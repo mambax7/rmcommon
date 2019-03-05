@@ -110,7 +110,7 @@ class Psr4ClassLoader
      */
     public static function addLoader($namespace, $path)
     {
-        $loaderClass = get_called_class();
+        $loaderClass = static::class;
         $loader      = new $loaderClass($namespace, $path);
         if (is_array($path)) {
             foreach ($path as $pathdir) {
