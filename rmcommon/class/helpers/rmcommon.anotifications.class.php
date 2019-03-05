@@ -124,7 +124,7 @@ abstract class Rmcommon_ANotifications
     /**
      * Set parameters for specific event
      * @param string $event Event index name (generally event name)
-     * @param string $id    The parameter identifier
+     * @param array $params    The parameter identifier
      * @return bool|\Rmcommon_ANotifications
      */
     public function parameters($event, $params)

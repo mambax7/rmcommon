@@ -14,7 +14,7 @@
  */
 class RMFormGroups extends RMFormElement
 {
-    private $_multi = 0;
+    private $_multi  = 0;
     private $_select = [];
     /**
      * Posibles valores
@@ -22,16 +22,16 @@ class RMFormGroups extends RMFormElement
      */
     private $_showtype = 0;
     private $_showdesc = 0;
-    private $_cols = 2;
+    private $_cols     = 2;
 
     /**
      * Constructor de la clase
-     * @param mixed $caption Texto de la etiqueta
-     * @param string $name Nombre del campo
-     * @param mixed $multi
-     * @param mixed $type
-     * @param mixed $cols
-     * @param mixed $selected
+     * @param mixed  $caption Texto de la etiqueta
+     * @param string $name    Nombre del campo
+     * @param mixed  $multi
+     * @param mixed  $type
+     * @param mixed  $cols
+     * @param mixed  $selected
      */
     public function __construct($caption, $name = '', $multi = 0, $type = 0, $cols = 2, $selected = [])
     {
@@ -86,8 +86,7 @@ class RMFormGroups extends RMFormElement
      * Este valor debe ser pasado como un array conteniendo los ideneitificadores
      * de los grupos (ej. array(0,1,2,3)) o bien como una lista delimitada por comas
      * conteniendo tambien los identificadores de grupos (ej, 1,2,3,4)
-     * @param array $value Identificadores de los grupos
-     * @param string $value Lista delimitada por comas con identificadores de los grupos
+     * @param array|string  $value Identificadores de los grupos, Lista delimitada por comas con identificadores de los grupos
      */
     public function setSelect($value)
     {
@@ -179,15 +178,15 @@ class RMFormGroups extends RMFormElement
      */
     public function render()
     {
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db     = XoopsDatabaseFactory::getDatabaseConnection();
         $result = $db->query('SELECT * FROM ' . $db->prefix('groups') . ' ORDER BY `name`');
-        $rtn = '';
-        $col = 1;
+        $rtn    = '';
+        $col    = 1;
 
         $typeinput = $this->get('type');
-        $name = $this->getName();
-        $selected = $this->get('value');
-        $selected = is_array($selected) ? $selected : [$selected];
+        $name      = $this->getName();
+        $selected  = $this->get('value');
+        $selected  = is_array($selected) ? $selected : [$selected];
 
         if ('radio' == $typeinput || 'checkbox' == $typeinput) {
             $this->remove('id');
@@ -230,7 +229,7 @@ class RMFormGroups extends RMFormElement
         } else {
             $this->setIfNotSet('class', 'form-control');
             $attributes = $this->renderAttributeString();
-            $rtn = "<select $attributes\"><option value='0'";
+            $rtn        = "<select $attributes\"><option value='0'";
             if (is_array($selected)) {
                 if (in_array(0, $selected, true)) {
                     $rtn .= ' selected';

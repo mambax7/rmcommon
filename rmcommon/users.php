@@ -385,8 +385,7 @@ function user_form($edit = false)
 /**
  * Save user data
  *
- * @param bool Indicates when is a edit
- * @param mixed $edit
+ * @param bool $edit Indicates when is a edit
  */
 function save_data($edit = false)
 {

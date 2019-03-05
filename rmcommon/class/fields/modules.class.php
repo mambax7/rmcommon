@@ -29,13 +29,11 @@ class RMFormModules extends RMFormElement
      * @param string $name     Nombre del campo
      * @param int    $multi    Selecciona multiple activada o desactivada
      * @param int    $type     0 = Select, 1 = Tabla
-     * @param array  $selected Valor seleccionado por defecto
-     * @param array  $selected Grupo de vlores seleccionado por defecto
+     * @param array  $selected Valor seleccionado por defecto, Grupo de vlores seleccionado por defecto
      * @param int    $cols     Numero de columnas para la tabla o filas para un campo select multi
      * @param array  $insert   Array con valores para agregar a la lista
      * @param bool   $dirnames Devolver nombres de directorios (true) o ids (false)
-     * @param int Mostrar Subpáginas
-     * @param mixed  $subpages
+     * @param int $subpages Mostrar Subpáginas
      */
     public function __construct($caption, $name = '', $multi = 0, $type = 0, $selected = null, $cols = 2, $insert = null, $dirnames = true, $subpages = 0)
     {
@@ -170,8 +168,7 @@ class RMFormModules extends RMFormElement
 
     /**
      * @desc Establece las subpáginas seleccionadas por defecto
-     * @param array Subpáginas seleccionadas
-     * @param mixed $subs
+     * @param array $subs Subpáginas seleccionadas
      */
     public function subpages($subs)
     {

@@ -110,8 +110,7 @@ class TextCleaner
     /**
      * Make links in the text clickable
      *
-     * @param string $text
-     * @param mixed  $string
+     * @param string $string $text
      * @return  string
      **/
     public function make_clickable($string)
@@ -148,8 +147,7 @@ class TextCleaner
     /**
      * Next set of three functions are a set of callbacks to manege url and uri matches
      *
-     * @param array Matches
-     * @param mixed $matches
+     * @param array $matches Matches
      * @return string
      */
     public static function url_clickable($matches)
@@ -350,7 +348,7 @@ class TextCleaner
      * @param mixed $text
      * @param mixed $len
      * @param mixed $continue
-     * @return
+     * @return string
      */
     public static function truncate($text, $len, $continue = '[...]')
     {
@@ -368,8 +366,7 @@ class TextCleaner
      * Replace EXMCodes with their equivalent HTML formatting
      *
      * @param string $text
-     * @param bool   $allowimage    Allow images in the text?
-     *                              On FALSE, uses links to images.
+     * @param bool|int   $allowimage    Allow images in the text?  On FALSE, uses links to images.
      * @return  string
      **/
     public function codeDecode($text, $allowimage = 1)
@@ -529,8 +526,7 @@ class TextCleaner
     /**
      * Reverses {@link htmlSpecialChars()}
      *
-     * @param string $text
-     * @param mixed  $string
+     * @param string $string Text
      * @param mixed  $quote_style
      * @return  string
      **/
@@ -649,9 +645,8 @@ class TextCleaner
      * based on Xoops displayTarea
      *
      * @param string $text
-     * @param bool   $dbr Disbale replace of breaklines when html is enabled
-     * @param bool Clean disabled tags?
-     * @param mixed  $clean_tags
+     * @param bool   $dbr        Disbale replace of breaklines when html is enabled
+     * @param bool   $clean_tags Clean disabled tags?
      * @param mixed  $paragraph
      * @return  string
      **/
@@ -756,11 +751,9 @@ class TextCleaner
     /**
      * This function is only a holder for event exmevent_format_code
      *
-     * @param string Code to format
-     * @param string Language name
-     * @param mixed $code
-     * @param mixed $lang
-     * @return srtring
+     * @param string $code Code to format
+     * @param string $lang Language name
+     * @return string
      */
     public function call_code_modifiers($code, $lang)
     {
@@ -797,10 +790,8 @@ class TextCleaner
     /**
      * Encrypt a string
      *
-     * @param string Text to crypt
-     * @param bool Apply base64_encode?
-     * @param mixed $string
-     * @param mixed $encode64
+     * @param string $string Text to crypt
+     * @param bool $encode64 Apply base64_encode?
      * @return string
      */
     public function encrypt($string, $encode64 = true)
@@ -815,10 +806,8 @@ class TextCleaner
     /**
      * Decrypt a string
      *
-     * @param strign Text to decrypt
-     * @param bool Apply base64_decode? default true
-     * @param mixed $string
-     * @param mixed $encode64
+     * @param string $string Text to decrypt
+     * @param bool $encode64 Apply base64_decode? default true
      * @return mixed|string
      */
     public static function decrypt($string, $encode64 = true)

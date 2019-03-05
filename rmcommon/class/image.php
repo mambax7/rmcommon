@@ -27,7 +27,7 @@ class RMImage extends RMObject
 
     public function __construct($id = null)
     {
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db       = XoopsDatabaseFactory::getDatabaseConnection();
         $this->_dbtable = $this->db->prefix('mod_rmcommon_images');
         $this->setNew();
         $this->initVarsFromTable();
@@ -114,9 +114,8 @@ class RMImage extends RMObject
 
     /**
      * Constructs the URL for image according to defined size
-     * @param int Specific size to construct the url
-     * @param mixed $size
-     * @return string
+     * @param int|string $size Specific size to construct the url
+     * @return mixed
      */
     public function url($size = '')
     {
@@ -130,7 +129,7 @@ class RMImage extends RMObject
 
         $this->get_sizes_data();
 
-        $url = $this->get_files_url();
+        $url  = $this->get_files_url();
         $info = pathinfo($this->getVar('file'));
 
         foreach ($this->sizes as $item) {
@@ -154,13 +153,13 @@ class RMImage extends RMObject
         }
 
         $this->get_sizes_data();
-        $ps = 0; // Previous size
+        $ps    = 0; // Previous size
         $small = 0;
 
         foreach ($this->sizes as $k => $size) {
             $ps = 0 == $ps ? $size['width'] : $ps;
             if ($size['width'] < $ps) {
-                $ps = $size['width'];
+                $ps    = $size['width'];
                 $small = $k;
             }
         }
@@ -206,10 +205,10 @@ class RMImage extends RMObject
 
     public function get_by_size($width)
     {
-        $sizes = $this->get_sizes_data();
+        $sizes  = $this->get_sizes_data();
         $sorted = [];
         foreach ($sizes as $i => $size) {
-            $sorted[ $i ] = $size['width'];
+            $sorted[$i] = $size['width'];
         }
 
         asort($sorted);
@@ -241,7 +240,7 @@ class RMImage extends RMObject
 
     public function delete()
     {
-        $path = XOOPS_UPLOAD_PATH . '/' . date('Y', $this->getVar('date')) . '/' . date('m', $this->getVar('date')) . '/';
+        $path  = XOOPS_UPLOAD_PATH . '/' . date('Y', $this->getVar('date')) . '/' . date('m', $this->getVar('date')) . '/';
         $sizes = $this->get_sizes_data();
 
         $info = pathinfo($this->getVar('file'));

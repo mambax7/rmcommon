@@ -26,14 +26,10 @@ class RMBreadCrumb
      * You can add new items to the crumbs array. A crumb must contain a caption text,
      * the link that this item will follow and, optionally, an icon and a submenu.
      *
-     * @param string Caption text
-     * @param string Link address
-     * @param string Icon url for this item
-     * @param array  Submenu for this item. This paramter must be passed as array containing caption, link and [icon]
-     * @param mixed $caption
-     * @param mixed $link
-     * @param mixed $icon
-     * @param mixed $menu
+     * @param string $caption Caption text
+     * @param string $link Link address
+     * @param string $icon Icon url for this item
+     * @param array  $menu Submenu for this item. This paramter must be passed as array containing caption, link and [icon]
      * @return int Id for item
      */
     public function add_crumb($caption, $link = '', $icon = '', $menu = [])
@@ -57,13 +53,10 @@ class RMBreadCrumb
     /**
      * Add a submenu to an existing crumb
      *
-     * @param string Caption text
-     * @param string Link address
-     * @param string Icon url for this item
      * @param mixed $id
-     * @param mixed $caption
-     * @param mixed $link
-     * @param mixed $icon
+     * @param string $caption Caption text
+     * @param string $link Link address
+     * @param string $icon Icon url for this item
      * @return int|null
      */
     public function add_menu($id, $caption, $link, $icon = '')

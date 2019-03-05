@@ -88,7 +88,6 @@ class Comments
      *
      * @param array $parameters
      * return mixed
-     * @return
      */
     public function form($parameters)
     {

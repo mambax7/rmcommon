@@ -35,8 +35,7 @@ function get_locale()
  * by EXM System and could not be used by other elements.
  *
  * @param string $domain Unique identifier for this file
- * @param string Local path to file
- * @param mixed  $file
+ * @param string $file Local path to file
  */
 function load_locale_file($domain, $file)
 {
@@ -68,10 +67,8 @@ function load_locale_file($domain, $file)
 /**
  * Read the MO file for a specific domain
  *
- * @param string Unique identifier for language file
- * @param string prefix for file name
- * @param mixed $domain
- * @param mixed $prefix
+ * @param string $domain Unique identifier for language file
+ * @param string $prefix prefix for file name
  * @uses This function must be called from every application to load the respective language file (mo file)
  *
  */
@@ -108,12 +105,9 @@ function load_plugin_locale($plugin, $prefix = '', $module = 'rmcommon')
 
 /**
  * Read the locale string for a theme
- * @param string Theme name
- * @param string Prefix for file
- * @param bool True for admin section, false for front section
- * @param mixed $theme
- * @param mixed $prefix
- * @param mixed $gui
+ * @param string $theme Theme name
+ * @param string $prefix Prefix for file
+ * @param bool $gui True for admin section, false for front section
  */
 function load_theme_locale($theme, $prefix = '', $gui = false)
 {
@@ -153,12 +147,10 @@ function translate($text, $domain = 'system')
 
 /**
  * Translate a text and print it
- * @param string Text to translate
- * @param string Domain name. Here you must specify the app name (eg. system), or plugin name (eg. rss) or theme Name.
- * The teme name must be specified with prefix "theme_". eg. "theme_exm" or "theme_simplex"
- * @param mixed $text
- * @param mixed $domain
- * @return print string
+ * @param string $text Text to translate
+ * @param string $domain Domain name. Here you must specify the app name (eg. system), or plugin name (eg. rss) or theme Name.
+ * The theme name must be specified with prefix "theme_". eg. "theme_exm" or "theme_simplex"
+ * @return string
  */
 function _e($text, $domain = 'rmcommon')
 {
@@ -167,11 +159,9 @@ function _e($text, $domain = 'rmcommon')
 
 /**
  * Translate a text and print it
- * @param string Text to translate
- * @param string Domain name. Here you must specify the app name (eg. system), or plugin name (eg. rss) or theme Name.
+ * @param string $text Text to translate
+ * @param string $domain Domain name. Here you must specify the app name (eg. system), or plugin name (eg. rss) or theme Name.
  * The teme name must be specified with prefix "theme_". eg. "theme_exm" or "theme_simplex"
- * @param mixed $text
- * @param mixed $domain
  * @return string
  */
 function __($text, $domain = 'rmcommon')

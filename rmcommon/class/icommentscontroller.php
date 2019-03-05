@@ -12,35 +12,29 @@ interface icommentscontroller
 {
     /**
      * Add 1 to comments internal counter of the module
-     * @param RMComment
-     * @param mixed $comment
+     * @param RMComment $comment
      */
     public function increment_comments_number($comment);
 
     /**
      * Reduce in 1 the comments internal counter of the module
-     * @param RMComment
-     * @param mixed $comment
+     * @param RMComment $comment
      */
     public function reduce_comments_number($comment);
 
     /**
      * Get the element related to a specific comment
-     * @param string Parameters to identify the comment
-     * @param RMComment Comment object
+     * @param string $params Parameters to identify the comment
+     * @param RMComment $com Comment object
      * @param bool Return item with url or without
-     * @param mixed $params
-     * @param mixed $com
      * @return string
      */
     public function get_item($params, $com);
 
     /**
      * Get the element url
-     * @param string Parameters to identify the comment
-     * @param RMComment Comment object
-     * @param mixed $params
-     * @param mixed $com
+     * @param string $params Parameters to identify the comment
+     * @param RMComment $com Comment object
      * @return string
      */
     public function get_item_url($params, $com);

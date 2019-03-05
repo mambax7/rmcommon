@@ -40,7 +40,7 @@ class RMFunctions
      * Check the number of images category on database
      * @param mixed $table
      * @param mixed $filters
-     * @return
+     * @return mixed
      */
     public static function get_num_records($table, $filters = '')
     {
@@ -122,10 +122,8 @@ class RMFunctions
 
     /**
      * This functions allows to get the groups names for a single category
-     * @param array Groups ids
-     * @param bool Return as list
-     * @param mixed $groups
-     * @param mixed $list
+     * @param array $groups Groups ids
+     * @param bool $list Return as list
      * @return array|list
      */
     public static function get_groups_names($groups, $list = true)
@@ -157,9 +155,8 @@ class RMFunctions
 
     /**
      * Load all categories from database
-     * @param string SQL Filters
+     * @param string $filters SQL Filters
      * @param bool  $object Determines if the return data is an array with objects (true) or values
-     * @param mixed $filters
      * @return array
      */
     public static function load_images_categories($filters = 'ORDER BY id_cat DESC', $object = false)
@@ -187,17 +184,12 @@ class RMFunctions
     /**
      * @Todo Move this method to RMComments functions class
      * Get all comments for given parameters
-     * @param string Object id (can be a module name)
-     * @param string Params for comment item
-     * @param string Object type (eg. module, plugin, etc)
-     * @param int Comment parent id, will return all comments under a given parent
-     * @param int User that has been posted the comments
+     * @param string     $obj    Object id (can be a module name)
+     * @param string     $params Params for comment item
+     * @param string     $type   Object type (eg. module, plugin, etc)
+     * @param int        $parent Comment parent id, will return all comments under a given parent
+     * @param null|mixed $user   User that has been posted the comments
      * @param bool       $assign Determines if the output will be assigned to a smarty variable
-     * @param mixed      $obj
-     * @param mixed      $params
-     * @param mixed      $type
-     * @param mixed      $parent
-     * @param null|mixed $user
      * @return array
      */
     public static function get_comments($obj, $params, $type = 'module', $parent = 0, $user = null, $assign = true)
@@ -221,14 +213,10 @@ class RMFunctions
      * Create the comments form
      * You need to include the template 'rmc-comments-form.html' where
      * you wish to show this form
-     * @param string Object name (eg. mywords, qpages, etc.)
-     * @param string Params to be included in form
-     * @param string Object type (eg. module, plugin, etc.)
-     * @param array File path to get the methods to update comments
-     * @param mixed $obj
-     * @param mixed $params
-     * @param mixed $type
-     * @param mixed $file
+     * @param string $obj Object name (eg. mywords, qpages, etc.)
+     * @param string $params Params to be included in form
+     * @param string $type Object type (eg. module, plugin, etc.)
+     * @param array $file File path to get the methods to update comments
      * @return mixed
      * @deprecated since 2.3.3
      */
@@ -250,11 +238,9 @@ class RMFunctions
     /**
      * @Todo   Move this method to RMComments class
      * Delete comments assigned to a object
-     * @param string Module name
-     * @param string Params
-     * @param mixed $module
-     * @param mixed $params
-     * @return |null
+     * @param string $module Module name
+     * @param string $params Params
+     * @return mixed|null
      */
     public function delete_comments($module, $params)
     {
@@ -301,8 +287,8 @@ class RMFunctions
     /**
      * Get an image from image manager
      * @param int $id Image id
-     * @param string Size name from category
-     * @param mixed     $size
+     * @param string $size Size name from category
+
      * @return bool|string
      */
     public function get_image($id, $size = '')
@@ -346,12 +332,9 @@ class RMFunctions
 
     /**
      * Add keywords and description metas
-     * @param string Description for meta content
-     * @param string Keywords for meta content. If hti svalue is empty then will generate from description
-     * @param int Limit of keywrods to generate
-     * @param mixed $description
-     * @param mixed $keywords
-     * @param mixed $limit
+     * @param string $description Description for meta content
+     * @param string $keywords Keywords for meta content. If hti svalue is empty then will generate from description
+     * @param int $limit Limit of keywrods to generate
      */
     public function add_keywords_description($description, $keywords = '', $limit = 50)
     {
@@ -414,12 +397,9 @@ class RMFunctions
     /**
      * Encode array keys to make a valid url string
      *
-     * @param array Array to encode
-     * @param string Var name to generate url
-     * @param string URL separator
-     * @param mixed $array
-     * @param mixed $name
-     * @param mixed $separator
+     * @param array $array Array to encode
+     * @param string $name Var name to generate url
+     * @param string $separator URL separator
      * @deprecated
      */
     public static function urlencode_array($array, $name, $separator = '&')
@@ -462,9 +442,8 @@ class RMFunctions
 
     /**
      * Load a module as XoopsModule object
-     * @param int|string Module id or module name
-     * @param mixed $mod
-     * @return object XoopsModule
+     * @param int|string $mod Module id or module name
+     * @return mixed|XoopsModule
      * @deprecated
      */
     public function load_module($mod)

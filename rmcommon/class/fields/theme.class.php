@@ -12,15 +12,13 @@ class RMFormTheme extends RMFormElement
 {
     /**
      * Constructor
-     * @param string $caption
-     * @param string $name Nombre del campo
-     * @param int $multi Selecciona multiple activada o desactivada
-     * @param int $type 0 = Select, 1 = Tabla
-     * @param int $selected Valor seleccionado por defecto
-     * @param array $selected Grupo de vlores seleccionado por defecto
-     * @param int $cols Numero de columnas para la tabla o filas para un campo select multi
-     * @param string 'GUI' for admin theme
-     * @param mixed $section
+     * @param string    $caption
+     * @param string    $name     Nombre del campo
+     * @param int       $multi    Selecciona multiple activada o desactivada
+     * @param int       $type     0 = Select, 1 = Tabla
+     * @param int|array $selected Valor seleccionado por defecto, Grupo de vlores seleccionado por defecto
+     * @param int       $cols     Numero de columnas para la tabla o filas para un campo select multi 'GUI' for admin theme
+     * @param mixed     $section
      */
     public function __construct($caption, $name, $multi = 0, $type = 0, $selected = null, $cols = 2, $section = '')
     {
@@ -58,7 +56,7 @@ class RMFormTheme extends RMFormElement
 
         $themes = [];
 
-        $gui = $this->has('gui');
+        $gui      = $this->has('gui');
         $selected = $this->get('selected');
         $multiple = $this->has('multiple');
 
@@ -96,7 +94,7 @@ class RMFormTheme extends RMFormElement
         } else {
             $this->setIfNotSet('class', 'form-control');
             $attributes = $this->renderAttributeString();
-            $rtn = "<select $attributes>";
+            $rtn        = "<select $attributes>";
             foreach ($themes as $k => $name) {
                 $rtn .= "<option value='$k'" . (is_array($selected) ? (in_array($k, $selected, true) ? " selected='selected'" : '') : '') . ">$name</option>";
             }

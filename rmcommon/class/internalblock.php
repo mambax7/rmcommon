@@ -222,13 +222,12 @@ class RMInternalBlock extends RMObject
      * Devuelve el contenido de un bloque
      *
      * @param string      $format Uso: 'S' para mostrar y 'E' para editar
-     * @param string      $c_type  Tipo de Contenido
      * @return mixed
      */
     public function getContent($format = 'S')
     {
         global $common;
-
+//string      $c_type  Tipo de Contenido
         $c_type = $this->getVar('content_type');
 
         switch ($format) {

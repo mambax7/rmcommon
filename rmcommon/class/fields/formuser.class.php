@@ -17,22 +17,15 @@ class RMFormUser extends RMFormElement
     private $_onchange = '';
 
     /**
-     * @param string Texto del campo
-     * @param string Nombre del Campo
-     * @param bool Seleccion múltiple
-     * @param array Valores seleccionados por defecto
-     * @param int Limite de resultados por página de usuarios
-     * @param int Ancho de la ventana
-     * @param int Alto de la ventana
-     * @param mixed $caption
-     * @param mixed $name
-     * @param mixed $multi
-     * @param mixed $select
-     * @param mixed $limit
-     * @param mixed $width
-     * @param mixed $height
-     * @param mixed $showall
-     * @param mixed $enable
+     * @param string $caption Texto del campo
+     * @param string $name    Nombre del Campo
+     * @param bool   $multi   Seleccion múltiple
+     * @param array  $select  Valores seleccionados por defecto
+     * @param int    $limit   Limite de resultados por página de usuarios
+     * @param int    $width   Ancho de la ventana
+     * @param int    $height  Alto de la ventana
+     * @param mixed  $showall
+     * @param mixed  $enable
      */
     public function __construct($caption = '', $name = '', $multi = false, $select = [], $limit = 20, $width = 600, $height = 300, $showall = 0, $enable = true)
     {
@@ -181,19 +174,12 @@ class RMFormFormUserSelect extends RMFormElement
     private $_onchange = '';
 
     /**
-     * @param string Texto del campo
-     * @param string Nombre del Campo
-     * @param bool Seleccion múltiple
-     * @param array Valores seleccionados por defecto
-     * @param int Limite de resultados por página de usuarios
-     * @param int Ancho de la ventana
-     * @param int Alto de la ventana
-     * @param mixed $caption
-     * @param mixed $name
-     * @param mixed $select
-     * @param mixed $limit
-     * @param mixed $width
-     * @param mixed $height
+     * @param string $caption Texto del campo
+     * @param string $name    Nombre del Campo
+     * @param array  $select  Valores seleccionados por defecto
+     * @param int    $limit   Limite de resultados por página de usuarios
+     * @param int    $width   Ancho de la ventana
+     * @param int    $height  Alto de la ventana
      * @param mixed $showall
      */
     public function __construct($caption, $name, $select = [], $limit = 36, $width = 600, $height = 300, $showall = 0)

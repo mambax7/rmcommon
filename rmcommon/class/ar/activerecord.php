@@ -401,7 +401,6 @@ abstract class RMActiveRecord
      *
      * @param array|string filters
      * @param array $options Array with options that will overwrite existing parameters
-     * @param mixed $filters
      * @return array
      */
     protected function create_select_statement($filters = '', $options = [])

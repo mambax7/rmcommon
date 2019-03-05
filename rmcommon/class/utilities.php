@@ -78,12 +78,11 @@ class RMUtilities
      * prevent these issues, and if you need to show the result in a form field
      * or directly in the page, then you can use special chars to show correctly.
      *
-     * @param       $options_or_size
+     * @param mixed $options_or_size
      * @param bool  $useDigits
      * @param bool  $useSpecial
-     * @param bool  $useUpper
+     * @param bool  $onlyUpper
      * @param bool  $useAlpha
-     * @param mixed $onlyUpper
      * @return string
      */
     public static function randomString($options_or_size, $useDigits = true, $useSpecial = true, $onlyUpper = false, $useAlpha = true)
@@ -177,9 +176,8 @@ class RMUtilities
      * Elimina directorios y todos los archivos contenidos
      * @param string $path Ruta del directorio
      * @param bool   $root Specify if the folder root must be deleted too
-     * @param array Path of excluded files or folders
-     * @param mixed  $exclude
-     * @return bool
+     * @param array $exclude Path of excluded files or folders
+     * @return mixed
      */
     public static function delete_directory($path, $root = true, $exclude = [])
     {

@@ -15,7 +15,7 @@ class RMImageCategory extends RMObject
 {
     public function __construct($id = null)
     {
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db       = XoopsDatabaseFactory::getDatabaseConnection();
         $this->_dbtable = $this->db->prefix('mod_rmcommon_images_categories');
         $this->setNew();
         $this->initVarsFromTable();
@@ -53,12 +53,12 @@ class RMImageCategory extends RMObject
 
     /**
      * Check if given user is allowed
-     * @param object XoopsUser object
+     * @param XoopsUser $user object
      * @return bool
      */
     public function user_allowed_toupload(XoopsUser $user)
     {
-        $groups = &$user->getGroups();
+        $groups  = &$user->getGroups();
         $allowed = $this->getVar('groups');
 
         foreach ($groups as $id) {

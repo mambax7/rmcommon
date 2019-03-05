@@ -14,16 +14,15 @@
  */
 class RMFormFile extends RMFormElement
 {
-    private $_size = 30;
+    private $_size  = 30;
     private $_limit = 0;
 
     /**
      * Constructor de la clase
      * @param string $caption Texto de la etiqueta
-     * @param string $name Nombre del campo
-     * @param int $size Longitud del campo (Por defecto 30)
-     * @param int Limite en bytes para el tamaño del archivo
-     * @param mixed $limit
+     * @param string $name    Nombre del campo
+     * @param int    $size    Longitud del campo (Por defecto 30)
+     * @param int    $limit   Limite en bytes para el tamaño del archivo
      */
     public function __construct($caption, $name = '', $size = 30, $limit = 0)
     {

@@ -192,14 +192,10 @@ class RMTemplate
 
     /**
      * Get a template from Current RMCommon Theme
-     * @param string Template file name
-     * @param string Elemernt type: module, builder or plugin
-     * @param string Module name
-     * @param string Element name, only when type is plugin or builder
-     * @param mixed $file
-     * @param mixed $type
-     * @param mixed $module
-     * @param mixed $element
+     * @param string $file Template file name
+     * @param string $type Elemernt type: module, builder or plugin
+     * @param string $module Module name
+     * @param string $element Element name, only when type is plugin or builder
      * @return string Template path
      */
     public static function path($file, $type = 'module', $module = '', $element = '')
@@ -335,8 +331,7 @@ class RMTemplate
 
     /**
      * Add a help lint to manage diferents sections
-     * @param string Link to help resource
-     * @param mixed $link
+     * @param string $link Link to help resource
      */
     public function set_help($link)
     {
@@ -370,10 +365,8 @@ class RMTemplate
 
     /**
      * Add a message to show in theme
-     * @param string Message to show
-     * @param int Level of message (1 will show error)
-     * @param mixed $message
-     * @param mixed $level
+     * @param string $message Message to show
+     * @param int $level Level of message (1 will show error)
      */
     public function add_message($message, $level = 0)
     {
@@ -1127,8 +1120,7 @@ class RMTemplate
 
     /**
      * Clear all styles stored previously.
-     * @param string Style ID
-     * @param null|mixed $id
+     * @param null|mixed $id Style ID
      * @return bool
      */
     public function clear_styles($id = null)
@@ -1150,9 +1142,7 @@ class RMTemplate
 
     /**
      * Assign template vars
-     * @param string|array Variable name or array with multiple variables and their values
-     * @param any Var value
-     * @param mixed      $var
+     * @param string|array $var Variable name or array with multiple variables and their values
      * @param null|mixed $value
      */
     public function assign($var, $value = null)
@@ -1168,10 +1158,8 @@ class RMTemplate
 
     /**
      * Store vars inside template as array
-     * @param string Var name
-     * @param mixed Var valu
-     * @param mixed $varname
-     * @param mixed $value
+     * @param string $varname name
+     * @param mixed $value Var value
      */
     public function append($varname, $value)
     {
@@ -1189,9 +1177,8 @@ class RMTemplate
     /**
      * Get a single template var
      *
-     * @param string Var name
-     * @param mixed $varname
-     * @return any
+     * @param string $varname Var name
+     * @return mixed
      */
     public function get_var($varname)
     {
@@ -1206,16 +1193,12 @@ class RMTemplate
      * Add option to menu. This method is only functional in admin section or with the themes
      * that support this feature
      *
-     * @param string Menu parent name
-     * @param string Caption
-     * @param string Option link url
-     * @param string Option icon url
-     * @param string Target window (_clank, _self, etc.)
-     * @param mixed $caption
-     * @param mixed $link
-     * @param mixed $icon
+     * @param string $caption Caption, Menu parent name
+     * @param string $link Option link url
+     * @param string $icon Option icon url
      * @param mixed $class
-     * @param mixed $target
+     * @param string $target Target window (_clank, _self, etc.)
+
      */
     public function add_menu_option($caption, $link, $icon = '', $class = '', $target = '')
     {

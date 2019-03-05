@@ -44,13 +44,10 @@ function tpl_cycle($values, $delimiter = ',', $reset = false)
 }
 
 /**
- * @param var Server VAR ($_POST, $_GET, $_SERVER, etc.)
- * @param string Value key
- * @param mixed Default value to return if the var is not located.
- * @param mixed $from
- * @param mixed $key
- * @param mixed $default
- * @return any
+ * @param string $from Server VAR ($_POST, $_GET, $_SERVER, etc.)
+ * @param string $key Value key
+ * @param mixed $default Default value to return if the var is not located.
+ * @return mixed
  * @deprecated
  * GET Predefined Variable
  */

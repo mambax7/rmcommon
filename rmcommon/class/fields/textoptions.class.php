@@ -13,38 +13,30 @@
  */
 class RMFormTextOptions extends RMFormElement
 {
-    private $html = 0;
-    private $xcode = 0;
+    private $html   = 0;
+    private $xcode  = 0;
     private $smiley = 0;
-    private $image = 0;
-    private $br = 0;
+    private $image  = 0;
+    private $br     = 0;
 
     /**
-     * @param string Texto del campo
-     * @param string Nombre del Campo
-     * @param int HTML activo (1) o inactivo (0)
-     * @param int Xoops Code activo (1) o inactivo (0)
-     * @param int Imágenes activo (1) o inactivo (0)
-     * @param int Caritas activo (1) o inactivo (0)
-     * @param int Saltos de Línea activo (1) o inactivo (0)
-     * @param int Número de columnas (Máximo 5, Mínimo 1)
-     * @param mixed $caption
-     * @param mixed $html
-     * @param mixed $xcode
-     * @param mixed $image
-     * @param mixed $smiley
-     * @param mixed $br
-     * @param mixed $cols
+     * @param string $caption Texto del campo, Nombre del Campo
+     * @param int $html HTML activo (1) o inactivo (0)
+     * @param int $xcode Xoops Code activo (1) o inactivo (0)
+     * @param int $image Imágenes activo (1) o inactivo (0)
+     * @param int $smiley Caritas activo (1) o inactivo (0)
+     * @param int $br Saltos de Línea activo (1) o inactivo (0)
+     * @param int $cols Número de columnas (Máximo 5, Mínimo 1)
      */
     public function __construct($caption, $html = 0, $xcode = 0, $image = 0, $smiley = 0, $br = 0, $cols = 5)
     {
         $this->setCaption($caption);
-        $this->html = $html;
-        $this->xcode = $xcode;
+        $this->html   = $html;
+        $this->xcode  = $xcode;
         $this->smiley = $smiley;
-        $this->image = $image;
-        $this->br = $br;
-        $this->cols = $cols > 5 ? 5 : ($cols <= 0 ? 1 : $cols);
+        $this->image  = $image;
+        $this->br     = $br;
+        $this->cols   = $cols > 5 ? 5 : ($cols <= 0 ? 1 : $cols);
     }
 
     public function html()
@@ -53,8 +45,7 @@ class RMFormTextOptions extends RMFormElement
     }
 
     /**
-     * @param int 1 o 0
-     * @param mixed $val
+     * @param int $val 1 o 0
      */
     public function setHtml($val)
     {
@@ -67,8 +58,7 @@ class RMFormTextOptions extends RMFormElement
     }
 
     /**
-     * @param int 1 o 0
-     * @param mixed $val
+     * @param int $val 1 o 0
      */
     public function setXcode($val)
     {
@@ -81,8 +71,7 @@ class RMFormTextOptions extends RMFormElement
     }
 
     /**
-     * @param int 1 o 0
-     * @param mixed $val
+     * @param int $val 1 o 0
      */
     public function setImage($val)
     {
@@ -95,8 +84,7 @@ class RMFormTextOptions extends RMFormElement
     }
 
     /**
-     * @param int 1 o 0
-     * @param mixed $val
+     * @param int $val 1 o 0
      */
     public function setSmiley($val)
     {
@@ -109,8 +97,7 @@ class RMFormTextOptions extends RMFormElement
     }
 
     /**
-     * @param int 1 o 0
-     * @param mixed $val
+     * @param int $val 1 o 0
      */
     public function setBR($val)
     {
@@ -123,8 +110,7 @@ class RMFormTextOptions extends RMFormElement
     }
 
     /**
-     * @param int Mayor que 0
-     * @param mixed $val
+     * @param int $val Mayor que 0
      */
     public function setCols($val)
     {
@@ -138,7 +124,7 @@ class RMFormTextOptions extends RMFormElement
         $cols = 1;
         for ($i = 1; $i <= 5; $i++) {
             if ($cols > $this->cols) {
-                $rtn .= '</tr><tr>';
+                $rtn  .= '</tr><tr>';
                 $cols = 1;
             }
             $rtn .= '<td>';

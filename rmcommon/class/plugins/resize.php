@@ -55,6 +55,7 @@ class phMagick_resize
     /**
      * tries to resize an image to the exact size wile mantaining aspect ratio,
      * the image will be croped to fit the measures
+     * @param phmagick $p
      * @param int $width
      * @param int $height
      */
@@ -83,10 +84,11 @@ class phMagick_resize
      * Creates a thumbnail of an image, if it doesn't exits
      *
      *
-     * @param string $imageUrl - The image Url
-     * @param mixed  $width    - String / Integer
-     * @param mixed  $height   - String / Integer
-     * @param bool  $exactDimentions False: resizes the image to the exact porportions (aspect ratio not preserved). True: preserves aspect ratio, only resises if image is bigger than specified measures
+     * @param phmagick $p
+     * @param string $imageUrl        - The image Url
+     * @param mixed  $width           - String / Integer
+     * @param mixed  $height          - String / Integer
+     * @param bool   $exactDimentions False: resizes the image to the exact porportions (aspect ratio not preserved). True: preserves aspect ratio, only resises if image is bigger than specified measures
      * @param mixed  $webPath
      * @param mixed  $physicalPath
      *

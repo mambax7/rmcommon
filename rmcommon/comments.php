@@ -17,7 +17,7 @@ function show_comments()
 
     $db = XoopsDatabaseFactory::getDatabaseConnection();
 
-    $keyw = rmc_server_var($_REQUEST, 'w', '');
+    $keyw   = rmc_server_var($_REQUEST, 'w', '');
     $filter = rmc_server_var($_REQUEST, 'filter', '');
 
     $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('mod_rmcommon_comments');
@@ -27,21 +27,21 @@ function show_comments()
     /**
      * Paginacion de Resultados
      */
-    $page = rmc_server_var($_GET, 'page', 1);
+    $page  = rmc_server_var($_GET, 'page', 1);
     $limit = 15;
     list($num) = $db->fetchRow($db->query($sql));
 
     $tpages = ceil($num / $limit);
-    $page = $page > $tpages ? $tpages : $page;
+    $page   = $page > $tpages ? $tpages : $page;
 
     $start = $num <= 0 ? 0 : ($page - 1) * $limit;
 
     $nav = new RMPageNav($num, $limit, $page, 5);
     $nav->target_url('comments.php?page={PAGE_NUM}');
 
-    $sql = str_replace('COUNT(*)', '*', $sql);
-    $sql .= " ORDER BY posted DESC LIMIT $start,$limit";
-    $result = $db->query($sql);
+    $sql      = str_replace('COUNT(*)', '*', $sql);
+    $sql      .= " ORDER BY posted DESC LIMIT $start,$limit";
+    $result   = $db->query($sql);
     $comments = [];
 
     $ucache = [];
@@ -66,21 +66,21 @@ function show_comments()
             $user = $ucache[$editor->getVar('xuid')];
 
             $poster = [
-                'id' => $user->getVar('uid'),
-                'name' => $user->getVar('uname'),
-                'email' => $user->getVar('email'),
-                'posts' => $user->getVar('posts'),
+                'id'     => $user->getVar('uid'),
+                'name'   => $user->getVar('uname'),
+                'email'  => $user->getVar('email'),
+                'posts'  => $user->getVar('posts'),
                 'avatar' => '' != $user->getVar('image') && 'blank.gif' != $user->getVar('image') ? XOOPS_UPLOAD_URL . '/' . $user->getVar('image') : RMCURL . '/images/avatar.gif',
-                'rank' => $user->rank(),
+                'rank'   => $user->rank(),
             ];
         } else {
             $poster = [
-                'id' => 0,
-                'name' => $editor->getVar('name'),
-                'email' => $editor->getVar('email'),
-                'posts' => 0,
+                'id'     => 0,
+                'name'   => $editor->getVar('name'),
+                'email'  => $editor->getVar('email'),
+                'posts'  => 0,
                 'avatar' => RMCURL . '/images/avatar.gif',
-                'rank' => '',
+                'rank'   => '',
             ];
         }
 
@@ -92,27 +92,27 @@ function show_comments()
                 require_once $cpath;
             }
 
-            $class = ucfirst($row['id_obj']) . 'Controller';
+            $class      = ucfirst($row['id_obj']) . 'Controller';
             $controller = new $class();
-            $item = $controller->get_item($row['params'], $com);
+            $item       = $controller->get_item($row['params'], $com);
             if (method_exists($controller, 'get_item_url')) {
                 $item_url = $controller->get_item_url($row['params'], $com);
             }
         } else {
-            $item = __('Unknow', 'rmcommon');
+            $item     = __('Unknow', 'rmcommon');
             $item_url = '';
         }
 
         $comments[] = [
-            'id' => $row['id_com'],
-            'text' => TextCleaner::getInstance()->clean_disabled_tags(TextCleaner::getInstance()->popuplinks(TextCleaner::getInstance()->nofollow($com->getVar('content')))),
-            'poster' => $poster,
-            'posted' => sprintf(__('Posted on %s', 'rmcommon'), formatTimestamp($com->getVar('posted'), 'l')),
-            'ip' => $com->getVar('ip'),
-            'item' => $item,
+            'id'       => $row['id_com'],
+            'text'     => TextCleaner::getInstance()->clean_disabled_tags(TextCleaner::getInstance()->popuplinks(TextCleaner::getInstance()->nofollow($com->getVar('content')))),
+            'poster'   => $poster,
+            'posted'   => sprintf(__('Posted on %s', 'rmcommon'), formatTimestamp($com->getVar('posted'), 'l')),
+            'ip'       => $com->getVar('ip'),
+            'item'     => $item,
             'item_url' => $item_url,
-            'module' => $row['id_obj'],
-            'status' => $com->getVar('status'),
+            'module'   => $row['id_obj'],
+            'status'   => $com->getVar('status'),
         ];
     }
 
@@ -137,7 +137,6 @@ function show_comments()
 /**
  * Change comment status
  * @param string status
- * @param mixed $status
  */
 function set_comments_status($status)
 {
@@ -148,10 +147,10 @@ function set_comments_status($status)
         die();
     }
 
-    $coms = rmc_server_var($_POST, 'coms', []);
-    $page = rmc_server_var($_POST, 'page', 1);
+    $coms   = rmc_server_var($_POST, 'coms', []);
+    $page   = rmc_server_var($_POST, 'page', 1);
     $filter = rmc_server_var($_POST, 'filter', '');
-    $w = rmc_server_var($_POST, 'w', '');
+    $w      = rmc_server_var($_POST, 'w', '');
 
     $qs = "page=$page&filter=$filter&w=$w";
 
@@ -165,7 +164,7 @@ function set_comments_status($status)
         die();
     }
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('mod_rmcommon_comments') . " SET status='$status' WHERE id_com IN (" . implode(',', $coms) . ')';
 
     if ($db->queryF($sql)) {
@@ -182,10 +181,10 @@ function delete_comments()
 {
     global $xoopsSecurity;
 
-    $coms = rmc_server_var($_POST, 'coms', []);
-    $page = rmc_server_var($_POST, 'page', 1);
+    $coms   = rmc_server_var($_POST, 'coms', []);
+    $page   = rmc_server_var($_POST, 'page', 1);
     $filter = rmc_server_var($_POST, 'filter', '');
-    $w = rmc_server_var($_POST, 'w', '');
+    $w      = rmc_server_var($_POST, 'w', '');
 
     $qs = "page=$page&filter=$filter&w=$w";
 
@@ -218,9 +217,9 @@ function delete_comments()
                 require_once $cpath;
             }
 
-            $class = ucfirst($com->getVar('id_obj')) . 'Controller';
+            $class      = ucfirst($com->getVar('id_obj')) . 'Controller';
             $controller = new $class();
-            $item = $controller->reduce_comments_number($com);
+            $item       = $controller->reduce_comments_number($com);
         } else {
             $item = __('Unknow', 'rmcommon');
         }
@@ -233,10 +232,10 @@ function edit_comment()
 {
     global $rmTpl;
 
-    $id = rmc_server_var($_GET, 'id', 0);
-    $page = rmc_server_var($_GET, 'page', 1);
+    $id     = rmc_server_var($_GET, 'id', 0);
+    $page   = rmc_server_var($_GET, 'page', 1);
     $filter = rmc_server_var($_GET, 'filter', '');
-    $w = rmc_server_var($_GET, 'w', '1');
+    $w      = rmc_server_var($_GET, 'w', '1');
 
     $qs = "w=$w&page=$page&filter=$filter";
 
@@ -255,7 +254,7 @@ function edit_comment()
 
     if (is_file($cpath)) {
         include $cpath;
-        $class = ucfirst($comment->getVar('id_obj')) . 'Controller';
+        $class      = ucfirst($comment->getVar('id_obj')) . 'Controller';
         $controller = new $class();
     }
 
@@ -266,7 +265,7 @@ function edit_comment()
     $form->addElement(new RMFormLabel(__('IP', 'rmcommon'), $comment->getVar('ip')));
 
     $user = new RMCommentUser($comment->getVar('user'));
-    $ele = new RMFormUser(__('Poster', 'rmcommon'), 'user', false, $user->getVar('xuid') > 0 ? $user->getVar('xuid') : 0);
+    $ele  = new RMFormUser(__('Poster', 'rmcommon'), 'user', false, $user->getVar('xuid') > 0 ? $user->getVar('xuid') : 0);
     $form->addElement($ele);
 
     $ele = new RMFormRadio(__('Status', 'rmcommon'), 'status', 1, 0, 2);
@@ -301,10 +300,10 @@ function save_comment()
 {
     global $xoopsSecurity;
 
-    $id = rmc_server_var($_POST, 'id', 0);
-    $page = rmc_server_var($_POST, 'page', 1);
+    $id     = rmc_server_var($_POST, 'id', 0);
+    $page   = rmc_server_var($_POST, 'page', 1);
     $filter = rmc_server_var($_POST, 'filter', '');
-    $w = rmc_server_var($_POST, 'w', '1');
+    $w      = rmc_server_var($_POST, 'w', '1');
 
     $qs = "id=$id&w=$w&page=$page&filter=$filter";
 
@@ -327,7 +326,7 @@ function save_comment()
     $status = rmc_server_var($_POST, 'status', 'unapproved');
     $status = 'approved' == $status ? $status : 'unapproved';
 
-    $user = rmc_server_var($_POST, 'user', 0);
+    $user    = rmc_server_var($_POST, 'user', 0);
     $content = rmc_server_var($_POST, 'content', '');
 
     // save basic info in comment object

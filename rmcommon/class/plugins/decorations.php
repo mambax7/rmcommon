@@ -88,12 +88,10 @@ class phmagick_decorations
 
     /**
      * Fake polaroid effect (white border and rotation)
-     *
-     * @param  int $rotation - The imahe will be rotatex x degrees
+     * @param phmagick $p phMagick
+     * @param  int    $rotate       - The imahe will be rotatex x degrees
      * @param  string $borderColor  - Polaroid border (ussuay white)
-     * @param  string $shaddowColor - drop shaddow color
      * @param  string $background   - Image background color (use for jpegs or images that do not support transparency or you will end up with a black background)
-     * @param mixed     $rotate
      * @return \phmagick
      */
     public function fakePolaroid(phmagick $p, $rotate = 6, $borderColor = '#fff', $background = 'none')
@@ -114,11 +112,12 @@ class phmagick_decorations
     /**
      * Real polaroid efect, supports text
      *
-     * @param phMagickTextObject $format   - text format for image label
-     * @param Int                $rotation - The imahe will be rotatex x degrees
-     * @param string $borderColor                 - Polaroid border (ussuay white)
-     * @param string $shaddowColor                - drop shaddow color
-     * @param string $background                  - Image background color (use for jpegs or images that do not support transparency or you will end up with a black background)
+     * @param phmagick $p phMagick
+     * @param phMagickTextObject $format       - text format for image label
+     * @param Int                $rotation     - The imahe will be rotatex x degrees
+     * @param string             $borderColor  - Polaroid border (ussuay white)
+     * @param string             $shaddowColor - drop shaddow color
+     * @param string             $background   - Image background color (use for jpegs or images that do not support transparency or you will end up with a black background)
      * @return \phmagick
      */
     public function polaroid(phmagick $p, $format = null, $rotation = 6, $borderColor = 'snow', $shaddowColor = 'black', $background = 'none')

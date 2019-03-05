@@ -31,12 +31,13 @@
 class phMagick_crop
 {
     /**
+     * @param phmagick        $p       phMagick
      * @param Integer         $width
      * @param Integer         $height
      * @param Integer         $top     - The Y coordinate for the left corner of the crop rectangule
      * @param Integer         $left    - The X coordinate for the left corner of the crop rectangule
      * @param phMagickGravity $gravity - The initial placement of the crop rectangule
-     * @return unknown_type
+     * @return mixed
      */
     public function crop(phmagick $p, $width, $height, $top = 0, $left = 0, $gravity = 'center')
     {

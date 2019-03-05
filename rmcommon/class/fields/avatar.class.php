@@ -31,12 +31,12 @@
  */
 class RMFormAvatarField extends RMFormElement
 {
-    private $_multi = 0;
-    private $_size = 5;
-    private $_select = [];
+    private $_multi    = 0;
+    private $_size     = 5;
+    private $_select   = [];
     private $_showtype = 0;
     private $_showdesc = 0;
-    private $_cols = 2;
+    private $_cols     = 2;
     /**
      * @desc Esta variable es utilizada para indicar si se deben cargar
      *       solo los avatares cargados por el usuario
@@ -46,12 +46,12 @@ class RMFormAvatarField extends RMFormElement
     /**
      * Constructor de la clase
      * @param string $caption Texto de la etiqueta
-     * @param string $name Nombre del elemento
-     * @param int $multi Seleccion múltiple (0 = Inactivo, 1 = Activo)
-     * @param mixed $type
-     * @param mixed $cols
-     * @param mixed $select
-     * @param mixed $user
+     * @param string $name    Nombre del elemento
+     * @param int    $multi   Seleccion múltiple (0 = Inactivo, 1 = Activo)
+     * @param mixed  $type
+     * @param mixed  $cols
+     * @param mixed  $select
+     * @param mixed  $user
      */
     public function __construct($caption, $name, $multi = 0, $type = 0, $cols = 2, $select = [], $user = 0)
     {
@@ -60,9 +60,9 @@ class RMFormAvatarField extends RMFormElement
         if (isset($_REQUEST[$name])) {
             $this->_select = $_REQUEST[$name];
         }
-        $this->_multi = $multi;
+        $this->_multi    = $multi;
         $this->_showtype = $type;
-        $this->_cols = $cols;
+        $this->_cols     = $cols;
         $this->_onlyuser = $user;
 
         if (isset($_REQUEST[$this->getName()])) {
@@ -98,8 +98,7 @@ class RMFormAvatarField extends RMFormElement
      * Este valor debe ser pasado como un array conteniendo los ideneitificadores
      * de los avatares (ej. array(0,1,2,3)) o bien como una lista delimitada por comas
      * conteniendo tambien los identificadores de avatares (ej, 1,2,3,4)
-     * @param array $value Identificadores de los avatares
-     * @param string $value Lista delimitada por comas con identificadores de los avatares
+     * @param array|string  $value Identificadores de los avatares, Lista delimitada por comas con identificadores de los avatares
      */
     public function setSelect($value)
     {
@@ -169,23 +168,23 @@ class RMFormAvatarField extends RMFormElement
      */
     public function render()
     {
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $sql = 'SELECT * FROM ' . $db->prefix('avatar');
         if ($this->_onlyuser) {
             global $xoopsUser;
             if ($xoopsUser) {
                 $useravatar = $xoopsUser->getVar('user_avatar');
-                $sql .= " WHERE avatar_display='1' AND (avatar_type='0' OR (avatar_type='1' AND avatar_file='$useravatar'))";
+                $sql        .= " WHERE avatar_display='1' AND (avatar_type='0' OR (avatar_type='1' AND avatar_file='$useravatar'))";
                 unset($useravatar);
             }
         }
-        $sql .= ' ORDER BY avatar_name';
+        $sql    .= ' ORDER BY avatar_name';
         $result = $db->query($sql);
-        $rtn = '';
-        $col = 1;
+        $rtn    = '';
+        $col    = 1;
 
         $typeinput = $this->_multi ? 'checkbox' : 'radio';
-        $name = $this->_multi ? $this->getName() . '[]' : $this->getName();
+        $name      = $this->_multi ? $this->getName() . '[]' : $this->getName();
 
         if ($this->_showtype) {
             $rtn = "<div style='height: 200px; overflow: auto;'><table cellspacing='2' cellpadding='3' border='0'>";
@@ -218,21 +217,21 @@ class RMFormAvatarField extends RMFormElement
             $rtn .= '</table></div>';
         } else {
             $rtn = "<script type='text/javascript'>
-						function showImageAvatar(){
-							sel = $('$name');
-							var img = sel.options[sel.selectedIndex].value;
-							div = $('avatarimg');
-							div.innerHTML = \"<img src='" . ABSURL . "/uploads/avatars/\"+img+\"'>\";
-						}
+                        function showImageAvatar(){
+                            sel = $('$name');
+                            var img = sel.options[sel.selectedIndex].value;
+                            div = $('avatarimg');
+                            div.innerHTML = \"<img src='" . ABSURL . "/uploads/avatars/\"+img+\"'>\";
+                        }
 
 
-					</script>";
+                    </script>";
             $rtn .= "<div id='avatarimg' style='float: right;'>";
             if (count($this->_select) > 0) {
                 $rtn .= "<img src='" . ABSURL . '/uploads/avatars/' . $this->_select[0] . "' border='0' alt=''>";
             }
             $rtn .= "</div>
-					<select name='$name' id='" . $this->id() . "' onchange='showImageAvatar();'";
+                    <select name='$name' id='" . $this->id() . "' onchange='showImageAvatar();'";
             $rtn .= $this->_multi ? " multiple='multiple' size='5'" : '';
             $rtn .= "><option value='0'";
             if (is_array($this->_select)) {

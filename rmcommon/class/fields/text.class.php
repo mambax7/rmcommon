@@ -40,13 +40,12 @@ class RMFormText extends RMFormElement
 
     /**
      * Constructor de la clase
-     * @param string|array $caption  Texto de la etiqueta
-     * @param string       $name     Nombre del campo
-     * @param int          $size     Longitud del campo
-     * @param int          $max      Longitud m?xima de car?cteres del campo
-     * @param string       $value    Valor por defecto
-     * @param bol          $password True muestra un campo password
-     * @param mixed        $maxlength
+     * @param string|array $caption   Texto de la etiqueta
+     * @param string       $name      Nombre del campo
+     * @param int          $size      Longitud del campo
+     * @param int          $maxlength Longitud maxima de car?cteres del campo
+     * @param string       $value     Valor por defecto
+     * @param bool         $password  True muestra un campo password
      * @param mixed        $enabled
      */
     public function __construct($caption, $name = null, $size = 10, $maxlength = 0, $value = '', $password = false, $enabled = true)

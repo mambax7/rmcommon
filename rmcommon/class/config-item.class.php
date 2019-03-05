@@ -29,7 +29,7 @@ class Rmcommon_Config_Item extends RMObject
         $this->ownerName = 'rmcommon';
         $this->ownerType = 'module';
 
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db       = XoopsDatabaseFactory::getDatabaseConnection();
         $this->_dbtable = $this->db->prefix('config');
         $this->setNew();
         $this->initVarsFromTable();
@@ -40,7 +40,7 @@ class Rmcommon_Config_Item extends RMObject
 
         $name = $this->escape($name);
 
-        $sql = "SELECT * FROM $this->_dbtable WHERE `conf_name`='$name' AND `conf_modid`=$mod";
+        $sql    = "SELECT * FROM $this->_dbtable WHERE `conf_name`='$name' AND `conf_modid`=$mod";
         $result = $this->db->query($sql);
         if ($this->db->getRowsNum($result) <= 0) {
             return;
@@ -58,8 +58,7 @@ class Rmcommon_Config_Item extends RMObject
      * Set a config value
      *
      * @param mixed  $value      Value
-     * @param string $type_Value type
-     * @param mixed $type
+     * @param mixed  $type
      */
     public function set_value($value, $type = '')
     {

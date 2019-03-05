@@ -48,9 +48,8 @@ class RMMailer
      * Load all data from configurations and generate the initial clases
      * to manage the email
      *
-     * @param string Content type for message body. It usually text/plain or text/html.
+     * @param string $content_type Content type for message body. It usually text/plain or text/html.
      *      Default is 'text/plain' but can be changed later
-     * @param mixed $content_type
      */
     public function __construct($content_type = 'text/plain')
     {
@@ -132,8 +131,7 @@ class RMMailer
     /**
      * Set the subject line
      *
-     * @param string Subject line
-     * @param mixed $subject
+     * @param string $subject Subject line
      */
     public function set_subject($subject)
     {
@@ -163,10 +161,8 @@ class RMMailer
     /**
      * Adds a part to message body.
      *
-     * @param string Part body content
-     * @param string Content type, default is text/html
-     * @param mixed $content
-     * @param mixed $type
+     * @param string $content Part body content
+     * @param string $type Content type, default is text/html
      */
     public function add_part($content, $type = 'text/html')
     {
@@ -177,18 +173,12 @@ class RMMailer
      * Attach a file
      * Note: Always is preferible get the Message object and work directly with it and with Attachement object
      *
-     * @param string Type of file. Can be 'path' for existent files or 'dynamic' for dynamic content
-     * @param string File path, when type = 'path'. The file must exists. Also can be a URL
-     * @param string Content type for file (mime type)
-     * @param string Set file name in the message
-     * @param mixed Content for dynamic content
-     * @param string File disposition (inline)
-     * @param mixed      $type
-     * @param mixed      $path
-     * @param mixed      $content_type
-     * @param mixed      $name
-     * @param null|mixed $content
-     * @param mixed      $disposition
+     * @param string $type Type of file. Can be 'path' for existent files or 'dynamic' for dynamic content
+     * @param string $path File path, when type = 'path'. The file must exists. Also can be a URL
+     * @param string $content_type Content type for file (mime type)
+     * @param string $name Set file name in the message
+     * @param null|mixed $content Content for dynamic content
+     * @param string $disposition File disposition (inline)
      */
     public function attach_content($type = 'path', $path = '', $content_type = '', $name = '', $content = null, $disposition = '')
     {
@@ -228,14 +218,10 @@ class RMMailer
      * Embed files into message
      * Note: Is better to use the Message object directly
      *
-     * @param string Path or dynamic
-     * @param string|mixed Path to file or file content when type is dynamic
-     * @param string File name
-     * @param string Mime type of image
-     * @param mixed      $type
-     * @param mixed      $file
-     * @param null|mixed $name
-     * @param null|mixed $content_type
+     * @param string $type Path or dynamic
+     * @param string|mixed  $file Path to file or file content when type is dynamic
+     * @param null|string $name File name
+     * @param null|string $content_type Mime type of image
      * @return int
      */
     public function embed($type, $file = '', $name = null, $content_type = null)
@@ -262,8 +248,7 @@ class RMMailer
     /**
      * set all recipients in one go
      *
-     * @param array Recipientes data array('recipient@address.com'=>'Recipient Name','recipent2@address.com',...)
-     * @param mixed $recipients
+     * @param array $recipients Recipientes data array('recipient@address.com'=>'Recipient Name','recipent2@address.com',...)
      * @return \Swift_Mime_SimpleMessage|null
      */
     public function set_to($recipients = [])
@@ -286,10 +271,8 @@ class RMMailer
 
     /**
      * Add single recipient
-     * @param string Email address
-     * @param string Name
-     * @param mixed $mail
-     * @param mixed $name
+     * @param string $mail Email address
+     * @param string $name Name
      * @return \Swift_Mime_SimpleMessage|null
      */
     public function add_to($mail, $name = '')
@@ -303,8 +286,7 @@ class RMMailer
 
     /**
      * This methods are similar to previous but for Cc recipients
-     * @param array Recipientes data array('recipient@address.com'=>'Recipient Name','recipent2@address.com',...)
-     * @param mixed $recipients
+     * @param array $recipients Recipientes data array('recipient@address.com'=>'Recipient Name','recipent2@address.com',...)
      * @return \Swift_Mime_SimpleMessage|null
      */
     public function set_cc($recipients = [])
@@ -327,10 +309,8 @@ class RMMailer
 
     /**
      * Add single recipient
-     * @param string Email address
-     * @param string Name
-     * @param mixed $mail
-     * @param mixed $name
+     * @param string $mail Email address
+     * @param string $name Name
      * @return \Swift_Mime_SimpleMessage|null
      */
     public function add_cc($mail, $name = '')
@@ -369,8 +349,7 @@ class RMMailer
      * Add Users as recipients for message.
      * Users can be passed as object or as ids
      *
-     * @param array Users (ids or objects)
-     * @param mixed $users
+     * @param array $users Users (ids or objects)
      * @param mixed $field
      */
     public function add_users($users, $field = 'to')
@@ -411,8 +390,7 @@ class RMMailer
     /**
      * Add xoops users object to recipients list
      *
-     * @param mixed A xoopsuser object or an array of xoopsuser objects
-     * @param mixed $users
+     * @param mixed $users A xoopsuser object or an array of xoopsuser objects
      * @param mixed $field
      */
     public function add_xoops_users($users, $field = 'to')
@@ -439,8 +417,7 @@ class RMMailer
 
     /**
      * Sets the return path
-     * @param string Email for return path
-     * @param mixed $mail
+     * @param string $mail Email for return path
      */
     public function set_return_path($mail)
     {
@@ -463,10 +440,8 @@ class RMMailer
     /**
      * Assign a template to generate the message body
      *
-     * @param string Path to file
-     * @param string Template type. It can be "old" or ''
-     * @param mixed $file
-     * @param mixed $type
+     * @param string $file Path to file
+     * @param string $type Template type. It can be "old" or ''
      */
     public function template($file, $type = '')
     {

@@ -263,8 +263,7 @@ class RMDb
 
     /**
      * Escape a string for secure use
-     * @param string String to escape
-     * @param mixed $string
+     * @param string $string String to escape
      * @return string Escaped string
      */
     public function escape($string)

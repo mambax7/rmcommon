@@ -81,8 +81,7 @@ class gettext_reader
     /**
      * Reads an array of Integers from the Stream
      *
-     * @param int count How many elements should be read
-     * @param mixed $count
+     * @param int $count count How many elements should be read
      * @return array of Integers
      */
     public function readintarray($count)
@@ -98,10 +97,8 @@ class gettext_reader
     /**
      * Constructor
      *
-     * @param object Reader the StreamReader object
-     * @param bool enable_cache Enable or disable caching of strings (default on)
-     * @param mixed $Reader
-     * @param mixed $enable_cache
+     * @param mixed $Reader Reader the StreamReader object
+     * @param bool $enable_cache Enable or disable caching of strings (default on)
      */
     public function __construct($Reader, $enable_cache = true)
     {
@@ -177,8 +174,7 @@ class gettext_reader
      * Returns a string from the "originals" table
      *
      * @access private
-     * @param int num Offset number of original string
-     * @param mixed $num
+     * @param int $num Offset number of original string
      * @return string Requested string if found, otherwise ''
      */
     public function get_original_string($num)
@@ -198,9 +194,8 @@ class gettext_reader
      * Returns a string from the "translations" table
      *
      * @access private
-     * @param int num Offset number of original string
-     * @param mixed $num
-     * @return string Requested string if found, otherwise ''
+     * @param int $num Offset number of original string
+      * @return string Requested string if found, otherwise ''
      */
     public function get_translation_string($num)
     {
@@ -219,12 +214,9 @@ class gettext_reader
      * Binary search for string
      *
      * @access private
-     * @param string string
-     * @param int start (internally used in recursive function)
-     * @param int end (internally used in recursive function)
-     * @param mixed $string
-     * @param mixed $start
-     * @param mixed $end
+     * @param string $string
+     * @param int    $start (internally used in recursive function)
+     * @param int    $end (internally used in recursive function)
      * @return int string number (offset in originals table)
      */
     public function find_string($string, $start = -1, $end = -1)
@@ -264,8 +256,7 @@ class gettext_reader
      * Translates a string
      *
      * @access public
-     * @param string string to be translated
-     * @param mixed $string
+     * @param string $string string to be translated
      * @return string translated string (or original, if not found)
      */
     public function translate($string)
@@ -365,8 +356,7 @@ class gettext_reader
      * Detects which plural form to take
      *
      * @access private
-     * @param n count
-     * @param mixed $n
+     * @param mixed $n count
      * @return int array index of the right plural form
      */
     public function select_string($n)
@@ -391,13 +381,10 @@ class gettext_reader
      * Plural version of gettext
      *
      * @access public
-     * @param string single
-     * @param string plural
-     * @param string number
-     * @param mixed $single
-     * @param mixed $plural
-     * @param mixed $number
-     * @return translated plural form
+     * @param string $single
+     * @param string $plural
+     * @param string $number
+     * @return string translated plural form
      */
     public function ngettext($single, $plural, $number)
     {

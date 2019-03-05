@@ -13,39 +13,35 @@ class RMPageNav
     private $total_results;
     private $items_page;
     private $current_page;
-    private $steps = 5;
-    private $url = '';
-    private $showing = '';
+    private $steps     = 5;
+    private $url       = '';
+    private $showing   = '';
     private $displayed = false;
-    private $rendered = '';
-    private $template = '';
-    private $start = 0;
+    private $rendered  = '';
+    private $template  = '';
+    private $start     = 0;
 
     /**
      * @desc Constructor
      *
-     * @param int Total results number
-     * @param int Items per page
-     * @param int Current Page
-     * @param int Steps to show when number of pages exceed the specified number
-     * @param mixed $total_results
-     * @param mixed $items_page
-     * @param mixed $current_page
-     * @param mixed $steps
+     * @param int $total_results Total results number
+     * @param int $items_page Items per page
+     * @param int $current_page Current Page
+     * @param int $steps Steps to show when number of pages exceed the specified number
      */
     public function __construct($total_results, $items_page, $current_page, $steps = 5)
     {
         $this->total_results = $total_results;
-        $this->items_page = $items_page;
-        $this->current_page = $current_page;
-        $this->steps = $steps;
+        $this->items_page    = $items_page;
+        $this->current_page  = $current_page;
+        $this->steps         = $steps;
         RMTemplate::get()->add_style('pagenav.css', 'rmcommon');
 
-        $total_pages = ceil($total_results / $items_page);
+        $total_pages  = ceil($total_results / $items_page);
         $current_page = $current_page > $total_pages ? $total_pages : $current_page;
         $current_page = 0 == $current_page ? 1 : $current_page;
 
-        $start = 1;
+        $start       = 1;
         $this->start = $items_page * $current_page - $items_page;
     }
 
@@ -61,7 +57,7 @@ class RMPageNav
     {
         $num = func_num_args();
         if ($num > 0) {
-            $url = func_get_arg(0);
+            $url       = func_get_arg(0);
             $this->url = $url;
         } else {
             return $this->url;
@@ -80,7 +76,7 @@ class RMPageNav
     {
         $num = func_num_args();
         if ($num > 0) {
-            $steps = func_get_arg(0);
+            $steps       = func_get_arg(0);
             $this->steps = $steps;
         } else {
             return $this->steps;
@@ -107,8 +103,7 @@ class RMPageNav
 
     /**
      * Set the template to use with render
-     * @param string Path to template file
-     * @param mixed $path
+     * @param string $path Path to template file
      */
     public function set_template($path)
     {
@@ -119,8 +114,7 @@ class RMPageNav
      * This method render the navigation bar with pages and all information.
      * Also creates the message "Shogin ..." that can be get after.
      *
-     * @param bool INdicates if this method must show the navbar or only render it
-     * @param mixed $caption
+     * @param bool $caption Indicates if this method must show the navbar or only render it
      * @param mixed $showing
      * @return string|echo
      */
@@ -131,13 +125,13 @@ class RMPageNav
             return $this->rendered;
         }
 
-        $total_pages = ceil($this->total_results / $this->items_page);
-        $current_page = $this->current_page > $total_pages ? $total_pages : $this->current_page;
-        $current_page = 0 == $current_page ? 1 : $current_page;
-        $items_page = $this->items_page;
+        $total_pages   = ceil($this->total_results / $this->items_page);
+        $current_page  = $this->current_page > $total_pages ? $total_pages : $this->current_page;
+        $current_page  = 0 == $current_page ? 1 : $current_page;
+        $items_page    = $this->items_page;
         $total_results = $this->total_results;
-        $steps = $this->steps();
-        $url = $this->url;
+        $steps         = $this->steps();
+        $url           = $this->url;
 
         if (1 == $current_page) {
             $first_element = 1;
@@ -145,8 +139,8 @@ class RMPageNav
             $first_element = $total_results > 0 ? (($current_page * $items_page) - ($items_page)) + 1 : 0;
         }
 
-        $last_element = $current_page * $items_page;
-        $last_element = $last_element > $total_results ? $total_results : $last_element;
+        $last_element  = $current_page * $items_page;
+        $last_element  = $last_element > $total_results ? $total_results : $last_element;
         $this->showing = sprintf(__('Showing results <strong>%u</strong> to <strong>%u</strong> from <strong>%u</strong>.', 'rmcommon'), $first_element, $last_element, $total_results);
 
         if ($total_pages <= 1) {
@@ -165,8 +159,8 @@ class RMPageNav
             $start = $current_page - floor($steps / 2);
         }
         //echo "$start>($total_pages - $steps) ? ($total_pages - $steps)+1 : $start;"; die();
-        $start = $start >= ($total_pages - $steps) && 1 != $start ? ($total_pages - $steps) + 1 : $start;
-        $start = $start < 1 ? 1 : $start;
+        $start       = $start >= ($total_pages - $steps) && 1 != $start ? ($total_pages - $steps) + 1 : $start;
+        $start       = $start < 1 ? 1 : $start;
         $this->start = $start;
 
         $end = $start + ($steps - 1);

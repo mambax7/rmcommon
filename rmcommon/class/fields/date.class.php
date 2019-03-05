@@ -12,8 +12,8 @@ global $rmc_config;
 
 class RMFormDate extends RMFormElement
 {
-    private $_date = 0;
-    private $options = 0;
+    private $_date      = 0;
+    private $options    = 0;
     private $year_range = '';
     private $time;
 
@@ -31,12 +31,10 @@ class RMFormDate extends RMFormElement
      * </pre>
      *
      * @param array|string $caption
-     * @param string $name Nombre identificador del campo
-     * @param string $date Fecha en formato 'yyyy-mm-14'
+     * @param string       $name Nombre identificador del campo
+     * @param string       $date Fecha en formato 'yyyy-mm-14'
      * @param string Year range (eg. 2000:2020)
-     * @param int Show time and time format (0 = Hide, 1 = Show date and time, 2 = Show only time)
-     * @param mixed $year_range
-     * @param mixed $time
+     * @param int $time Show time and time format (0 = Hide, 1 = Show date and time, 2 = Show only time)
      */
     public function __construct($caption, $name = '', $date = '', $year_range = '', $time = 0)
     {
@@ -76,7 +74,6 @@ class RMFormDate extends RMFormElement
      * Set options for widget
      * See documentation in http://trentrichardson.com/examples/timepicker/
      * @param string Options in javascript format (eg. showHour: false, showMinute: false)
-     * @param mixed $options
      */
     public function options($options)
     {

@@ -219,7 +219,7 @@ class RMImageResizer
     /**
      * Creamos la im?gen en memoria
      * @param mixed $format
-     * @return object
+     * @return mixed
      */
     private function createImage($format)
     {

@@ -368,10 +368,8 @@ class RMForm extends \Common\Core\Helpers\Attributes
      * generada por la clase. Estas deben llamarse por medio de su id.
      * Mucho cuidado con la utilización de este método pues no se hace nignuna
      * comprobación especial de los parámetros pasados.
-     * @param string Datos extra
-     * @param string Id de la fila. Debe iniciar con row_
-     * @param mixed $extra
-     * @param mixed $id
+     * @param string $extra Datos extra
+     * @param string $id Id de la fila. Debe iniciar con row_
      */
     public function setRowExtras($extra, $id)
     {
@@ -405,7 +403,7 @@ class RMForm extends \Common\Core\Helpers\Attributes
      * @param string Nombre de la variable smarty
      * @param string Plantilla que se utilizará
      * @param bool Incluir javascript
-     * @return string
+     * @return array
      */
     public function renderForTemplate()
     {

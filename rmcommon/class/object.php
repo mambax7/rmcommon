@@ -202,12 +202,10 @@ class RMObject
      * @access public
      * @param string     $key
      * @param int        $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
-     * @param mixed
+     * @param null|mixed $value
      * @param bool       $required  require html form input?
      * @param int        $maxlength for XOBJ_DTYPE_TXTBOX type only
-     * @param string     $option    does this data have any select options?
-     * @param null|mixed $value
-     * @param mixed      $options
+     * @param mixed     $options    does this data have any select options?
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '')
     {
@@ -280,8 +278,7 @@ class RMObject
      * assign values to multiple variables in a batch
      *
      * @access private
-     * @param array $var_array associative array of values to assign
-     * @param mixed $var_arr
+     * @param array|mixed $var_arr associative array of values to assign
      */
     public function assignVars($var_arr)
     {
@@ -353,10 +350,8 @@ class RMObject
     /**
      * returns all variables for the object
      *
-     * @param bool Return formated vars?
-     * @param string Format type (s,e,p,f)
-     * @param mixed $formated
-     * @param mixed $format
+     * @param bool $formated Return formated vars?
+     * @param string $format Format type (s,e,p,f)
      * @return array associative array of key->value pairs
      */
     public function getVars($formated = false, $format = 's')
@@ -694,8 +689,7 @@ class RMObject
     /**
      * add an error
      *
-     * @param string $value error to add
-     * @param mixed  $err_str
+     * @param mixed  $err_str value error to add
      * @access public
      */
     public function setErrors($err_str)
@@ -738,9 +732,8 @@ class RMObject
      * Obtenemos los errores almacenados.
      * Estos pueden obtenerse de dos maneras dependiendo del parmetro $html.
      * false Nos devuelve un array y true nos devuelve una cadena HTML frmateada.
-     * @param bol $html Devolver cadena HTML o array
-     * @return array
-     * @return string
+     * @param bool $html Devolver cadena HTML o array
+     * @return array|string
      */
     public function errors($html = true)
     {
@@ -800,9 +793,8 @@ class RMObject
      * Recuperamos el log de elementos.
      * Si es pasado como parmetro "false" devuelve un array.
      * Si se pasa el valor "true" devuelve HTML
-     * @param bol $ashtml True o False
-     * @return array
-     * @return string
+     * @param bool $ashtml True o False
+     * @return array|string
      */
     public function getLogger($ashtml = true)
     {
@@ -1208,8 +1200,7 @@ class RMObject
 
     /**
      * Escape a string for secure use
-     * @param string String to escape
-     * @param mixed $string
+     * @param string $string String to escape
      * @return string Escaped string
      */
     protected function escape($string)

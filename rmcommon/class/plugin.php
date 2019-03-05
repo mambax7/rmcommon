@@ -13,7 +13,7 @@
  */
 class RMPlugin extends RMObject
 {
-    private $dir = '';
+    private $dir      = '';
     private $settings = [];
 
     // The file used for plugin
@@ -25,7 +25,7 @@ class RMPlugin extends RMObject
 
     public function __construct($id = null)
     {
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db       = XoopsDatabaseFactory::getDatabaseConnection();
         $this->_dbtable = $this->db->prefix('mod_rmcommon_plugins');
         $this->setNew();
         $this->initVarsFromTable();
@@ -56,8 +56,7 @@ class RMPlugin extends RMObject
 
     /**
      * This method must be called before to access the plugin methods
-     * @param string Directory name
-     * @param mixed $dir
+     * @param string $dir Directory name
      * @return bool
      */
     public function load_from_dir($dir)
@@ -195,14 +194,14 @@ class RMPlugin extends RMObject
 
     private function insert_configs()
     {
-        $dir = $this->plugin()->get_info('dir');
+        $dir         = $this->plugin()->get_info('dir');
         $pre_options = $this->plugin->options();
 
         if (empty($pre_options)) {
             return null;
         }
 
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db        = XoopsDatabaseFactory::getDatabaseConnection();
         $c_options = RMFunctions::plugin_settings($dir);
 
         if (empty($c_options)) {
@@ -226,7 +225,7 @@ class RMPlugin extends RMObject
         foreach ($pre_options as $name => $option) {
             if (isset($c_options[$name])) {
                 $option['value'] = $c_options[$name]['value'];
-                $sql = 'UPDATE ' . $db->prefix('mod_rmcommon_settings') . " SET value='$option[value]' WHERE element='$dir' AND type='plugin' AND name='$name'";
+                $sql             = 'UPDATE ' . $db->prefix('mod_rmcommon_settings') . " SET value='$option[value]' WHERE element='$dir' AND type='plugin' AND name='$name'";
                 $db->queryF($sql);
             } else {
                 $sql = 'INSERT INTO ' . $db->prefix('mod_rmcommon_settings') . " (`element`,`name`,`type`,`value`,`valuetype`) VALUES
@@ -252,7 +251,7 @@ class RMPlugin extends RMObject
     public function delete()
     {
         $dir = $this->plugin()->get_info('dir');
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $sql = 'DELETE FROM ' . $db->prefix('mod_rmcommon_settings') . " WHERE element='$dir' AND type='plugin'";
         if (!$db->queryF($sql)) {
             $this->addError($db->error());

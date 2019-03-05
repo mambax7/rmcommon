@@ -46,7 +46,8 @@ class phMagick_transform
 
     /**
      * Flips the image vericaly
-     * @return unknown_type
+     * @param phmagick        $p   phMagick
+     * @return mixed
      */
     public function flipVertical(phmagick $p)
     {
@@ -64,7 +65,8 @@ class phMagick_transform
 
     /**
      * Flips the image horizonaly
-     * @return unknown_type
+     * @param phmagick        $p   phMagick
+     * @return mixed
      */
     public function flipHorizontal(phmagick $p)
     {
@@ -82,9 +84,10 @@ class phMagick_transform
 
     /**
      * Flips the image horizonaly and verticaly
+     * @param phmagick        $p   phMagick
      * @param int $size
      * @param int $transparency
-     * @return unknown_type
+     * @return mixed
      */
     public function reflection(phmagick $p, $size = 60, $transparency = 50)
     {

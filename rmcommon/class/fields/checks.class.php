@@ -37,11 +37,11 @@ class RMFormCheck extends RMFormElement
         if ($this->has('options')) {
             foreach ($caption['options'] as $value => $option) {
                 $this->_options[] = [
-                    'caption' => TextCleaner::getInstance()->clean_disabled_tags($option['caption']),
-                    'value' => TextCleaner::getInstance()->clean_disabled_tags($value),
+                    'caption'  => TextCleaner::getInstance()->clean_disabled_tags($option['caption']),
+                    'value'    => TextCleaner::getInstance()->clean_disabled_tags($value),
                     'selected' => $caption['selected'],
-                    'extra' => $caption['extra'],
-                    'name' => $caption['name'],
+                    'extra'    => $caption['extra'],
+                    'name'     => $caption['name'],
                 ];
             }
         }
@@ -50,17 +50,17 @@ class RMFormCheck extends RMFormElement
     /**
      * Agrega una nueva casilla (checkbox) al elemento.
      * @param string $caption Texto de la casilla
-     * @param string $name Nombre de la casilla
-     * @param mixed $value Valor de la casilla
-     * @param int $state Activada, descativada (1, 0)
+     * @param string $name    Nombre de la casilla
+     * @param mixed  $value   Valor de la casilla
+     * @param int    $state   Activada, descativada (1, 0)
      */
     public function addOption($caption, $name, $value, $state = 0)
     {
-        $rtn = [];
-        $rtn['caption'] = TextCleaner::getInstance()->clean_disabled_tags($caption);
-        $rtn['value'] = TextCleaner::getInstance()->clean_disabled_tags($value);
-        $rtn['selected'] = $state ? 'selected' : '';
-        $rtn['name'] = $name;
+        $rtn              = [];
+        $rtn['caption']   = TextCleaner::getInstance()->clean_disabled_tags($caption);
+        $rtn['value']     = TextCleaner::getInstance()->clean_disabled_tags($value);
+        $rtn['selected']  = $state ? 'selected' : '';
+        $rtn['name']      = $name;
         $this->_options[] = $rtn;
     }
 
@@ -83,7 +83,7 @@ class RMFormCheck extends RMFormElement
 
         $rtn = '';
         if ('inline' == $this->get('display')) {
-            $rtn .= '';
+            $rtn  .= '';
             $cols = 1;
             foreach ($this->_options as $k => $v) {
                 $rtn .= "<label class='checkbox-inline'><input $attributes name='" . $v['name'] . "[]' value='$v[value]' ";
@@ -98,7 +98,7 @@ class RMFormCheck extends RMFormElement
             foreach ($this->_options as $k => $v) {
                 $rtn .= "<div class='checkbox'><label><input $attributes name='$v[name]' value='$v[value]' ";
                 //if ($v['state']==1){
-                //	$rtn .= "checked ";
+                //  $rtn .= "checked ";
                 //}
                 $rtn .= RMHttpRequest::request($this->get('name'), 'string') == $v['value'] ? 'checked ' : ('selected' == $v['selected'] ? 'checked ' : '');
                 $rtn .= "> $v[caption]</label></div>";
@@ -118,13 +118,13 @@ class RMFormRadio extends RMFormElement
 
     /**
      * @param string $caption Texto de la etiqueta.
-     * @param string $name Nombre del campo.
-     * @param int $inline Show inline controls or as list
-     * @param int $type 1 = Tabla, 0 = Lista
-     * @param int $cols Numero de columnas de la tabla
+     * @param string $name    Nombre del campo.
+     * @param int    $inline  Show inline controls or as list
      */
     public function __construct($caption, $name = '', $inline = 0)
     {
+// int    $type    1 = Table, 0 = List
+// int    $cols    Numero de columnas de la tabla
         if (is_array($caption)) {
             parent::__construct($caption);
         } else {
@@ -145,17 +145,17 @@ class RMFormRadio extends RMFormElement
             foreach ($caption['options'] as $value => $option) {
                 if (is_array($option)) {
                     $this->_options[] = [
-                        'caption' => TextCleaner::getInstance()->clean_disabled_tags($option['caption']),
-                        'value' => TextCleaner::getInstance()->clean_disabled_tags($value),
+                        'caption'  => TextCleaner::getInstance()->clean_disabled_tags($option['caption']),
+                        'value'    => TextCleaner::getInstance()->clean_disabled_tags($value),
                         'selected' => $caption['selected'],
-                        'extra' => $caption['extra'],
+                        'extra'    => $caption['extra'],
                     ];
                 } else {
                     $this->_options[] = [
-                        'caption' => TextCleaner::getInstance()->clean_disabled_tags($option),
-                        'value' => TextCleaner::getInstance()->clean_disabled_tags($value),
+                        'caption'  => TextCleaner::getInstance()->clean_disabled_tags($option),
+                        'value'    => TextCleaner::getInstance()->clean_disabled_tags($value),
                         'selected' => '',
-                        'extra' => '',
+                        'extra'    => '',
                     ];
                 }
             }
@@ -165,17 +165,17 @@ class RMFormRadio extends RMFormElement
     /**
      * Agrega una nueva opcion (radio) al elemento
      * @param string $caption Texto de la etiqueta
-     * @param mixed $value valor del elemento
-     * @param int $state 0 Desactivado, 1 Activado
-     * @param mixed $extra
+     * @param mixed  $value   valor del elemento
+     * @param int    $state   0 Desactivado, 1 Activado
+     * @param mixed  $extra
      */
     public function addOption($caption, $value, $state = 0, $extra = '')
     {
-        $rtn = [];
-        $rtn['caption'] = TextCleaner::getInstance()->clean_disabled_tags($caption);
-        $rtn['value'] = TextCleaner::getInstance()->clean_disabled_tags($value);
-        $rtn['selected'] = $state;
-        $rtn['extra'] = $extra;
+        $rtn              = [];
+        $rtn['caption']   = TextCleaner::getInstance()->clean_disabled_tags($caption);
+        $rtn['value']     = TextCleaner::getInstance()->clean_disabled_tags($value);
+        $rtn['selected']  = $state;
+        $rtn['extra']     = $extra;
         $this->_options[] = $rtn;
     }
 
@@ -225,7 +225,7 @@ class RMFormYesNo extends RMFormElement
     /**
      * @param string $caption
      * @param string $name
-     * @param int $value Initial value (0 = No, 1 = S)
+     * @param int    $value Initial value (0 = No, 1 = S)
      */
     public function __construct($caption, $name = '', $value = 0)
     {

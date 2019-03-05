@@ -19,14 +19,10 @@ class RMFtpClient
 
     /**
      * @desc Constructor de la clase
-     * @param string Nombre del servidor al que se conectará
-     * @param int Número de puerto al que se conectará
-     * @param string Nombre de usuario
-     * @param string Contraseña de conexión
-     * @param mixed $server
-     * @param mixed $port
-     * @param mixed $uname
-     * @param mixed $pass
+     * @param string $server Nombre del servidor al que se conectará
+     * @param int $port Número de puerto al que se conectará
+     * @param string $uname Nombre de usuario
+     * @param string $pass Contraseña de conexión
      */
     public function __construct($server, $port = 21, $uname = '', $pass = '')
     {
@@ -54,8 +50,7 @@ class RMFtpClient
 
     /**
      * @desc Activa el modo pasivo
-     * @param bool Activar o desactivar
-     * @param mixed $bool
+     * @param bool $bool Activar o desactivar
      */
     public function pasv($bool = true)
     {
@@ -73,10 +68,8 @@ class RMFtpClient
 
     /**
      * @desc Cambia el directorio actual
-     * @param string Directorio existente en el servidor
+     * @param string $dir Directorio existente en el servidor
      * return bool
-     * @param mixed $dir
-     * @return bool
      */
     public function chdir($dir)
     {
@@ -85,8 +78,7 @@ class RMFtpClient
 
     /**
      * @desc Elimina un archivo del servidor
-     * @param string Ruta existente del archivo
-     * @param mixed $ruta
+     * @param string $ruta Ruta existente del archivo
      * @return bool
      */
     public function delete($ruta)
@@ -96,10 +88,8 @@ class RMFtpClient
 
     /**
      * @desc Establece los permisos de un archivo en el servidor
-     * @param oct Modo del permiso cono un numero octal(Ej. 0644)
-     * @param string Ruta del archivo
-     * @param mixed $mode
-     * @param mixed $ruta
+     * @param mixed $mode Modo del permiso cono un numero octal(Ej. 0644)
+     * @param string $ruta Ruta del archivo
      * @return bool o octal
      */
     public function chmod($mode, $ruta)
@@ -109,14 +99,10 @@ class RMFtpClient
 
     /**
      * @desc Obtiene un archivo desde el servidor FTP y lo almacena localmente
-     * @param string Ruta a un archivo local
-     * @param string Ruta del archivo en el servidor (debe existir)
-     * @param constant Modo de tansferencia (FTP_ASCII o FTP_BINARY
-     * @param int Desde donde se empieza a descargar el archivo
-     * @param mixed $local
-     * @param mixed $remote
-     * @param mixed $mode
-     * @param mixed $pos
+     * @param string $local Ruta a un archivo local
+     * @param string $remote Ruta del archivo en el servidor (debe existir)
+     * @param string $mode Modo de tansferencia (FTP_ASCII o FTP_BINARY
+     * @param int $pos Desde donde se empieza a descargar el archivo
      * @return bool
      */
     public function get($local, $remote, $mode = FTP_ASCII, $pos = 0)
@@ -126,8 +112,7 @@ class RMFtpClient
 
     /**
      * @desc Devuelve la fecha de modificación de un archivo en el servidor
-     * @param string Ruta válida del archivo
-     * @param mixed $ruta
+     * @param string $ruta Ruta válida del archivo
      * @return int
      */
     public function mtime($ruta)
@@ -137,9 +122,9 @@ class RMFtpClient
 
     /**
      * @desc Crea un directorio en el servidor
-     * @param string Directorio
-     * @param mixed $dir
-     * @return string or false
+     * @param string $dir Directorio
+     * @param mixed
+     * @return string|false
      */
     public function mkdir($dir)
     {
@@ -148,9 +133,8 @@ class RMFtpClient
 
     /**
      * @desc Lista de archivos
-     * @param string Directorio
-     * @param mixed $dir
-     * @return array or false
+     * @param string $dir Directorio
+     * @return array|false
      */
     public function nlist($dir)
     {
@@ -159,16 +143,11 @@ class RMFtpClient
 
     /**
      * @desc Carga un archivo al servidor FTP
-     * @param string Archivo remoto
-     * @param string Archivo local
-     * @param constant Modo de transferencia (FTP_ASCII o FTP_BINARY)
-     * @param int Posición de inicio
+     * @param string $remote Archivo remoto
+     * @param string $local Archivo local
+     * @param string $mode Modo de transferencia (FTP_ASCII o FTP_BINARY)
+     * @param int $pos Posición de inicio
      * return bool
-     * @param mixed $remote
-     * @param mixed $local
-     * @param mixed $mode
-     * @param mixed $pos
-     * @return bool
      */
     public function put($remote, $local, $mode = FTP_ASCII, $pos = 0)
     {
@@ -177,10 +156,8 @@ class RMFtpClient
 
     /**
      * @desc Obtiene la lista de directorios archivos
-     * @param string Directorio
-     * @param bool Modo recursivo
-     * @param mixed $dir
-     * @param mixed $mode
+     * @param string $dir Directorio
+     * @param bool $mode Modo recursivo
      * @return array
      */
     public function rawlist($dir, $mode = false)
@@ -190,10 +167,8 @@ class RMFtpClient
 
     /**
      * @desc Renombra un archivo o un directorio
-     * @param string Nombre actual
-     * @param string Nuevo nombre
-     * @param mixed $old
-     * @param mixed $new
+     * @param string $old Nombre actual
+     * @param string $new Nuevo nombre
      * @return bool
      */
     public function rename($old, $new)
@@ -203,8 +178,7 @@ class RMFtpClient
 
     /**
      * @desc Elimina un directorio
-     * @param string ruta al directorio
-     * @param mixed $dir
+     * @param string $dir ruta al directorio
      * @return bool
      */
     public function rmdir($dir)
@@ -214,8 +188,7 @@ class RMFtpClient
 
     /**
      * @desc Obtiene el tamaño de un archivo remoto
-     * @param string Ruta del archivo
-     * @param mixed $file
+     * @param string $file Ruta del archivo
      * @return int
      */
     public function size($file)
@@ -230,8 +203,7 @@ class RMFtpClient
 
     /**
      * @desc Permite saber si un directorio existe
-     * @param string Directorio a comprobar
-     * @param mixed $dir
+     * @param string $dir Directorio a comprobar
      * @return bool
      */
     public function isDir($dir)

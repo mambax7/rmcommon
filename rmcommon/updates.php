@@ -157,7 +157,6 @@ class UpdateManager
 
     /**
      * Process local query to send to remote server
-     * @param $action
      */
     public function processQuery()
     {

@@ -14,13 +14,13 @@
  */
 class RMFormButton extends RMFormElement
 {
-    private $_type = 'submit';
+    private $_type  = 'submit';
     private $_value = '';
 
     /**
      * @param string $caption Nombre del elemento de formulario
-     * @param string $value Texto del Bot?n (Ej. Enviar, Cancelar)
-     * @param string $type Tipo de bot?n (Ej. submit, button). Por defecto el valor es 'submit'
+     * @param string $value   Texto del Bot?n (Ej. Enviar, Cancelar)
+     * @param string $type    Tipo de bot?n (Ej. submit, button). Por defecto el valor es 'submit'
      */
     public function __construct($caption, $value = '', $type = 'submit')
     {
@@ -83,7 +83,7 @@ class RMFormButton extends RMFormElement
     public function render()
     {
         $attributes = $this->renderAttributeString();
-        $ret = "<button $attributes>" . $this->get('caption') . '</button>';
+        $ret        = "<button $attributes>" . $this->get('caption') . '</button>';
 
         return $ret;
     }
@@ -95,12 +95,12 @@ class RMFormButton extends RMFormElement
  */
 class RMFormButtonGroup extends RMFormElement
 {
-    private $sep = '';
+    private $sep     = '';
     private $buttons = [];
-    private $ok = '';
+    private $ok      = '';
 
     /**
-     * @param string $caption Texto de la celda
+     * @param string $caption   Texto de la celda
      * @param string $separator Separador de botones. Puede ser cualquier car?cter (HTML)
      */
     public function __construct($caption = '&nbsp;', $separator = ' ')
@@ -113,10 +113,10 @@ class RMFormButtonGroup extends RMFormElement
      * Adds a new button to group
      *
      * @param string|object $name
-     * @param $value
-     * @param string $type
-     * @param string $extra
-     * @param bool $ok
+     * @param               $value
+     * @param string        $type
+     * @param string        $extra
+     * @param bool          $ok
      * @return bool
      */
     public function addButton($name, $value = '', $type = 'button', $extra = '', $ok = false)
@@ -127,12 +127,12 @@ class RMFormButtonGroup extends RMFormElement
             return true;
         }
 
-        $index = count($this->buttons);
+        $index                 = count($this->buttons);
         $this->buttons[$index] = new RMFormButton([
-            'id' => $name,
-            'caption' => $value,
-            'type' => $type,
-        ]);
+                                                      'id'      => $name,
+                                                      'caption' => $value,
+                                                      'type'    => $type,
+                                                  ]);
         if ('' != trim($extra)) {
             $this->buttons[$index]->setExtra($extra);
         }
@@ -147,7 +147,7 @@ class RMFormButtonGroup extends RMFormElement
 
     /**
      * Obtiene el array con los botones del grupo
-     * @return arrar Array de elementos EXMButton
+     * @return array Array de elementos EXMButton
      */
     public function getButtons()
     {

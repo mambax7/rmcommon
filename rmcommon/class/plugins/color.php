@@ -54,10 +54,9 @@ class phMagick_color
     /**
      *  Brightens an image, defualt: 50%
      *
-     * @param string  $imageFile  - Physical path of the umage file
-     * @param string  $newFile    - Physical path of the generated image
-     * @param int     $alphaValue - 100: white , 0: original color (no change)
-     * @return bool - True: success
+     * @param phmagick $p          phMagick
+     * @param int      $alphaValue - 100: white , 0: original color (no change)
+     * @return bool|phmagick - True: success
      */
     public function brighten(phmagick $p, $alphaValue = 50)
     {
@@ -82,6 +81,7 @@ class phMagick_color
 
     /**
      * Convert's the image to grayscale
+     * @param phmagick $p phMagick
      * @param int $enhance
      * @return \phmagick
      */
@@ -114,6 +114,7 @@ class phMagick_color
 
     /**
      * Inverts the image colors
+     * @param phmagick $p phMagick
      */
     public function invertColors(phmagick $p)
     {

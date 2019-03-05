@@ -227,10 +227,8 @@ class HeliumHelper
 
     /**
      * Get the icon for preferences categories
-     * @param string Original image path
-     * @param string Data type to return
-     * @param mixed $image
-     * @param mixed $data
+     * @param string $image Original image path
+     * @param string $data Data type to return
      * @return string with required data
      */
     public function getPreferenceData($image, $data)

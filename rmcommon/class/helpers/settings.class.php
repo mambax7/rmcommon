@@ -14,7 +14,7 @@
  */
 class RMSettings
 {
-    private static $plugin_settings = [];
+    private static $plugin_settings  = [];
     private static $modules_settings = [];
 
     /**
@@ -31,7 +31,7 @@ class RMSettings
         if (!isset($cuSettings)) {
             $cuSettings = new stdClass();
 
-            $db = XoopsDatabaseFactory::getDatabaseConnection();
+            $db  = XoopsDatabaseFactory::getDatabaseConnection();
             $sql = 'SELECT mid FROM ' . $db->prefix('modules') . " WHERE dirname='rmcommon'";
             list($id) = $db->fetchRow($db->query($sql));
 
@@ -39,7 +39,7 @@ class RMSettings
             require_once XOOPS_ROOT_PATH . '/kernel/configitem.php';
             require_once XOOPS_ROOT_PATH . '/class/criteria.php';
             require_once XOOPS_ROOT_PATH . '/class/module.textsanitizer.php';
-            $ret = [];
+            $ret    = [];
             $result = $db->query('SELECT * FROM ' . $db->prefix('config') . " WHERE conf_modid='$id'");
 
             while (false !== ($row = $db->fetchArray($result))) {
@@ -63,8 +63,8 @@ class RMSettings
      * Retrieves the settings for a given plugin
      *
      * @param string $dir Plugin's directory
-     * @param bool $values
-     * @return array
+     * @param bool   $values
+     * @return null|array
      */
     public static function plugin_settings($dir, $values = false)
     {
@@ -73,8 +73,8 @@ class RMSettings
         }
 
         if (!isset(self::$plugin_settings[$dir])) {
-            $db = XoopsDatabaseFactory::getDatabaseConnection();
-            $sql = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_settings') . " WHERE element='$dir'";
+            $db     = XoopsDatabaseFactory::getDatabaseConnection();
+            $sql    = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_settings') . " WHERE element='$dir'";
             $result = $db->query($sql);
             if ($db->getRowsNum($result) <= 0) {
                 return null;
@@ -84,7 +84,7 @@ class RMSettings
                 $configs[$row['name']] = $row;
             }
 
-            $configs = self::option_value_output($configs);
+            $configs                     = self::option_value_output($configs);
             self::$plugin_settings[$dir] = $configs;
         }
 
@@ -136,7 +136,7 @@ class RMSettings
      * </pre>
      *
      * @param string $directory Directory name where module resides in
-     * @param string $option Name of the option to retrieve (if any)
+     * @param string $option    Name of the option to retrieve (if any)
      * @return mixed
      */
     public static function module_settings($directory, $option = '')
@@ -161,10 +161,10 @@ class RMSettings
             return (object)$xoopsModuleConfig;
         }
         $moduleHandler = xoops_getHandler('module');
-        $module = $moduleHandler->getByDirname($directory);
+        $module        = $moduleHandler->getByDirname($directory);
         $configHandler = xoops_getHandler('config');
         if ($module) {
-            $moduleConfig = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
+            $moduleConfig                       = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
             self::$modules_settings[$directory] = $moduleConfig;
 
             if ('' != $option && isset($moduleConfig[$option])) {
@@ -189,7 +189,7 @@ class RMSettings
             $mod = $xoopsModule;
         } else {
             $moduleHandler = xoops_getHandler('module');
-            $mod = $moduleHandler->getByDirname($directory);
+            $mod           = $moduleHandler->getByDirname($directory);
         }
 
         $item = new Rmcommon_Config_Item($option, $mod->getVar('mid'));
@@ -242,10 +242,10 @@ class RMSettings
                 }
                 break;
             case 'select_multi':
-                $ele = new RMFormSelect($field->caption, $field->name, 1, [$field->value]);
+                $ele     = new RMFormSelect($field->caption, $field->name, 1, [$field->value]);
                 $options = $field->options;
                 foreach ($options as $value => $caption) {
-                    $value = defined($value) ? constant($value) : $value;
+                    $value   = defined($value) ? constant($value) : $value;
                     $caption = defined($caption) ? constant($caption) : $caption;
                     $ele->addOption($value, $caption);
                 }
@@ -254,27 +254,27 @@ class RMSettings
                 $ele = new RMFormYesNo($field->caption, $field->name, $field->value);
                 break;
             case 'radio':
-                $ele = new RMFormRadio([
-                    'caption' => $field->caption,
-                    'display' => 'list',
-                    'name' => $field->name,
-                ]);
+                $ele     = new RMFormRadio([
+                                               'caption' => $field->caption,
+                                               'display' => 'list',
+                                               'name'    => $field->name,
+                                           ]);
                 $options = $field->options;
                 foreach ($options as $value => $caption) {
-                    $value = defined($value) ? constant($value) : $value;
+                    $value   = defined($value) ? constant($value) : $value;
                     $caption = defined($caption) ? constant($caption) : $caption;
                     $ele->addOption($caption, $value, $value == $field->value ? 'selected' : '');
                 }
                 break;
             case 'checkbox':
-                $ele = new RMFormCheck([
-                    'caption' => $field->caption,
-                    'display' => 'inline',
-                    'name' => $field->name . ('array' == $field->type ? '[]' : ''),
-                ]);
+                $ele     = new RMFormCheck([
+                                               'caption' => $field->caption,
+                                               'display' => 'inline',
+                                               'name'    => $field->name . ('array' == $field->type ? '[]' : ''),
+                                           ]);
                 $options = $field->options;
                 foreach ($options as $value => $caption) {
-                    $value = defined($value) ? constant($value) : $value;
+                    $value   = defined($value) ? constant($value) : $value;
                     $caption = defined($caption) ? constant($caption) : $caption;
 
                     if ('array' == $field->type) {
@@ -299,7 +299,7 @@ class RMSettings
                 $ele = new RMFormSelect($field->caption, $field->name, 0, [$field->value]);
 
                 $tplsetHandler = xoops_getHandler('tplset');
-                $tplsetlist = $tplsetHandler->getList();
+                $tplsetlist    = $tplsetHandler->getList();
                 asort($tplsetlist);
                 foreach ($tplsetlist as $key => $name) {
                     $ele->addOption($key, $name);
@@ -319,7 +319,7 @@ class RMSettings
             case 'language':
             case 'language_multi':
                 $langs = XoopsLists::getLangList();
-                $ele = new RMFormSelect($field->caption, $field->name, 'language_multi' == $field->field ? 1 : 0, $field->value);
+                $ele   = new RMFormSelect($field->caption, $field->name, 'language_multi' == $field->field ? 1 : 0, $field->value);
                 foreach ($langs as $caption => $value) {
                     $ele->addOption($value, $caption);
                 }
@@ -331,11 +331,11 @@ class RMSettings
                 $ele = new RMFormLanguageField($field->caption, $field->name, 'cu-language-multi' == $field->field ? 1 : 0, 0, [$field->value]);
                 break;
             case 'startpage':
-                $ele = new RMFormSelect($field->caption, $field->name, 0, [$field->value]);
+                $ele           = new RMFormSelect($field->caption, $field->name, 0, [$field->value]);
                 $moduleHandler = xoops_getHandler('module');
-                $criteria = new CriteriaCompo(new Criteria('hasmain', 1));
+                $criteria      = new CriteriaCompo(new Criteria('hasmain', 1));
                 $criteria->add(new Criteria('isactive', 1));
-                $moduleslist = $moduleHandler->getList($criteria, true);
+                $moduleslist       = $moduleHandler->getList($criteria, true);
                 $moduleslist['--'] = _MD_AM_NONE;
                 $ele->addOptionsArray($moduleslist);
 
@@ -356,17 +356,17 @@ class RMSettings
                 $ele = new RMFormSelect($field->caption, $field->name, 0, $field->value);
 
                 $ele->addOptionArray([
-                    '0' => __('No cache', 'rmcommon'),
-                    '30' => sprintf(__('%u seconds', 'rmcommon'), 30),
-                    '60' => __('1 minute', 'rmcommon'),
-                    '300' => sprintf(__('%u minutes', 'rmcommon'), 5),
-                    '1800' => sprintf(__('%u minutes', 'rmcommon'), 30),
-                    '3600' => __('One hour', 'rmcommon'),
-                    '18000' => sprintf(__('%u hours', 'rmcommon'), 5),
-                    '86400' => __('One day', 'rmcommon'),
-                    '259200' => sprintf(__('%u days', 'rmcommon'), 3),
-                    '604800' => __('One week', 'rmcommon'),
-                ]);
+                                         '0'      => __('No cache', 'rmcommon'),
+                                         '30'     => sprintf(__('%u seconds', 'rmcommon'), 30),
+                                         '60'     => __('1 minute', 'rmcommon'),
+                                         '300'    => sprintf(__('%u minutes', 'rmcommon'), 5),
+                                         '1800'   => sprintf(__('%u minutes', 'rmcommon'), 30),
+                                         '3600'   => __('One hour', 'rmcommon'),
+                                         '18000'  => sprintf(__('%u hours', 'rmcommon'), 5),
+                                         '86400'  => __('One day', 'rmcommon'),
+                                         '259200' => sprintf(__('%u days', 'rmcommon'), 3),
+                                         '604800' => __('One week', 'rmcommon'),
+                                     ]);
                 break;
             case 'password':
                 $ele = new RMFormText($field->caption, $field->name, 50, 255, $field->value, true);

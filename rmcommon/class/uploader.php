@@ -15,19 +15,16 @@ class RMFileUploader extends XoopsMediaUploader
     /**
      * Generate the uploader object
      *
-     * @param string $dir
-     * @param mixed $maxsize
-     * @param mixed $allowedtypes
      * @param mixed $uploadDir
      * @param mixed $maxFileSize
-     * @param mixed $allowed_exts
-     * @return RMFileUploader
+     * @param mixed  $allowed_exts
+     * @return string RMFileUploader
      */
     public function __construct($uploadDir, $maxFileSize, $allowed_exts = [])
     {
         //$this->XoopsMediaUploader($dir, $allowedtypes, $maxsize);
         $this->extensionToMime = include $GLOBALS['xoops']->path('include/mimetypes.inc.php');
-        $ev = RMEvents::get();
+        $ev                    = RMEvents::get();
         $this->extensionToMime = $ev->run_event('rmcommon.get.mime.types', $this->extensionToMime);
         if (!is_array($this->extensionToMime)) {
             $this->extensionToMime = [];
@@ -40,7 +37,7 @@ class RMFileUploader extends XoopsMediaUploader
             }
         }
 
-        $this->uploadDir = $uploadDir;
+        $this->uploadDir   = $uploadDir;
         $this->maxFileSize = (int)$maxFileSize;
         if (isset($maxWidth)) {
             $this->maxWidth = (int)$maxWidth;
@@ -72,9 +69,9 @@ class RMFileUploader extends XoopsMediaUploader
             $this->savedFileName = mb_strtolower($this->mediaName);
         }
 
-        $fdata = pathinfo($this->savedFileName);
+        $fdata               = pathinfo($this->savedFileName);
         $this->savedFileName = TextCleaner::sweetstring($fdata['filename']) . ('' != $fdata['extension'] ? '.' . $fdata['extension'] : '');
-        $fdata = pathinfo($this->savedFileName);
+        $fdata               = pathinfo($this->savedFileName);
 
         if (file_exists($this->uploadDir . '/' . $this->savedFileName)) {
             $num = 1;
@@ -94,7 +91,7 @@ class RMFileUploader extends XoopsMediaUploader
         $ext = mb_strtolower(mb_substr(mb_strrchr($this->savedDestination, '.'), 1));
         if (in_array($ext, $this->imageExtensions, true)) {
             $info = @getimagesize($this->savedDestination);
-            if (false === $info || $this->imageExtensions[(int) $info[2]] != $ext) {
+            if (false === $info || $this->imageExtensions[(int)$info[2]] != $ext) {
                 $this->setErrors(_ER_UP_SUSPICIOUSREFUSED);
                 @unlink($this->savedDestination);
 
