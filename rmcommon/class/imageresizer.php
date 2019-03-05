@@ -400,7 +400,9 @@ class RMImageResizer
 
         $target_file = XOOPS_UPLOAD_PATH . '/' . $params->target;
         if (!is_dir($target_file)) {
-            mkdir($target_file, 0777);
+            if (!mkdir($target_file, 0777) && !is_dir($target_file)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $target_file));
+            }
         }
 
         $target_file .= '/' . $file_info['filename'] . '-' . $params->width . '.' . $params->height . '.' . $file_info['extension'];

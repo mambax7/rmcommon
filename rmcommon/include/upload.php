@@ -59,17 +59,23 @@ if (!$cat->user_allowed_toupload($xoopsUser)) {
 // Cargamos la imágen
 $updir = XOOPS_UPLOAD_PATH . '/' . date('Y', time());
 if (!file_exists($updir)) {
-    mkdir($updir);
+    if (!mkdir($updir) && !is_dir($updir)) {
+        throw new \RuntimeException(sprintf('Directory "%s" was not created', $updir));
+    }
     chmod($updir, octdec('0777'));
 }
 $updir .= '/' . date('m', time());
 if (!file_exists($updir)) {
-    mkdir($updir);
+    if (!mkdir($updir) && !is_dir($updir)) {
+        throw new \RuntimeException(sprintf('Directory "%s" was not created', $updir));
+    }
     chmod($updir, octdec('0777'));
 }
 
 if (!file_exists($updir . '/sizes')) {
-    mkdir($updir . '/sizes');
+    if (!mkdir($concurrentDirectory = $updir . '/sizes') && !is_dir($concurrentDirectory)) {
+        throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+    }
     chmod($updir . '/sizes', octdec('0777'));
 }
 

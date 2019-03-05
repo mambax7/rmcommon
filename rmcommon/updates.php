@@ -264,7 +264,9 @@ function dt_download_file($url, $code, $siteID, $dir, $type)
     //jsonReturn($response['data']['url']);
 
     if (!is_dir(XOOPS_CACHE_PATH . '/updates/')) {
-        mkdir(XOOPS_CACHE_PATH . '/updates/', 511);
+        if (!mkdir($concurrentDirectory = XOOPS_CACHE_PATH . '/updates/', 511) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+        }
     }
 
     $pos = mb_strpos($url, '?');
@@ -527,7 +529,9 @@ function download_for_later()
     }
 
     if (!is_dir(XOOPS_CACHE_PATH . '/updates/')) {
-        mkdir(XOOPS_CACHE_PATH . '/updates/', 511);
+        if (!mkdir($concurrentDirectory = XOOPS_CACHE_PATH . '/updates/', 511) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+        }
     }
 
     if (!file_put_contents(XOOPS_CACHE_PATH . '/updates/' . $type . '-' . $dir . '.zip', file_get_contents($response['data']['url']))) {
