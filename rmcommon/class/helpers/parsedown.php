@@ -1210,7 +1210,7 @@ class RMParsedown
             return;
         }
 
-        if (preg_match('/\bhttps?:[\/]{2}[^\s<]+\b\/*/ui', $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
+        if (preg_match('^/\bhttps?:[\/]{2}[^\s<]+\b\/*/ui', $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
             $Inline = [
                 'extent'   => mb_strlen($matches[0][0]),
                 'position' => $matches[0][1],

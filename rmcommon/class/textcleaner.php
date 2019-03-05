@@ -217,7 +217,7 @@ class TextCleaner
         if (false === mb_strpos($url, ':')
             && '/' != mb_substr($url, 0, 1)
             && '#' != mb_substr($url, 0, 1)
-            && !preg_match('/^[a-z0-9-]+?\.php/i', $url)) {
+            && !preg_match('/^[a-z0-9-]+?\.php$/i', $url)) {
             $url = 'http://' . $url;
         }
 

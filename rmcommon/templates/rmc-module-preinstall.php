@@ -62,7 +62,7 @@
                         <td><strong><?php _e('Help:', 'rmcommon'); ?></strong></td>
                         <td colspan="2">
                             <?php if ('' != $module->getInfo('help')): ?>
-                                <a href="<?php echo preg_match('/http:|https:/is', $module->getInfo('help')) ? $module->getInfo('help') : XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('help'); ?>" target="_blank"><?php _e('Click here',
+                                <a href="<?php echo preg_match('^/http:|https:/is', $module->getInfo('help')) ? $module->getInfo('help') : XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('help'); ?>" target="_blank"><?php _e('Click here',
                                                                                                                                                                                                                                                                'rmcommon'); ?></a><?php endif; ?></td>
                     </tr>
                 </table>
