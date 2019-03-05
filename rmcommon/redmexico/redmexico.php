@@ -33,7 +33,7 @@ if ($xoopsModule && ($xoopsModule->getInfo('rmnative') || !$rmc_config['gui_disa
     } else {
         class XoopsGuiRedmexicoShim extends XoopsSystemGui
         {
-            public function validate()
+            public static function validate()
             {
                 return true;
             }

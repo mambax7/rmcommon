@@ -41,7 +41,7 @@ class UpdateManager
     {
         global $common;
 
-        $action = $common->httpRequest()::request('action', 'string', '');
+        $action = $common->httpRequest()->request('action', 'string', '');
 
         switch ($action) {
             case 'ajax-updates':
@@ -133,7 +133,7 @@ class UpdateManager
 
         $xoopsLogger->activated = false;
 
-        $url = $common->httpRequest()::get('url', 'string', '');
+        $url = $common->httpRequest()->get('url', 'string', '');
 
         if ('' == $url) {
             jsonReturn(__('Invalid parameters!', 'rmcommon'));
@@ -165,15 +165,15 @@ class UpdateManager
         $common->ajax()->prepare();
 
         // URL is mandatory
-        $url = $common->httpRequest()::post('url', 'string', '');
+        $url = $common->httpRequest()->post('url', 'string', '');
         $url = str_replace('&amp;', '&', $url);
         // "remote" param is mandatory
-        $action = $common->httpRequest()::post('remote', 'string', '');
+        $action = $common->httpRequest()->post('remote', 'string', '');
         // Query can contain a received server data
-        $api    = $common->httpRequest()::post('api', 'integer', 0);
-        $serial = $common->httpRequest()::post('serial', 'integer', 0);
+        $api    = $common->httpRequest()->post('api', 'integer', 0);
+        $serial = $common->httpRequest()->post('serial', 'integer', 0);
         // Data for login
-        $credentials = $common->httpRequest()::post('credentials', 'string', '');
+        $credentials = $common->httpRequest()->post('credentials', 'string', '');
 
         if ('' == $url) {
             $common->ajax()->notifyError(__('Provided update URL is not valid!', 'rmcommon'));
@@ -216,7 +216,7 @@ class UpdateManager
         $siteID   = urlencode(md5(crypt(XOOPS_LICENSE_KEY . XOOPS_URL, $common->settings->secretkey)));
         $query[1] .= '&site=' . $siteID;
 
-        $response = json_decode($common->httpRequest()::load_url($query[0], $query[1], true), true);
+        $response = json_decode($common->httpRequest()->load_url($query[0], $query[1], true), true);
 
         $type    = 0;
         $message = __('Response from server', 'rmcommon');
@@ -301,7 +301,7 @@ function dt_download_file($url, $code, $siteID, $dir, $type)
 
     $source = XOOPS_CACHE_PATH . '/updates/' . $type . '-' . $dir;
     if (is_dir($source)) {
-        $common->utilities()::delete_directory($source);
+        $common->utilities()->delete_directory($source);
     }
 
     $zip->extractTo($source);
@@ -357,7 +357,7 @@ function dt_download_file($url, $code, $siteID, $dir, $type)
 
         RMUtilities::delete_directory($source);
     } else {
-        $ftpdata = base64_decode($common->httpRequest()::post('ftp', 'string', ''), true);
+        $ftpdata = base64_decode($common->httpRequest()->post('ftp', 'string', ''), true);
         if ('' == $ftpdata) {
             $common->ajax()->notifyError(__('FTP configuration has not been specified and directory %s could not be written', 'rmcommon'));
         }

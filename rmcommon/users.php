@@ -624,10 +624,10 @@ function delete_users()
     $query = $common->httpRequest()->post('query', 'string', '');
     $query = urldecode($query);
 
-    $uid = $common->httpRequest()::post('ids', 'array', []);
+    $uid = $common->httpRequest()->post('ids', 'array', []);
 
     if (empty($uid)) {
-        $common->uris()::redirect_with_message(__('Select at leas one user to delete', 'rmcommon'), 'users.php?' . $query, RMMSG_INFO);
+        $common->uris()->redirect_with_message(__('Select at leas one user to delete', 'rmcommon'), 'users.php?' . $query, RMMSG_INFO);
     }
 
     $memberHandler = xoops_getHandler('member', 'system');
@@ -650,10 +650,10 @@ function delete_users()
     }
 
     if ('' == $errors) {
-        $common->uris()::redirect_with_message(__('Users deleted successfully!', 'rmcommon'), 'users.php?' . $query, RMMSG_SUCCESS);
+        $common->uris()->redirect_with_message(__('Users deleted successfully!', 'rmcommon'), 'users.php?' . $query, RMMSG_SUCCESS);
     }
 
-    $common->uris()::redirect_with_message(__('There was errors while trying to delete users:', 'rmcommon') . '<br>' . $errors, 'users.php?' . $query, RMMSG_WARN);
+    $common->uris()->redirect_with_message(__('There was errors while trying to delete users:', 'rmcommon') . '<br>' . $errors, 'users.php?' . $query, RMMSG_WARN);
 }
 
 // get the action

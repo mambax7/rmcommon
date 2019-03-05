@@ -89,7 +89,7 @@ function show_group_form()
     }
 
     ob_start();
-    include RMTemplate::getInstance()::path('rmc-groups-form.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->path('rmc-groups-form.php', 'module', 'rmcommon');
     $content = ob_get_clean();
 
     $common->ajax()->response($group->isNew() ? __('Create new group', 'rmcommon') : sprintf(__('Edit group "%s"', 'rmcommon'), $group->getVar('name')), 0, 1, [
