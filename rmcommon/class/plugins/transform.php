@@ -16,6 +16,7 @@
     +--------------------------------------------------------------------------------------------+
 
 */
+
 /**
  * phMagick - Image transformation functions
  *
@@ -40,7 +41,7 @@ class phMagick_transform
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
@@ -58,7 +59,7 @@ class phMagick_transform
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
@@ -76,13 +77,13 @@ class phMagick_transform
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
      * Flips the image horizonaly and verticaly
-     * @param mixed $size
-     * @param mixed $transparency
+     * @param int $size
+     * @param int $transparency
      * @return unknown_type
      */
     public function reflection(phmagick $p, $size = 60, $transparency = 50)
@@ -138,6 +139,6 @@ class phMagick_transform
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 }

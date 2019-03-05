@@ -10,20 +10,19 @@
 
 class RMFormLanguageField extends RMFormElement
 {
-    private $multi = 0;
-    private $type = 0;
+    private $multi    = 0;
+    private $type     = 0;
     private $selected = [];
-    private $cols = 2;
+    private $cols     = 2;
 
     /**
      * Constructor
-     * @param string $caption
-     * @param string $name Nombre del campo
-     * @param int $multi Selecciona multiple activada o desactivada
-     * @param int $type 0 = Select, 1 = Tabla
-     * @param $selected Valor seleccionado por defecto
-     * @param array $selected Grupo de vlores seleccionado por defecto
-     * @param int $cols Numero de columnas para la tabla o filas para un campo select multi
+     * @param string       $caption
+     * @param string       $name     Field Name
+     * @param int          $multi    Select multiple activated or deactivated
+     * @param int          $type     0 = Select, 1 = Table
+     * @param null|array   $selected  Group of Values selected by default
+     * @param int          $cols     Number of columns for the table or rows for a multi select field
      */
     public function __construct($caption, $name, $multi = 0, $type = 0, $selected = null, $cols = 2)
     {
@@ -80,8 +79,8 @@ class RMFormLanguageField extends RMFormElement
 
     public function render()
     {
-        $files = XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH . '/modules/rmcommon/lang', '');
-        $langs = [];
+        $files          = XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH . '/modules/rmcommon/lang', '');
+        $langs          = [];
         $langs['en_US'] = 'en';
         foreach ($files as $file => $v) {
             if ('.mo' != mb_substr($file, -3)) {
@@ -91,12 +90,12 @@ class RMFormLanguageField extends RMFormElement
             $langs[mb_substr($file, 0, -3)] = mb_substr($file, 0, -3);
         }
 
-        $type = $this->get('type');
+        $type     = $this->get('type');
         $selected = $this->get('selected');
 
         if ('radio' == $type || 'checkbox' == $type) {
             $rtn = '<div class="' . $type . '"><ul class="rmoptions_container">';
-            $i = 1;
+            $i   = 1;
 
             if ('checkbox' == $type) {
                 $this->set('name', $this->get('name') . '[]');
@@ -111,7 +110,7 @@ class RMFormLanguageField extends RMFormElement
         } else {
             $this->setIfNotSet('class', 'form-control');
             $attributes = $this->renderAttributeString();
-            $rtn = "<select $attributes>";
+            $rtn        = "<select $attributes>";
             foreach ($langs as $k) {
                 $rtn .= "<option value='$k'" . (is_array($selected) ? (in_array($k, $selected, true) ? " selected='selected'" : '') : '') . ">$k</option>";
             }

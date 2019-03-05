@@ -33,8 +33,8 @@ class phMagick_text
     /**
      * Draws an image with the submited string, usefull for water marks
      *
-     * @param $text   String - the text to draw an image from
-     * @param $format phMagickTextObject - the text configuration
+     * @param string             $text   - the text to draw an image from
+     * @param null|phMagickTextObject $format - the text configuration
      * @return \phmagick
      */
     public function fromString(phmagick $p, $text = '', phMagickTextObject $format = null)

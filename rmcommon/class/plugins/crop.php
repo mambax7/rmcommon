@@ -16,6 +16,7 @@
     +--------------------------------------------------------------------------------------------+
 
 */
+
 /**
  * phMagick - Crop function
  *
@@ -30,11 +31,11 @@
 class phMagick_crop
 {
     /**
-     * @param $width Integer
-     * @param $height Integer
-     * @param $top Integer - The Y coordinate for the left corner of the crop rectangule
-     * @param $left Integer - The X coordinate for the left corner of the crop rectangule
-     * @param $gravity phMagickGravity - The initial placement of the crop rectangule
+     * @param Integer         $width
+     * @param Integer         $height
+     * @param Integer         $top     - The Y coordinate for the left corner of the crop rectangule
+     * @param Integer         $left    - The X coordinate for the left corner of the crop rectangule
+     * @param phMagickGravity $gravity - The initial placement of the crop rectangule
      * @return unknown_type
      */
     public function crop(phmagick $p, $width, $height, $top = 0, $left = 0, $gravity = 'center')
@@ -54,6 +55,6 @@ class phMagick_crop
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 }

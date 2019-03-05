@@ -300,9 +300,9 @@ class RMFunctions
 
     /**
      * Get an image from image manager
-     * @param       $id int Image id
+     * @param int $id Image id
      * @param string Size name from category
-     * @param mixed $size
+     * @param mixed     $size
      * @return bool|string
      */
     public function get_image($id, $size = '')

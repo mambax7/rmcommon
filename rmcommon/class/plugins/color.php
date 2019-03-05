@@ -54,9 +54,9 @@ class phMagick_color
     /**
      *  Brightens an image, defualt: 50%
      *
-     * @param $imageFile  String - Physical path of the umage file
-     * @param $newFile    String - Physical path of the generated image
-     * @param $alphaValue Integer - 100: white , 0: original color (no change)
+     * @param string  $imageFile  - Physical path of the umage file
+     * @param string  $newFile    - Physical path of the generated image
+     * @param int     $alphaValue - 100: white , 0: original color (no change)
      * @return bool - True: success
      */
     public function brighten(phmagick $p, $alphaValue = 50)
@@ -82,7 +82,7 @@ class phMagick_color
 
     /**
      * Convert's the image to grayscale
-     * @param mixed $enhance
+     * @param int $enhance
      * @return \phmagick
      */
     //    function toGrayScale(phmagick $p){

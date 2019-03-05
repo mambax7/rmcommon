@@ -35,7 +35,7 @@ class Plugins
 
     /**
      * Checks if a plugin is already installed
-     * @param $dir Plugin directory
+     * @param string $dir Plugin directory name
      * @return bool
      */
     public static function isInstalled($dir)
@@ -49,7 +49,7 @@ class Plugins
 
     /**
      * Loads an installed plugin directly from file
-     * @param $dir Plugin directory name
+     * @param string $dir Plugin directory name
      * @return bool|\RMPlugin
      */
     public function load($dir)
@@ -69,7 +69,7 @@ class Plugins
 
     /**
      * Loads a new instance of given plugin withouth check plugins loaded caché
-     * @param $dir Plugin dirname
+     * @param string $dir Plugin directory name
      * @return bool|object
      */
     public function loadNew($dir)

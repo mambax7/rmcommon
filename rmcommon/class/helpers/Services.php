@@ -140,7 +140,7 @@ class Services
 
     /**
      * Checks if there are a registered provider for specific service
-     * @param $service Service name
+     * @param string $service Service name
      * @return bool
      */
     public function isThereProvider($service)

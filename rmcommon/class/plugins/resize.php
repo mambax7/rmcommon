@@ -16,6 +16,7 @@
     +--------------------------------------------------------------------------------------------+
 
 */
+
 /**
  * phMagick - Resising functions
  *
@@ -35,7 +36,7 @@ class phMagick_resize
 
         //if $width or $height == 0 then we want to resize to fit one measure
         //if any of them is sent as 0 resize will fail because we are trying to resize to 0 px
-        $width = 0 == $width ? '' : $width;
+        $width  = 0 == $width ? '' : $width;
         $height = 0 == $height ? '' : $height;
 
         $cmd = $p->getBinary('convert');
@@ -48,14 +49,14 @@ class phMagick_resize
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
      * tries to resize an image to the exact size wile mantaining aspect ratio,
      * the image will be croped to fit the measures
-     * @param $width
-     * @param $height
+     * @param int $width
+     * @param int $height
      */
     public function resizeExactly(phmagick $p, $width, $height)
     {
@@ -83,19 +84,18 @@ class phMagick_resize
      *
      *
      * @param string $imageUrl - The image Url
-     * @param mixed $width - String / Integer
-     * @param mixed $height - String / Integer
-     * @param boolean: False: resizes the image to the exact porportions (aspect ratio not preserved). True: preserves aspect ratio, only resises if image is bigger than specified measures
-     * @param mixed $exactDimentions
-     * @param mixed $webPath
-     * @param mixed $physicalPath
+     * @param mixed  $width    - String / Integer
+     * @param mixed  $height   - String / Integer
+     * @param bool  $exactDimentions False: resizes the image to the exact porportions (aspect ratio not preserved). True: preserves aspect ratio, only resises if image is bigger than specified measures
+     * @param mixed  $webPath
+     * @param mixed  $physicalPath
      *
      * @return string - the thumbnail URL
      */
     public function onTheFly(phmagick $p, $imageUrl, $width, $height, $exactDimentions = false, $webPath = '', $physicalPath = '')
     {
         //convert web path to physical
-        $basePath = str_replace($webPath, $physicalPath, dirname($imageUrl));
+        $basePath   = str_replace($webPath, $physicalPath, dirname($imageUrl));
         $sourceFile = $basePath . '/' . basename($imageUrl);
 
         //naming the new thumbnail

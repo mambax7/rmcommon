@@ -33,9 +33,9 @@ class phMagick_compose
     /**
      * Add's an watermark to an image
      *
-     * @param $watermarkImage String - Image path
-     * @param $gravity        phMagickGravity - The placement of the watermark
-     * @param $transparency   Integer - 1 to 100 the tranparency of the watermark (100 = opaque)
+     * @param string  $watermarkImage - Image path
+     * @param phMagickGravity  $gravity        - phMagickGravity - the placement of the watermark
+     * @param int     $transparency   - 1 to 100 the tranparency of the watermark (100 = opaque)
      * @return \phmagick
      */
     public function watermark(phmagick $p, $watermarkImage, $gravity = 'center', $transparency = 50)
@@ -58,9 +58,9 @@ class phMagick_compose
     /**
      * Joins severall imagens in one tab strip
      *
-     * @param       $paths Array of Strings - the paths of the images to join
-     * @param mixed $tileWidth
-     * @param mixed $tileHeight
+     * @param null|array $paths array of Strings - the paths of the images to join
+     * @param mixed       $tileWidth
+     * @param mixed       $tileHeight
      * @return \phmagick
      */
     public function tile(phmagick $p, array $paths = null, $tileWidth = '', $tileHeight = 1)
@@ -83,9 +83,9 @@ class phMagick_compose
     /**
      * Attempts to create an image(s) from a File (PDF & Avi are supported on most systems)
      * it grabs the first frame / page from the source file
-     * @param       $file  String - the path to the file
-     * @param       $ext   String - the extention of the generated image
-     * @param mixed $frames
+     * @param string $file - the path to the file
+     * @param string $ext  - the extention of the generated image
+     * @param mixed        $frames
      * @return \phmagick
      */
     public function acquireFrame(phmagick $p, $file, $frames = 0)
