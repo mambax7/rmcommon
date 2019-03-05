@@ -352,7 +352,7 @@ class HeliumHelper
             $pos_boot = mb_strpos($menu['icon'], 'glyphicon glyphicon-');
 
             if (false === $pos_fa && false === $pos_moon && false === $pos_boot) {
-                $menu['icon'] = ('' != $dir ? XOOPS_URL . '/modules/' . $dir . '/' : '') . str_replace('../', '', $menu['icon']);
+                $menu['icon'] = ('' != $dir ? XOOPS_URL . '/modules/' . $dir . '/' : '') . preg_replace('/\.+[\/\\]+/', '', $menu['icon']);
             }
         }
 
