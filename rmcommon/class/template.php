@@ -1372,7 +1372,7 @@ class RMTemplate
 
     public function fetch_smarty($tpl_file, $element, $type = 'module', $plugin = '')
     {
-        $file = $this->get_template($tpl_file, $type, $element, $plugin);
+        $file = $this->path($tpl_file, $type, $element, $plugin);
 
         $tpl = $this->xo_tpl();
 
