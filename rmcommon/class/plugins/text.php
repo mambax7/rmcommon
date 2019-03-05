@@ -16,6 +16,7 @@
     +--------------------------------------------------------------------------------------------+
 
 */
+
 /**
  * phMagick - Text drawing functions
  *
@@ -32,8 +33,9 @@ class phMagick_text
     /**
      * Draws an image with the submited string, usefull for water marks
      *
-     * @param $text String - the text to draw an image from
+     * @param $text   String - the text to draw an image from
      * @param $format phMagickTextObject - the text configuration
+     * @return \phmagick
      */
     public function fromString(phmagick $p, $text = '', phMagickTextObject $format = null)
     {
@@ -70,6 +72,6 @@ class phMagick_text
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 }

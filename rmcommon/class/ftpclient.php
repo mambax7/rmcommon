@@ -11,9 +11,9 @@
 class RMFtpClient
 {
     private $server = '';
-    private $port = 21;
-    private $uname = '';
-    private $pass = '';
+    private $port   = 21;
+    private $uname  = '';
+    private $pass   = '';
     // Almacena el manejador ftp
     private $connection = '';
 
@@ -31,9 +31,9 @@ class RMFtpClient
     public function __construct($server, $port = 21, $uname = '', $pass = '')
     {
         $this->server = $server;
-        $this->port = $port;
-        $this->uname = $uname;
-        $this->pass = $pass;
+        $this->port   = $port;
+        $this->uname  = $uname;
+        $this->pass   = $pass;
     }
 
     /**
@@ -76,6 +76,7 @@ class RMFtpClient
      * @param string Directorio existente en el servidor
      * return bool
      * @param mixed $dir
+     * @return bool
      */
     public function chdir($dir)
     {
@@ -167,6 +168,7 @@ class RMFtpClient
      * @param mixed $local
      * @param mixed $mode
      * @param mixed $pos
+     * @return bool
      */
     public function put($remote, $local, $mode = FTP_ASCII, $pos = 0)
     {

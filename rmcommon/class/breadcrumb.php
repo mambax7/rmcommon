@@ -44,9 +44,9 @@ class RMBreadCrumb
 
         $this->crumbs[] = [
             'caption' => $caption,
-            'link' => $link,
-            'icon' => $icon,
-            'menu' => $menu,
+            'link'    => $link,
+            'icon'    => $icon,
+            'menu'    => $menu,
         ];
 
         end($this->crumbs);
@@ -64,6 +64,7 @@ class RMBreadCrumb
      * @param mixed $caption
      * @param mixed $link
      * @param mixed $icon
+     * @return int|null
      */
     public function add_menu($id, $caption, $link, $icon = '')
     {
@@ -77,8 +78,8 @@ class RMBreadCrumb
 
         $this->crumbs[$id]['menu'] = [
             'caption' => $caption,
-            'link' => $link,
-            'icon' => $icon,
+            'link'    => $link,
+            'icon'    => $icon,
         ];
 
         return null;

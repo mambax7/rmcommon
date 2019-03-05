@@ -32,22 +32,22 @@
  */
 class RMFormText extends RMFormElement
 {
-    public $_size = 30;
+    public $_size     = 30;
     public $_max;
-    public $_value = '';
+    public $_value    = '';
     public $_password = false;
-    public $_enabled = true;
+    public $_enabled  = true;
 
     /**
      * Constructor de la clase
-     * @param string|array $caption Texto de la etiqueta
-     * @param string $name Nombre del campo
-     * @param int $size Longitud del campo
-     * @param int $max Longitud m?xima de car?cteres del campo
-     * @param string $value Valor por defecto
-     * @param bol $password True muestra un campo password
-     * @param mixed $maxlength
-     * @param mixed $enabled
+     * @param string|array $caption  Texto de la etiqueta
+     * @param string       $name     Nombre del campo
+     * @param int          $size     Longitud del campo
+     * @param int          $max      Longitud m?xima de car?cteres del campo
+     * @param string       $value    Valor por defecto
+     * @param bol          $password True muestra un campo password
+     * @param mixed        $maxlength
+     * @param mixed        $enabled
      */
     public function __construct($caption, $name = null, $size = 10, $maxlength = 0, $value = '', $password = false, $enabled = true)
     {
@@ -129,8 +129,8 @@ class RMFormSubTitle extends RMFormElement
 
     /**
      * @param string $caption Texto del subtitulo
-     * @param int $level Heading level for subtitle. Use '0' for no heading (span)
-     * @param string $class solo si $type = 1
+     * @param int    $level   Heading level for subtitle. Use '0' for no heading (span)
+     * @param string $class   solo si $type = 1
      * @param string $desc
      */
     public function __construct($caption, $level = 0, $class = '', $desc = '')
@@ -154,6 +154,7 @@ class RMFormSubTitle extends RMFormElement
      * 0 = TH, 1 = TD
      * @param int $type Tipo de t?tulo
      * @deprecated
+     * @return null
      */
     public function setType($type)
     {
@@ -198,20 +199,20 @@ class RMFormSubTitle extends RMFormElement
  */
 class RMFormTextArea extends RMFormElement
 {
-    private $_rows = 4;
-    private $_cols = 45;
+    private $_rows  = 4;
+    private $_cols  = 45;
     private $_value = '';
-    private $width = '';
+    private $width  = '';
     private $height = '';
 
     /**
      * @param string $caption Texto de la etiqueta
-     * @param string $name Nombre del campo
-     * @param int $rows N?mero de filas del campo
-     * @param int $cols N?mero de columnas del campo
-     * @param string $value Texto inicial del campo
-     * @param string $width Ancho del campo formateado para estilo CSS
-     * @param string $height Alto del campo formateado para estilo CSS
+     * @param string $name    Nombre del campo
+     * @param int    $rows    N?mero de filas del campo
+     * @param int    $cols    N?mero de columnas del campo
+     * @param string $value   Texto inicial del campo
+     * @param string $width   Ancho del campo formateado para estilo CSS
+     * @param string $height  Alto del campo formateado para estilo CSS
      */
     public function __construct($caption, $name = '', $rows = 4, $cols = 45, $value = '', $width = '', $height = '')
     {
@@ -305,8 +306,8 @@ class RMFormLabel extends RMFormElement
 {
     /**
      * @param string $caption Texto de la etiqueta
-     * @param string $cell Contenido de la celda
-     * @param mixed $id
+     * @param string $cell    Contenido de la celda
+     * @param mixed  $id
      */
     public function __construct($caption, $cell = '', $id = '')
     {

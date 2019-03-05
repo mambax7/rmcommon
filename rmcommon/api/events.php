@@ -18,7 +18,7 @@ require_once RMCPATH . '/class/textcleaner.php';
 
 class RMEvents
 {
-    private $_events = [];
+    private $_events   = [];
     private $_preloads = [];
 
     public function __construct()
@@ -33,9 +33,9 @@ class RMEvents
                 $file_list = XoopsLists::getFileListAsArray($dir);
                 foreach ($file_list as $file) {
                     if (preg_match('/(\.php)$/i', $file)) {
-                        $file = mb_substr($file, 0, -4);
+                        $file                          = mb_substr($file, 0, -4);
                         $this->_preloads[$i]['module'] = $module;
-                        $this->_preloads[$i]['file'] = $file;
+                        $this->_preloads[$i]['file']   = $file;
                         $i++;
                     }
                 }
@@ -52,8 +52,8 @@ class RMEvents
             $class_methods = get_class_methods($class_name);
             foreach ($class_methods as $method) {
                 if (0 === mb_strpos($method, 'event')) {
-                    $event_name = mb_strtolower(str_replace('event', '', $method));
-                    $event = ['class_name' => $class_name, 'method' => $method];
+                    $event_name                   = mb_strtolower(str_replace('event', '', $method));
+                    $event                        = ['class_name' => $class_name, 'method' => $method];
                     $this->_events[$event_name][] = $event;
                 }
             }
@@ -78,13 +78,13 @@ class RMEvents
 
     public function load_extra_preloads($dir, $name)
     {
-        $dir = rtrim($dir, '/');
+        $dir   = rtrim($dir, '/');
         $extra = [];
         if (is_dir($dir . '/events')) {
             $file_list = XoopsLists::getFileListAsArray($dir . '/events');
             foreach ($file_list as $file) {
                 if (preg_match('/(\.php)$/i', $file)) {
-                    $file = mb_substr($file, 0, -4);
+                    $file    = mb_substr($file, 0, -4);
                     $extra[] = $file;
                 }
             }
@@ -99,8 +99,8 @@ class RMEvents
             $class_methods = get_class_methods($class_name);
             foreach ($class_methods as $method) {
                 if (0 === mb_strpos($method, 'event')) {
-                    $event_name = mb_strtolower(str_replace('event', '', $method));
-                    $event = ['class_name' => $class_name, 'method' => $method];
+                    $event_name                   = mb_strtolower(str_replace('event', '', $method));
+                    $event                        = ['class_name' => $class_name, 'method' => $method];
                     $this->_events[$event_name][] = $event;
                 }
             }
@@ -109,14 +109,15 @@ class RMEvents
 
     /**
      * @desc Almacena toda la información de la API
-     * @param mixed $event_name
+     * @param mixed      $event_name
      * @param null|mixed $value
+     * @return mixed|null
      */
     public function trigger($event_name, $value = null)
     {
-        $pre = $event_name;
+        $pre        = $event_name;
         $event_name = mb_strtolower(str_replace('.', '', $event_name));
-        $args = func_get_args();
+        $args       = func_get_args();
         if (!isset($this->_events[$event_name])) {
             return $value;
         }
@@ -133,7 +134,7 @@ class RMEvents
     }
 
     /**
-     * @param $event_name
+     * @param      $event_name
      * @param null $value
      * @return mixed
      *

@@ -86,6 +86,7 @@ class RMImageResizer
      * @param int $red   Valor Rojo para la im?gen generada
      * @param int $green Valor Verde para la im?gen generada
      * @param int $blue  Valor Azul para la im?gen generada
+     * @return bool|null
      */
     public function resizeAndCrop($tw, $th, $red = 255, $green = 255, $blue = 255)
     {
@@ -152,6 +153,7 @@ class RMImageResizer
      * Redimensiona una im?gen a un ancho espec?fico
      * @param int  $width Ancho de la im?gen
      * @param bool $force Crea una im?gen anque esta sea mas peque?a que el ancho dado
+     * @return bool|null
      */
     public function resizeWidth($width, $force = false)
     {
@@ -190,6 +192,7 @@ class RMImageResizer
      * @param int  $width  Ancho de la im?gen
      * @param int  $height Alto de la im?gen
      * @param bool $force  Crea una im?gen aunque esta sea mas peque?a que el ancho dado
+     * @return bool|null
      */
     public function resizeWidthOrHeight($width, $height, $force = false)
     {
@@ -240,6 +243,7 @@ class RMImageResizer
      * @param mixed $format
      * @param mixed $image
      * @param mixed $quality
+     * @return bool|null
      */
     private function imageFromFormat($format, $image, $quality = 90)
     {

@@ -134,6 +134,7 @@ function load_theme_locale($theme, $prefix = '', $gui = false)
  * Allows to translate string from exm system elements
  * @param mixed $text
  * @param mixed $domain
+ * @return mixed
  */
 function translate($text, $domain = 'system')
 {

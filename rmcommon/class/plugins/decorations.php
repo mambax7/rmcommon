@@ -16,6 +16,7 @@
     +--------------------------------------------------------------------------------------------+
 
 */
+
 /**
  * phMagick - Image decorations function
  *
@@ -45,12 +46,12 @@ class phmagick_decorations
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     public function dropShadow(phmagick $p, $color = '#000', $offset = 4, $transparency = 60, $top = 4, $left = 4)
     {
-        $top = $top > 0 ? '+' . $top : $top;
+        $top  = $top > 0 ? '+' . $top : $top;
         $left = $left > 0 ? '+' . $left : $left;
 
         $cmd = $p->getBinary('convert');
@@ -63,7 +64,7 @@ class phmagick_decorations
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     public function glow(phmagick $p, $color = '#827f00', $offset = 10, $transparency = 60)
@@ -82,17 +83,18 @@ class phmagick_decorations
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
      * Fake polaroid effect (white border and rotation)
      *
-     * @param $rotation Int - The imahe will be rotatex x degrees
-     * @param $borderColor - Polaroid border (ussuay white)
-     * @param $shaddowColor - drop shaddow color
-     * @param $background - Image background color (use for jpegs or images that do not support transparency or you will end up with a black background)
+     * @param       $rotation     Int - The imahe will be rotatex x degrees
+     * @param       $borderColor  - Polaroid border (ussuay white)
+     * @param       $shaddowColor - drop shaddow color
+     * @param       $background   - Image background color (use for jpegs or images that do not support transparency or you will end up with a black background)
      * @param mixed $rotate
+     * @return \phmagick
      */
     public function fakePolaroid(phmagick $p, $rotate = 6, $borderColor = '#fff', $background = 'none')
     {
@@ -106,17 +108,18 @@ class phmagick_decorations
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
      * Real polaroid efect, supports text
      *
-     * @param $format phMagickTextObject - text format for image label
-     * @param $rotation Int - The imahe will be rotatex x degrees
-     * @param $borderColor - Polaroid border (ussuay white)
+     * @param $format       phMagickTextObject - text format for image label
+     * @param $rotation     Int - The imahe will be rotatex x degrees
+     * @param $borderColor  - Polaroid border (ussuay white)
      * @param $shaddowColor - drop shaddow color
-     * @param $background - Image background color (use for jpegs or images that do not support transparency or you will end up with a black background)
+     * @param $background   - Image background color (use for jpegs or images that do not support transparency or you will end up with a black background)
+     * @return \phmagick
      */
     public function polaroid(phmagick $p, $format = null, $rotation = 6, $borderColor = 'snow', $shaddowColor = 'black', $background = 'none')
     {
@@ -162,7 +165,7 @@ class phmagick_decorations
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     public function border(phmagick $p, $borderColor = '#000', $borderSize = '1')
@@ -176,6 +179,6 @@ class phmagick_decorations
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 }

@@ -103,6 +103,7 @@ abstract class Rmcommon_ANotifications
      * Set permissions for specific event
      * @param string $event       Event index name (generally event name)
      * @param array  $permissions Array with users and groups indexes
+     * @return bool|\Rmcommon_ANotifications
      */
     public function permissions($event, $permissions)
     {
@@ -124,6 +125,7 @@ abstract class Rmcommon_ANotifications
      * Set parameters for specific event
      * @param string $event Event index name (generally event name)
      * @param string $id    The parameter identifier
+     * @return bool|\Rmcommon_ANotifications
      */
     public function parameters($event, $params)
     {

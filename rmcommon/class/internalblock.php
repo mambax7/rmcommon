@@ -120,6 +120,7 @@ class RMInternalBlock extends RMObject
      * Obtiene un array con los identificadores
      * de los grupos con permiso de administrador
      * @param mixed $object
+     * @return array
      */
     public function adminGroups($object = false)
     {
@@ -223,6 +224,7 @@ class RMInternalBlock extends RMObject
      * @param string $format    Uso: 'S' para mostrar y 'E' para editar
      * @param        $c_type    Tipo de Contenido
      * @returns string
+     * @return mixed
      */
     public function getContent($format = 'S')
     {

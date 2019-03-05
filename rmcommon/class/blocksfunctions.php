@@ -38,9 +38,9 @@ class RMBlocksFunctions
             $icon = &$module->getInfo('icon');
 
             $list[$mod['dirname']] = [
-                'name' => $mod['name'],
+                'name'   => $mod['name'],
                 'blocks' => $module->getInfo('blocks'),
-                'icon' => $icon,
+                'icon'   => $icon,
             ];
         }
 
@@ -53,12 +53,13 @@ class RMBlocksFunctions
     /**
      * Get blocks positions
      * @param mixed $active
+     * @return array
      */
     public static function block_positions($active = '')
     {
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db     = XoopsDatabaseFactory::getDatabaseConnection();
         $result = $db->query('SELECT * FROM ' . $db->prefix('mod_rmcommon_blocks_positions') . ('' != $active ? ' WHERE active=' . $active : ''));
-        $pos = [];
+        $pos    = [];
         while (false !== ($row = $db->fetchArray($result))) {
             $pos[$row['id_position']] = $row;
         }
@@ -76,7 +77,7 @@ class RMBlocksFunctions
         $sides = [];
 
         foreach (self::block_positions(1) as $id => $row) {
-            $sides[$id] = $row['tag'];
+            $sides[$id]          = $row['tag'];
             $blocks[$row['tag']] = [];
         }
 
@@ -93,7 +94,7 @@ class RMBlocksFunctions
         $groups = @is_object($xoopsUser) ? $xoopsUser->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 
         $subpage = isset($xoopsOption['module_subpage']) ? $xoopsOption['module_subpage'] : '';
-        $barray = []; // Array of retrieved blocks
+        $barray  = []; // Array of retrieved blocks
 
         $barray = self::get_blocks($groups, $mid, $isStart, XOOPS_BLOCK_VISIBLE, '', 1, $subpage, array_keys($sides));
 
@@ -118,7 +119,7 @@ class RMBlocksFunctions
         $orderby = '' == $orderby ? 'b.weight,b.bid' : $orderby;
 
         // Get authorized blocks
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = [];
         $sql = 'SELECT DISTINCT
                     gperm_itemid
@@ -171,7 +172,7 @@ class RMBlocksFunctions
                 $sql .= ' AND b.canvas IN (' . implode(',', $canvas) . ')';
             }
 
-            $sql .= ' ORDER BY ' . $orderby;
+            $sql    .= ' ORDER BY ' . $orderby;
             $result = $db->query($sql);
 
             while (false !== ($myrow = $db->fetchArray($result))) {
@@ -191,19 +192,19 @@ class RMBlocksFunctions
         $template = $xoopsTpl;
 
         $block = [
-            'id' => $bobj->getVar('bid'),
+            'id'     => $bobj->getVar('bid'),
             'module' => $bobj->getVar('dirname'),
-            'title' => $bobj->getVar('name'),
+            'title'  => $bobj->getVar('name'),
             // 'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $bobj->getVar( 'name' ) ) ) ),
             'weight' => $bobj->getVar('weight'),
-            'type' => $bobj->getVar('element_type'),
+            'type'   => $bobj->getVar('element_type'),
         ];
 
         $bcachetime = (int)$bobj->getVar('bcachetime');
         if (empty($bcachetime)) {
             $template->caching = 0;
         } else {
-            $template->caching = 2;
+            $template->caching        = 2;
             $template->cache_lifetime = $bcachetime;
         }
         $template->setCompileId($bobj->getVar('dirname', 'n'));

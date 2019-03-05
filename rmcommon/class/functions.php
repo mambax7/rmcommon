@@ -40,6 +40,7 @@ class RMFunctions
      * Check the number of images category on database
      * @param mixed $table
      * @param mixed $filters
+     * @return
      */
     public static function get_num_records($table, $filters = '')
     {
@@ -247,12 +248,13 @@ class RMFunctions
     }
 
     /**
-     * @Todo Move this method to RMComments class
+     * @Todo   Move this method to RMComments class
      * Delete comments assigned to a object
      * @param string Module name
      * @param string Params
      * @param mixed $module
      * @param mixed $params
+     * @return |null
      */
     public function delete_comments($module, $params)
     {
@@ -301,6 +303,7 @@ class RMFunctions
      * @param       $id int Image id
      * @param string Size name from category
      * @param mixed $size
+     * @return bool|string
      */
     public function get_image($id, $size = '')
     {
@@ -475,6 +478,7 @@ class RMFunctions
      * See RMModules::get_modules_list
      * @param mixed $active
      * @deprecated
+     * @return array
      */
     public function get_modules_list($active = -1)
     {

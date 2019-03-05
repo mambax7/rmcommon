@@ -721,6 +721,7 @@ class TextCleaner
      * Sanitizing of [code] tag
      * from Xoops
      * @param mixed $text
+     * @return mixed|string|string[]|null
      */
     public function codePreConv($text)
     {
@@ -818,6 +819,7 @@ class TextCleaner
      * @param bool Apply base64_decode? default true
      * @param mixed $string
      * @param mixed $encode64
+     * @return mixed|string
      */
     public static function decrypt($string, $encode64 = true)
     {
@@ -834,6 +836,7 @@ class TextCleaner
      * chars
      * @param mixed $value
      * @param mixed $lower
+     * @return string|string[]|null
      */
     public static function sweetstring($value, $lower = true)
     {

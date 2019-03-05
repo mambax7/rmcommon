@@ -16,6 +16,7 @@
     +--------------------------------------------------------------------------------------------+
 
 */
+
 /**
  * phMagick - Color manipulation function
  *
@@ -31,7 +32,7 @@ class phMagick_color
 {
     public function darken(phmagick $p, $alphaValue = 50)
     {
-        $percent = 100 - (int) $alphaValue;
+        $percent = 100 - (int)$alphaValue;
 
         //get original file dimentions
 
@@ -47,20 +48,20 @@ class phMagick_color
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
      *  Brightens an image, defualt: 50%
      *
-     * @param $imageFile String - Physical path of the umage file
-     * @param $newFile String - Physical path of the generated image
+     * @param $imageFile  String - Physical path of the umage file
+     * @param $newFile    String - Physical path of the generated image
      * @param $alphaValue Integer - 100: white , 0: original color (no change)
      * @return bool - True: success
      */
     public function brighten(phmagick $p, $alphaValue = 50)
     {
-        $percent = 100 - (int) $alphaValue;
+        $percent = 100 - (int)$alphaValue;
 
         //get original file dimentions
 
@@ -76,24 +77,25 @@ class phMagick_color
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
      * Convert's the image to grayscale
      * @param mixed $enhance
+     * @return \phmagick
      */
-//    function toGrayScale(phmagick $p){
-//        $cmd  = $p->getBinary('convert');
-//        $cmd .= ' "' . $p->getSource() .'"';
-//        $cmd .= ' -colorspace Gray  ';
-//        $cmd .= ' "' . $p->getDestination().'"' ;
-//
-//        $p->execute($cmd);
-//        $p->setSource($p->getDestination());
-//        $p->setHistory($p->getDestination());
-//        return  $p ;
-//    }
+    //    function toGrayScale(phmagick $p){
+    //        $cmd  = $p->getBinary('convert');
+    //        $cmd .= ' "' . $p->getSource() .'"';
+    //        $cmd .= ' -colorspace Gray  ';
+    //        $cmd .= ' "' . $p->getDestination().'"' ;
+    //
+    //        $p->execute($cmd);
+    //        $p->setSource($p->getDestination());
+    //        $p->setHistory($p->getDestination());
+    //        return  $p ;
+    //    }
 
     public function toGreyScale(phmagick $p, $enhance = 2)
     {
@@ -107,7 +109,7 @@ class phMagick_color
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     /**
@@ -124,7 +126,7 @@ class phMagick_color
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     public function sepia(phmagick $p, $tone = 90)
@@ -139,7 +141,7 @@ class phMagick_color
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 
     public function autoLevels(phmagick $p)
@@ -153,6 +155,6 @@ class phMagick_color
         $p->setSource($p->getDestination());
         $p->setHistory($p->getDestination());
 
-        return  $p;
+        return $p;
     }
 }

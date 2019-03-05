@@ -718,6 +718,7 @@ class RMTemplate
      * Add jQuery script to site header
      * @param mixed $ui
      * @param mixed $force
+     * @return bool
      */
     public function add_jquery($ui = true, $force = false)
     {
@@ -777,6 +778,7 @@ class RMTemplate
     /**
      * Add jQuery script to site header
      * @param mixed $type
+     * @return bool
      */
     public function add_bootstrap($type = 'css')
     {
@@ -855,6 +857,7 @@ class RMTemplate
     /**
      * Get all scripts stored in class
      * @param mixed $make
+     * @return array|mixed
      */
     public function get_scripts($make = false)
     {
@@ -973,6 +976,7 @@ class RMTemplate
      * @param string $element Name of the owner element. Can be the name of a module or a theme.
      * @param array  $options Additional parameters to add to style code.
      * @param string $owner   Type of owner element. Possible values can be 'theme' or empty;
+     * @return bool|void
      */
     public function add_style($file, $element = '', $options = [], $owner = '')
     {
@@ -1054,6 +1058,7 @@ class RMTemplate
     /**
      * Get all styles stored in class
      * @param mixed $make
+     * @return array|mixed|string
      */
     public function get_styles($make = false)
     {
@@ -1566,6 +1571,7 @@ class RMTemplate
      * @param mixed $element
      * @param mixed $subfolder
      * @deprecated Use generate_url() instead.
+     * @return string
      */
     public function style_url($sheet, $element = 'rmcommon', $subfolder = '')
     {

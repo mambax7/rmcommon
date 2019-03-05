@@ -284,6 +284,7 @@ abstract class RMFormElement extends Attributes
     /**
      * @desc Asigna el formulario (nombre) al elemento actual
      * @param mixed $name
+     * @return \RMFormElement
      */
     public function setForm($name)
     {

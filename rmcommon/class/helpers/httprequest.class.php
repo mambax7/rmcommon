@@ -44,6 +44,7 @@ class RMHttpRequest
      * @param mixed $haystack
      * @param mixed $type
      * @param mixed $default
+     * @return array|bool|float|int|mixed|string
      */
     public static function array_value($key, $haystack, $type, $default = '')
     {

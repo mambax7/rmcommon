@@ -13,10 +13,10 @@ require_once RMCPATH . '/class/swift/swift_required.php';
 /**
  * Mailer Class
  *
- * @since 2.0
+ * @since   2.0
  * @package API
- * @author Eduardo Cortés <i.bitcero@gmail.com>
- * @license: GPL v2
+ * @author  Eduardo Cortés <i.bitcero@gmail.com>
+ * @license : GPL v2
  */
 class RMMailer
 {
@@ -37,7 +37,7 @@ class RMMailer
      */
     private $errors = [];
 
-    private $vars = [];
+    private $vars     = [];
     private $template = '';
     private $tpl_type = '';
 
@@ -49,14 +49,14 @@ class RMMailer
      * to manage the email
      *
      * @param string Content type for message body. It usually text/plain or text/html.
-     * 		Default is 'text/plain' but can be changed later
+     *      Default is 'text/plain' but can be changed later
      * @param mixed $content_type
      */
     public function __construct($content_type = 'text/plain')
     {
-        $config = RMSettings::cu_settings();
+        $config        = RMSettings::cu_settings();
         $configHandler = xoops_getHandler('config');
-        $xconfig = $configHandler->getConfigsByCat(XOOPS_CONF_MAILER);
+        $xconfig       = $configHandler->getConfigsByCat(XOOPS_CONF_MAILER);
 
         // Instantiate the Swit Transport according to our preferences
         // We can change this preferences later
@@ -183,12 +183,12 @@ class RMMailer
      * @param string Set file name in the message
      * @param mixed Content for dynamic content
      * @param string File disposition (inline)
-     * @param mixed $type
-     * @param mixed $path
-     * @param mixed $content_type
-     * @param mixed $name
+     * @param mixed      $type
+     * @param mixed      $path
+     * @param mixed      $content_type
+     * @param mixed      $name
      * @param null|mixed $content
-     * @param mixed $disposition
+     * @param mixed      $disposition
      */
     public function attach_content($type = 'path', $path = '', $content_type = '', $name = '', $content = null, $disposition = '')
     {
@@ -232,8 +232,8 @@ class RMMailer
      * @param string|mixed Path to file or file content when type is dynamic
      * @param string File name
      * @param string Mime type of image
-     * @param mixed $type
-     * @param mixed $file
+     * @param mixed      $type
+     * @param mixed      $file
      * @param null|mixed $name
      * @param null|mixed $content_type
      * @return int
@@ -264,6 +264,7 @@ class RMMailer
      *
      * @param array Recipientes data array('recipient@address.com'=>'Recipient Name','recipent2@address.com',...)
      * @param mixed $recipients
+     * @return \Swift_Mime_SimpleMessage|null
      */
     public function set_to($recipients = [])
     {
@@ -289,6 +290,7 @@ class RMMailer
      * @param string Name
      * @param mixed $mail
      * @param mixed $name
+     * @return \Swift_Mime_SimpleMessage|null
      */
     public function add_to($mail, $name = '')
     {
@@ -303,6 +305,7 @@ class RMMailer
      * This methods are similar to previous but for Cc recipients
      * @param array Recipientes data array('recipient@address.com'=>'Recipient Name','recipent2@address.com',...)
      * @param mixed $recipients
+     * @return \Swift_Mime_SimpleMessage|null
      */
     public function set_cc($recipients = [])
     {
@@ -328,6 +331,7 @@ class RMMailer
      * @param string Name
      * @param mixed $mail
      * @param mixed $name
+     * @return \Swift_Mime_SimpleMessage|null
      */
     public function add_cc($mail, $name = '')
     {
@@ -526,8 +530,8 @@ class RMMailer
 
         $this->create_body();
 
-        $pmHandler =  xoops_getHandler('privmessage');
-        $pm = &$pmHandler->create();
+        $pmHandler = xoops_getHandler('privmessage');
+        $pm        = &$pmHandler->create();
         $pm->setVar('subject', $this->get_subject());
         // RMV-NOTIFY
         $pm->setVar('from_userid', $this->fromuser->uid());

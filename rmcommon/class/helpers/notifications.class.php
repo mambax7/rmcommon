@@ -305,6 +305,7 @@ class RMNotifications
      *
      * @param RMNotificationItem $event
      * @param array              $params Parameters to pass to the local notifications controller
+     * @return bool
      */
     public function notify(RMNotificationItem $event, $params)
     {

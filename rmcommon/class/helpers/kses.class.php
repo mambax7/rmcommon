@@ -1074,6 +1074,7 @@ class RMKses
     /**
      * Inline CSS filter
      * @param mixed $css
+     * @return mixed|string
      */
     protected function safecss_filter_attr($css)
     {

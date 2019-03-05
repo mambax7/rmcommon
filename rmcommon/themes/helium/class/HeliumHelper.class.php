@@ -99,6 +99,7 @@ class HeliumHelper
     /**
      * Get the menu for a specified module
      * @param mixed $m
+     * @return array|bool|mixed|null
      */
     public function moduleMenu($m)
     {
@@ -177,6 +178,7 @@ class HeliumHelper
      * Prepare menu options
      * @param mixed $submenu
      * @param mixed $mod
+     * @return array|mixed
      */
     public function moduleSubmenu($submenu, $mod)
     {
@@ -290,6 +292,7 @@ class HeliumHelper
      * @param mixed $menu
      * @param mixed $noaccept
      * @param mixed $class
+     * @return mixed|string
      */
     public function getSystemIcon($menu, $noaccept = false, $class = '')
     {
@@ -363,6 +366,7 @@ class HeliumHelper
      *
      * @param mixed $left
      * @param mixed $right
+     * @return string
      */
     public function calculate_cols($left, $right)
     {

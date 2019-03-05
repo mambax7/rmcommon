@@ -44,6 +44,7 @@ class RMUtilities
     /**
      * Determina el color rgb a partir de una cadena HEX
      * @param mixed $color
+     * @return array
      */
     private function hexToRGB($color)
     {
@@ -153,6 +154,7 @@ class RMUtilities
     /**
      * Add a slash (/) to the end of string
      * @param mixed $string
+     * @return string
      */
     public function add_slash($string)
     {

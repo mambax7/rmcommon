@@ -221,6 +221,7 @@ class RMObject
      * Establece el tipo de dato para una variable
      * @param string $var  Nombre de la variable
      * @param int    $type Tipo de Dato
+     * @return bool|int
      */
     public function setVarType($var, $type)
     {
@@ -235,6 +236,7 @@ class RMObject
      * Establece la longitud de un campo
      * @param string $var Nombre de la variable
      * @param int    $len Longitud del campo o null
+     * @return bool|int|null
      */
     public function setVarLen($var, $len = null)
     {
@@ -249,6 +251,7 @@ class RMObject
      * Establece la obligatoriedad de una variable
      * @param string $var Nombre de la variable
      * @param bool   $required
+     * @return bool
      */
     public function setVarRequired($var, $required)
     {
@@ -761,6 +764,7 @@ class RMObject
     /**
      * Comrpobamos si ha sido inicializada una variable.
      * @param string $var Nombre de la variable
+     * @return bool
      */
     protected function varIsset($var)
     {
@@ -997,6 +1001,7 @@ class RMObject
     /**
      * Load the object values from database with a filtered query
      * @param mixed $filter
+     * @return bool
      */
     protected function loadValuesFiltered($filter = '')
     {
@@ -1019,6 +1024,7 @@ class RMObject
     /**
      * Carga valores de la base de datos
      * @param array $values Array de valores
+     * @return bool
      */
     protected function loadValuesArray($values)
     {
