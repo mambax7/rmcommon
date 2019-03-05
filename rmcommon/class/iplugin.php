@@ -31,9 +31,9 @@
  */
 abstract class RMIPlugin
 {
-    protected $info = [];
+    protected $info     = [];
     protected $settings = [];
-    protected $errors = [];
+    protected $errors   = [];
 
     public function on_install()
     {
@@ -114,5 +114,5 @@ abstract class RMIPlugin
         return \Common\Core\Helpers\Plugins::isInstalled($this->info['dir']);
     }
 
-    abstract public static function getInstance();
+    abstract public function getInstance();
 }

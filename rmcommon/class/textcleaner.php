@@ -242,7 +242,7 @@ class TextCleaner
         return RMEvents::get()->run_event('rmcommon.clean_url', $url, $original_url, $context);
     }
 
-    private function bad_protocol($string, $allowed_protocols)
+    private static function bad_protocol($string, $allowed_protocols)
     {
         $string  = self::no_null($string);
         $string2 = $string . 'a';
@@ -255,7 +255,7 @@ class TextCleaner
         return $string;
     }
 
-    private function bad_protocol_once($string, $allowed_protocols)
+    private static function bad_protocol_once($string, $allowed_protocols)
     {
         $string2 = preg_split('/:|&#58;|&#x3a;/i', $string, 2);
         if (isset($string2[1]) && !preg_match('%/\?%', $string2[0])) {
@@ -320,7 +320,7 @@ class TextCleaner
         return chr(hexdec($match[1]));
     }
 
-    public function no_null($string)
+    public static function no_null($string)
     {
         $string = preg_replace('/\0+/', '', $string);
         $string = preg_replace('/(\\\\0)+/', '', $string);
@@ -328,7 +328,7 @@ class TextCleaner
         return $string;
     }
 
-    public function replace($search, $subject)
+    public static function replace($search, $subject)
     {
         $found = true;
         while ($found) {
