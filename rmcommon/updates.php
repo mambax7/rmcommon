@@ -361,7 +361,7 @@ function dt_download_file($url, $code, $siteID, $dir, $type)
             $common->ajax()->notifyError(__('FTP configuration has not been specified and directory %s could not be written', 'rmcommon'));
         }
 
-        parse_str($ftpdata);
+        parse_str($ftpdata, $output);
         if ('' == $ftp_server || '' == $ftp_user || '' == $ftp_pass) {
             $common->ajax()->notifyError(__('FTP configuration not valid!', 'rmcommon'));
         }

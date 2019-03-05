@@ -1,4 +1,5 @@
 <?php
+
 /**
  * $Id$
  * --------------------------------------------------------------
@@ -68,10 +69,10 @@ class RMHttpRequest
      * The key must be a valid parameter name.
      * Type must be a valid data type, e.g. boolean, integer, float, string, number or array
      *
-     * @param string $method Method to use (e.g. get, post, request)
-     * @param string $key Key name to get
-     * @param string $type Value type of the param to get
-     * @param mixed $default Value to use when param is not found
+     * @param string $method  Method to use (e.g. get, post, request)
+     * @param string $key     Key name to get
+     * @param string $type    Value type of the param to get
+     * @param mixed  $default Value to use when param is not found
      * @return mixed
      */
     protected static function get_http_parameter($method, $key, $type, $default = '')
@@ -82,7 +83,7 @@ class RMHttpRequest
 
         $method = mb_strtolower($method);
 
-        if (!in_array($method, [ 'get', 'post', 'request', 'put', 'delete' ], true)) {
+        if (!in_array($method, ['get', 'post', 'request', 'put', 'delete'], true)) {
             return null;
         }
 
@@ -102,12 +103,12 @@ class RMHttpRequest
                 break;
             case 'put':
             case 'delete':
-                parse_str(file_get_contents('php://input'));
+            parse_str(file_get_contents('php://input'), $output);
                 if (isset(${$key})) {
                     return self::clean_value(${$key}, $type);
                 }
 
-                    return self::clean_value($default, $type);
+                return self::clean_value($default, $type);
                 break;
         }
 
@@ -130,10 +131,10 @@ class RMHttpRequest
 
         switch ($type) {
             case 'bool':
-                $return = (bool) $value;
+                $return = (bool)$value;
                 break;
             case 'integer':
-                $return = (int) $value;
+                $return = (int)$value;
                 break;
             case 'float':
                 $return = (float)$value;
@@ -145,7 +146,7 @@ class RMHttpRequest
                 $return = trim((string)$value);
                 break;
             case 'array':
-                $return = is_array($value) ? $value : (array) $value;
+                $return = is_array($value) ? $value : (array)$value;
                 break;
             default:
                 $return = $value;
@@ -179,8 +180,8 @@ class RMHttpRequest
      * You can use the obtained data as follow:
      * <pre>echo $data->name;</pre>
      *
-     * @param string $source <p>Source for data. Can be 'post', 'get' or 'request'.</p>
-     * @param array $parameters <p>List of parameters that will be loaded from any of previous three methods.</p>
+     * @param string $source     <p>Source for data. Can be 'post', 'get' or 'request'.</p>
+     * @param array  $parameters <p>List of parameters that will be loaded from any of previous three methods.</p>
      * @return stdClass
      */
     public static function collect_data($source = 'post', $parameters = [])
@@ -206,7 +207,7 @@ class RMHttpRequest
 
     /**
      * Get content from URL
-     * @param        string $url
+     * @param string $url
      * @param string string|array $query
      * @param bool   bool $post
      *
@@ -222,19 +223,19 @@ class RMHttpRequest
         if ($post) {
             if ('' == $query) {
                 $query = explode('?', $url);
-                $url = $query[0];
+                $url   = $query[0];
                 $query = $query[1];
             }
 
             $options = [
                 'http' => [
-                    'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method' => 'POST',
+                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method'  => 'POST',
                     'content' => $query,
                 ],
             ];
             $context = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
+            $result  = file_get_contents($url, false, $context);
 
             return $result;
         }
