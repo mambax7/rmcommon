@@ -944,7 +944,7 @@ class RMObject
         /**
          * Added on Sep-05-2017
          */
-        if (null != $filters && is_array($filters) && false === empty($filters)) {
+        if (null != $filters && is_array($filters) && !empty($filters)) {
             foreach ($filters as $column => $value) {
                 $column = $this->escape($column);
                 $value  = $this->escape($value);

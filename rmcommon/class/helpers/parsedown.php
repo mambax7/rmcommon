@@ -1206,7 +1206,7 @@ class RMParsedown
 
     protected function inlineUrl($Excerpt)
     {
-        if (true !== $this->urlsLinked or !isset($Excerpt['text'][2]) or '/' !== $Excerpt['text'][2]) {
+        if (!$this->urlsLinked or !isset($Excerpt['text'][2]) or '/' !== $Excerpt['text'][2]) {
             return;
         }
 

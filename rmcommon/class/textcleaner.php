@@ -171,7 +171,7 @@ class TextCleaner
             return $matches[0];
         }
         // removed trailing [,;:] from URL
-        if (true === in_array(mb_substr($dest, -1), ['.', ',', ';', ':'], true)) {
+        if (in_array(mb_substr($dest, -1), ['.', ',', ';', ':'], true)) {
             $ret  = mb_substr($dest, -1);
             $dest = mb_substr($dest, 0, mb_strlen($dest) - 1);
         }

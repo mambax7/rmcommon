@@ -201,7 +201,7 @@ class UpdateManager
 
             if ($license->isNew() && 'module' == $vars['type']) {
                 $controller = RMFunctions::loadModuleController($vars['id']);
-                if (false === $controller) {
+                if (!$controller) {
                     $common->ajax()->notifyError(__('Module is not compatible with this update process', 'rmcommon'), 1, 1);
                 }
                 $data = $controller->licenseData();
@@ -228,7 +228,7 @@ class UpdateManager
             $common->ajax()->response($message, $type, 1, $response);
         }
 
-        if (false === isset($response['code']) || '' == $response['code']) {
+        if (!isset($response['code']) || '' == $response['code']) {
             $common->ajax()->notifyError(__('Unexpected response from updates server. Please try again later.', 'rmcommon'));
         }
 

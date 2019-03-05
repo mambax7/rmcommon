@@ -103,7 +103,7 @@ class Widgets
             return false;
         }
 
-        if (false === array_key_exists($provider, $this->widgetsProviders)) {
+        if (!array_key_exists($provider, $this->widgetsProviders)) {
             trigger_error(sprintf(__('Attempt to load a widget from a non existent provider: %s', 'rmcommon'), $provider));
 
             return false;
@@ -111,7 +111,7 @@ class Widgets
 
         // File path
         $path = $this->widgetsProviders[$provider]['path'] . '/' . $widgetName . '.php';
-        if (false === file_exists($path)) {
+        if (!file_exists($path)) {
             trigger_error(sprintf(__('Attempt to load a non existent widget: %s', 'rmcommon'), $widgetName));
 
             return false;
@@ -119,7 +119,7 @@ class Widgets
 
         require_once $path;
 
-        if (false === class_exists($this->widgetsProviders[$provider]['namespace'] . '\\' . $widgetName)) {
+        if (!class_exists($this->widgetsProviders[$provider]['namespace'] . '\\' . $widgetName)) {
             trigger_error(sprintf(__('Attempt to load a non existent widget: %s', 'rmcommon'), $widgetName));
 
             return false;
@@ -127,7 +127,7 @@ class Widgets
 
         $widgetClass = $this->widgetsProviders[$provider]['namespace'] . '\\' . $widgetName;
         $widget      = new $widgetClass();
-        if (false === $widget instanceof \Common\Core\Helpers\WidgetAbstract) {
+        if (!$widget instanceof \Common\Core\Helpers\WidgetAbstract) {
             trigger_error(sprintf(__('Attempt to load a non valid widget: %s. Widgets must be extended from WidgetAbstract.', 'rmcommon'), $widgetName));
 
             return false;

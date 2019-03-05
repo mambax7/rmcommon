@@ -86,7 +86,7 @@ class RmcommonRmcommonPreload
         if (0 == $save['permalinks']) {
             $ht = new RMHtaccess('rmcommon');
             $htResult = $ht->removeRule();
-            if (true !== $htResult) {
+            if (!$htResult) {
                 showMessage(
                     __('An error ocurred while trying to delete .htaccess rules!', 'rmcommon') . '<br>' .
                     __('Please delete lines starting with <code># begin rmcommon</code> and ending with <code># end rmcommon</code>', 'rmcommon'),

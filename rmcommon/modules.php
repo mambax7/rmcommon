@@ -116,7 +116,7 @@ function modules_install_function($dirname)
             }
         }
 
-        if (false === $error) {
+        if (!$error) {
             $sqlfile = $module->getInfo('sqlfile');
             if (is_array($sqlfile) && !empty($sqlfile[XOOPS_DB_TYPE])) {
                 $sql_file_path = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . $sqlfile[XOOPS_DB_TYPE];
@@ -161,7 +161,7 @@ function modules_install_function($dirname)
                         }
                     }
                     // if there was an error, delete the tables created so far, so the next installation will not fail
-                    if (true === $error) {
+                    if ($error) {
                         foreach ($created_tables as $ct) {
                             $db->query('DROP TABLE ' . $db->prefix($ct));
                         }
@@ -170,7 +170,7 @@ function modules_install_function($dirname)
             }
         }
         // if no error, save the module info and blocks info associated with it
-        if (false === $error) {
+        if (!$error) {
             if (!$moduleHandler->insert($module)) {
                 $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_INSERT_DATA_FAILD, '<strong>' . $module->getVar('name') . '</strong>');
                 foreach ($created_tables as $ct) {

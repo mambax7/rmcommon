@@ -71,7 +71,7 @@ class RMFormModules extends RMFormElement
         $this->setIfNotSet('type', $type ? 'radio' : 'select');
         $this->setIfNotSet('value', []);
 
-        if (false === is_array($this->get('value'))) {
+        if (!is_array($this->get('value'))) {
             $this->set('value', [$this->get('value')]);
         }
 
@@ -234,7 +234,7 @@ class RMFormModules extends RMFormElement
                 $rtn .= "<input $attributes name=\"" . sprintf($name, $k) . "\"
                         value='$k'" . (-1 == $k ? ' data-all' : " data-module=\"$k\"") . " id='" . $this->get('id') . "-$k'" . (is_array($selected) && in_array($k, $selected, true) ? ' checked' : '') . '> ';
 
-                if (1 == $k || (false === empty($subpages) && $this->has('subpages') && $k > -1)) {
+                if (1 == $k || (!empty($subpages) && $this->has('subpages') && $k > -1)) {
                     $rtn .= '<a href="#">' . $v . '</a>';
                 } else {
                     $rtn .= $v;

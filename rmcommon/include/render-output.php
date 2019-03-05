@@ -44,14 +44,14 @@ function cu_render_output($output)
      * Temporal solution to ModuleAdmin __constructor method
      * @todo Delete
      */
-    if (false === $common->isAjax) {
+    if (!$common->isAjax) {
         $pos = mb_strpos($output, '<!DOCTYPE');
         if ($pos > 0) {
             $toMove = mb_substr($output, 0, $pos);
             $output = mb_substr($output, $pos);
 
             if (!$xoopsModule || !$xoopsModule->getInfo('rmnative')) {
-                $pos = mb_strpos($output, '</head>', 0);
+                $pos    = mb_strpos($output, '</head>', 0);
                 $output = mb_substr($output, 0, $pos) . $toMove . "\n" . mb_substr($output, $pos);
                 unset($pos, $toMove);
             }
@@ -83,7 +83,7 @@ function cu_render_output($output)
         $str = "<meta\s+name=['\"]??" . $name . "['\"]??\s+content=['\"]??(.+)['\"]??\s*\/?>";
         if (preg_match($str, $page)) {
             $find[] = $str;
-            $str = "meta name=\"$name\" content=\"$content\">\n";
+            $str    = "meta name=\"$name\" content=\"$content\">\n";
             $repl[] = $str;
         } else {
             $rtn .= "\n<meta name=\"$name\" content=\"$content\">";
@@ -99,35 +99,35 @@ function cu_render_output($output)
 
     if (false !== $pos = mb_strpos($page, '<!-- RMTemplateHeader -->')) {
         // Replace RMTemplateHeader with scripts and styles
-        $ssContent = $rtn . $htmlStyles . $htmlScripts['header'] . $htmlScripts['inlineHeader'];
-        $page = str_replace('<!-- RMTemplateHeader -->', $ssContent, $page);
+        $ssContent      = $rtn . $htmlStyles . $htmlScripts['header'] . $htmlScripts['inlineHeader'];
+        $page           = str_replace('<!-- RMTemplateHeader -->', $ssContent, $page);
         $headerRendered = true;
     }
 
     if (false !== $pos = mb_strpos($page, '<!-- RMTemplateFooter -->')) {
         // Replace RMTemplateHeader with scripts and styles
-        $ssContent = $htmlScripts['footer'] . $htmlScripts['inlineFooter'];
-        $page = str_replace('<!-- RMTemplateFooter -->', $ssContent, $page);
+        $ssContent      = $htmlScripts['footer'] . $htmlScripts['inlineFooter'];
+        $page           = str_replace('<!-- RMTemplateFooter -->', $ssContent, $page);
         $footerRendered = true;
     }
 
     // Inject code if this is a standard theme
     // Natives themes must to include appropiate code
-    if (false === $common->nativeTheme) {
+    if (!$common->nativeTheme) {
         $pos = mb_strpos($page, '</head>');
-        if (false !== $pos && false === $headerRendered) {
+        if (false !== $pos && !$headerRendered) {
             $ssContent = $rtn . $htmlStyles . $htmlScripts['header'] . $htmlScripts['inlineHeader'];
-            $ret = mb_substr($page, 0, $pos) . "\n";
-            $ret .= $ssContent;
-            $page = $ret . mb_substr($page, $pos);
+            $ret       = mb_substr($page, 0, $pos) . "\n";
+            $ret       .= $ssContent;
+            $page      = $ret . mb_substr($page, $pos);
         }
 
         $pos = mb_strpos($page, '</body>');
-        if (false !== $pos && false === $footerRendered) {
+        if (false !== $pos && !$footerRendered) {
             $ssContent = $htmlScripts['footer'] . $htmlScripts['inlineFooter'];
-            $ret = mb_substr($page, 0, $pos) . "\n";
-            $ret .= $ssContent;
-            $page = $ret . mb_substr($page, $pos);
+            $ret       = mb_substr($page, 0, $pos) . "\n";
+            $ret       .= $ssContent;
+            $page      = $ret . mb_substr($page, $pos);
         }
     }
 

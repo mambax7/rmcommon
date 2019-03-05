@@ -41,7 +41,7 @@ class Help
 
         $path = XOOPS_ROOT_PATH . '/modules/' . $directory . '/include/help.php';
 
-        if (false === is_file($path)) {
+        if (!is_file($path)) {
             throw new \RMException(__('File with docs URL does not exists', 'rmcommon'));
         }
 

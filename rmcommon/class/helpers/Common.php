@@ -357,7 +357,7 @@ class Common
 
     public function help($directory)
     {
-        if (false === array_key_exists($directory, $this->helps)) {
+        if (!array_key_exists($directory, $this->helps)) {
             $this->helps[$directory] = new Help($directory);
         }
 

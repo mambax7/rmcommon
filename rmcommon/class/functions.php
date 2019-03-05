@@ -510,7 +510,7 @@ class RMFunctions
 
         $file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/class/' . $dirname . 'controller.php';
 
-        if (false === file_exists($file) || false === is_file($file)) {
+        if (!file_exists($file) || !is_file($file)) {
             return false;
         }
 

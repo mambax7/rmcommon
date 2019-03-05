@@ -46,7 +46,7 @@ class Counter extends WidgetAbstract implements WidgetInterface
     {
         $this->suppressList = ['color', 'icon', 'format'];
 
-        if (false === empty($data)) {
+        if (!empty($data)) {
             parent::__construct($data);
 
             if (!$this->has('format')) {

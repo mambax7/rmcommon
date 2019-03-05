@@ -99,7 +99,7 @@ class Quill implements Editor
                                                                      'id'        => 'quill-css',
                                                                  ]);
 
-        if ('' == $template || false === file_exists($template)) {
+        if ('' == $template || !file_exists($template)) {
             $template = $common->template()->path('api/quill.php', 'module', 'rmcommon');
         }
 

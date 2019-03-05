@@ -71,19 +71,19 @@ class UserCard extends WidgetAbstract implements WidgetInterface
         global $common;
 
         $defaults = [
-            'type' => 'large',
-            'name' => '',
-            'email' => '',
-            'user' => null,
-            'link' => '',
-            'carge' => '',
-            'mainButton' => [],
-            'color' => 'primary',
-            'counters' => [],
-            'info' => '',
-            'social' => [],
-            'highlight' => '',
-            'headerBg' => '',
+            'type'           => 'large',
+            'name'           => '',
+            'email'          => '',
+            'user'           => null,
+            'link'           => '',
+            'carge'          => '',
+            'mainButton'     => [],
+            'color'          => 'primary',
+            'counters'       => [],
+            'info'           => '',
+            'social'         => [],
+            'highlight'      => '',
+            'headerBg'       => '',
             'headerGradient' => false,
         ];
 
@@ -95,15 +95,15 @@ class UserCard extends WidgetAbstract implements WidgetInterface
 
         // Get user data
         if (is_a($data['user'], 'XoopsUser')) {
-            $data['name'] = '' == $data['user']->getVar('name') ? $data['user']->getVar('name') : $data['user']->getVar('uname');
+            $data['name']  = '' == $data['user']->getVar('name') ? $data['user']->getVar('name') : $data['user']->getVar('uname');
             $data['email'] = $data['user']->email;
         } elseif ($data['user'] > 0) {
-            $xUser = new XoopsUser($data['user']);
-            $data['name'] = '' == $xUser->getVar('name') ? $xUser->getVar('name') : $xUser->getVar('uname');
+            $xUser         = new XoopsUser($data['user']);
+            $data['name']  = '' == $xUser->getVar('name') ? $xUser->getVar('name') : $xUser->getVar('uname');
             $data['email'] = $xUser->email;
         }
 
-        if (false === array_key_exists('name', $data) || '' == $data['name']) {
+        if (!array_key_exists('name', $data) || '' == $data['name']) {
             throw new \RMException(__('the widget UserCard requires the user name', 'rmcommon'));
         }
 

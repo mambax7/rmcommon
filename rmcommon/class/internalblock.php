@@ -548,7 +548,7 @@ class RMInternalBlockHandler
             $col = 'mid';
         }
 
-        if (true === $asobject) {
+        if ($asobject) {
             $sql = $sql = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_blocks') . " WHERE $col='" . $moduleid . "'";
         } else {
             $sql = 'SELECT bid FROM ' . $db->prefix('mod_rmcommon_blocks') . " WHERE $col=" . $moduleid . '';

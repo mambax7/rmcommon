@@ -10,18 +10,18 @@
 
 class RMTimeFormatter
 {
-    private $time = 0;
-    public $format = '';
+    private $time   = 0;
+    public  $format = '';
 
     /**
      * Initialize this class
      *
-     * @param int|string $time <p>Unix timestamp or date in string format</p>
-     * @param string $format <p>Format for time (e.g. Created on %M% %d%, %Y%)</p>
+     * @param int|string $time   <p>Unix timestamp or date in string format</p>
+     * @param string     $format <p>Format for time (e.g. Created on %M% %d%, %Y%)</p>
      */
     public function __construct($time = 0, $format = '')
     {
-        $this->time = $time;
+        $this->time   = $time;
         $this->format = $format;
     }
 
@@ -51,9 +51,9 @@ class RMTimeFormatter
      * Example 2:
      *      $tf->format( '2014-05-25' );
      *
-     * @param int|string $time <p>Time to format</p>
-     * @param string $format <p>This value is optional. Represents the format for the returned value.</p>
-     * @param mixed $offset
+     * @param int|string $time   <p>Time to format</p>
+     * @param string     $format <p>This value is optional. Represents the format for the returned value.</p>
+     * @param mixed      $offset
      * @return mixed
      */
     public function format($time = 0, $format = '', $offset = true)
@@ -161,7 +161,7 @@ class RMTimeFormatter
 
     public function ago($time, $format = '%m%-%d%-%Y% %h%:%i%:%s%')
     {
-        if (false === is_numeric($time)) {
+        if (!is_numeric($time)) {
             $time = strtotime($time);
         }
 

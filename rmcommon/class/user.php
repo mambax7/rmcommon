@@ -80,7 +80,7 @@ class RMUser extends RMObject
     {
         $groups = &$this->getGroups();
 
-        if (false === $data || '' == $fields) {
+        if (!$data || '' == $fields) {
             return $groups;
         }
 

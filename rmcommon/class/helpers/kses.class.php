@@ -855,7 +855,7 @@ class RMKses
                     if (preg_match('/^\s+/', $attr)) { # valueless
                         $working = 1;
                         $mode    = 0;
-                        if (false === array_key_exists($attrname, $attrarr)) {
+                        if (!array_key_exists($attrname, $attrarr)) {
                             $attrarr[$attrname] = ['name' => $attrname, 'value' => '', 'whole' => $attrname, 'vless' => 'y'];
                         }
                         $attr = preg_replace('/^\s+/', '', $attr);
@@ -871,7 +871,7 @@ class RMKses
                             $thisval = $this->bad_protocol($thisval, $allowed_protocols);
                         }
 
-                        if (false === array_key_exists($attrname, $attrarr)) {
+                        if (!array_key_exists($attrname, $attrarr)) {
                             $attrarr[$attrname] = ['name' => $attrname, 'value' => $thisval, 'whole' => "$attrname=\"$thisval\"", 'vless' => 'n'];
                         }
                         $working = 1;
@@ -887,7 +887,7 @@ class RMKses
                             $thisval = $this->bad_protocol($thisval, $allowed_protocols);
                         }
 
-                        if (false === array_key_exists($attrname, $attrarr)) {
+                        if (!array_key_exists($attrname, $attrarr)) {
                             $attrarr[$attrname] = ['name' => $attrname, 'value' => $thisval, 'whole' => "$attrname='$thisval'", 'vless' => 'n'];
                         }
                         $working = 1;
@@ -903,7 +903,7 @@ class RMKses
                             $thisval = $this->bad_protocol($thisval, $allowed_protocols);
                         }
 
-                        if (false === array_key_exists($attrname, $attrarr)) {
+                        if (!array_key_exists($attrname, $attrarr)) {
                             $attrarr[$attrname] = ['name' => $attrname, 'value' => $thisval, 'whole' => "$attrname=\"$thisval\"", 'vless' => 'n'];
                         }
                         # We add quotes to conform to W3C's HTML spec.
@@ -921,7 +921,7 @@ class RMKses
             }
         } # while
 
-        if (1 == $mode && false === array_key_exists($attrname, $attrarr)) {
+        if (1 == $mode && !array_key_exists($attrname, $attrarr)) {
             # special case, for when the attribute list ends with a valueless
             # attribute like "selected"
             $attrarr[$attrname] = ['name' => $attrname, 'value' => '', 'whole' => $attrname, 'vless' => 'y'];

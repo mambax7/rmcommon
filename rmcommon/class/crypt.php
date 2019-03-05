@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Common Utilities Framework for XOOPS
  *
@@ -50,7 +51,7 @@ class crypt
 
     private function allMethods()
     {
-        if (false === empty($this->allMethods)) {
+        if (!empty($this->allMethods)) {
             return $this->allMethods;
         }
 

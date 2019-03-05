@@ -109,7 +109,7 @@ class RMForm extends \Common\Core\Helpers\Attributes
             $this->set('addtoken', $addtoken);
         }
 
-        if (false === $this->has('method')) {
+        if (!$this->has('method')) {
             $this->set('method', 'post');
         }
 

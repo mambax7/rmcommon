@@ -516,7 +516,7 @@ class RMTemplate
             $remote_script = 1;
         }
 
-        if (false === $idProvided) {
+        if (!$idProvided) {
             $parts = pathinfo($file);
             $id    = str_replace('.min', '', $parts['filename']);
             $id    = mb_strtolower($element) . '-' . TextCleaner::getInstance()->sweetstring($id) . '-js';
@@ -1002,7 +1002,7 @@ class RMTemplate
             $providedId = false;
         }
 
-        if (false === $providedId) {
+        if (!$providedId) {
             $parts = pathinfo($file);
             $id    = str_replace('.min', '', $parts['filename']);
             $id    = mb_strtolower($element) . '-' . TextCleaner::getInstance()->sweetstring($id) . '-css';
@@ -1435,7 +1435,7 @@ class RMTemplate
             return false;
         }*/
 
-        if ('' != $element && false === array_key_exists($element, $this->attributes)) {
+        if ('' != $element && !array_key_exists($element, $this->attributes)) {
             return null;
         }
 

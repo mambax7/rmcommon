@@ -60,7 +60,7 @@ class RegisterHelper
                 break;
             case 'theme':
                 $xtAssember = new XtAssembler($item);
-                if (false === $common->nativeTheme) {
+                if (!$common->nativeTheme) {
                     return false;
                 }
                 $url  = $xtAssember->theme()->getInfo('updateurl');

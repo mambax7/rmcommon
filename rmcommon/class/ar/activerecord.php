@@ -519,7 +519,7 @@ abstract class RMActiveRecord
      */
     public function get_errors($as_html = true)
     {
-        if (false === $as_html) {
+        if (!$as_html) {
             return $this->_properties['errors'];
         }
 

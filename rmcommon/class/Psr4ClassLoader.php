@@ -151,7 +151,7 @@ class Psr4ClassLoader
         $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR) . '/';
 
         // initialize the namespace prefix array
-        if (false === isset($this->prefixes[$prefix])) {
+        if (!isset($this->prefixes[$prefix])) {
             $this->prefixes[$prefix] = [];
         }
 
@@ -212,7 +212,7 @@ class Psr4ClassLoader
     protected function loadMappedFile($prefix, $relative_class)
     {
         // are there any base directories for this namespace prefix?
-        if (false === isset($this->prefixes[$prefix])) {
+        if (!isset($this->prefixes[$prefix])) {
             return false;
         }
 
