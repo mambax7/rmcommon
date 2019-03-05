@@ -143,7 +143,7 @@ class HeliumHelper
                 'link'     => $menu['link'],
                 'icon'     => array_key_exists('icon', $menu) ? $menu['icon'] : '',
                 'location' => isset($menu['location']) ? $menu['location'] : '',
-                'options'  => isset($menu['options']) ? self::moduleSubmenu($menu['options'], $mod) : ('system' == $m && _AM_SYSTEM_PREF == $menu['title'] ? self::systemPreferences() : null),
+                'options'  => isset($menu['options']) ? $this->moduleSubmenu($menu['options'], $mod) : ('system' == $m && _AM_SYSTEM_PREF == $menu['title'] ? $this->systemPreferences() : null),
             ];
 
             if (array_key_exists('rewrite', $menu)) {
@@ -216,9 +216,9 @@ class HeliumHelper
 
         foreach (array_keys($confcats) as $i) {
             $options[] = [
-                'title' => self::getPreferenceData(system_AdminIcons('xoops/' . $image[$i]), 'title'),
+                'title' => $this->getPreferenceData(system_AdminIcons('xoops/' . $image[$i]), 'title'),
                 'link'  => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=show&confcat_id=' . $confcats[$i]->getVar('confcat_id'),
-                'icon'  => self::getPreferenceData(system_AdminIcons('xoops/' . $image[$i]), 'icon'),
+                'icon'  => $this->getPreferenceData(system_AdminIcons('xoops/' . $image[$i]), 'icon'),
             ];
         }
 
