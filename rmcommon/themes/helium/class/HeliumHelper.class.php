@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Helium Theme
  *
@@ -32,7 +33,7 @@ class HeliumHelper
     {
         global $cuSettings;
 
-        if ($this->is_absolute_url($menu->link)) {
+        if ($this::is_absolute_url($menu->link)) {
             return $menu->link;
         }
 
@@ -74,7 +75,7 @@ class HeliumHelper
          * We need to verify that icon have the directory prefix
          */
         // Relative or absolute url?
-        $matches = [];
+        $matches  = [];
         $absolute = preg_match("/^(http:\/\/|https:\/\/|ftp:\/\/|\/\/)/m", $icon, $matches, PREG_OFFSET_CAPTURE);
 
         if ($absolute) {
@@ -137,11 +138,11 @@ class HeliumHelper
 
         foreach ($amenu as $menu) {
             $tempMenu = [
-                'title' => $menu['title'],
-                'link' => $menu['link'],
-                'icon' => array_key_exists('icon', $menu) ? $menu['icon'] : '',
+                'title'    => $menu['title'],
+                'link'     => $menu['link'],
+                'icon'     => array_key_exists('icon', $menu) ? $menu['icon'] : '',
                 'location' => isset($menu['location']) ? $menu['location'] : '',
-                'options' => isset($menu['options']) ? self::moduleSubmenu($menu['options'], $mod) : ('system' == $m && _AM_SYSTEM_PREF == $menu['title'] ? self::systemPreferences() : null),
+                'options'  => isset($menu['options']) ? self::moduleSubmenu($menu['options'], $mod) : ('system' == $m && _AM_SYSTEM_PREF == $menu['title'] ? self::systemPreferences() : null),
             ];
 
             if (array_key_exists('rewrite', $menu)) {
@@ -155,11 +156,11 @@ class HeliumHelper
 
         if ($mod->hasconfig()) {
             $return_menu[] = [
-                'title' => __('Options', 'rmcommon'),
-                'link' => $mod->getInfo('rmnative') ? XOOPS_URL . '/modules/rmcommon/settings.php?mod=' . $mod->mid() . '&amp;popup=1&amp;action=configure' : XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->mid(),
-                'icon' => 'svg-rmcommon-wrench',
-                'type' => 1,
-                'location' => 'cu-settings',
+                'title'      => __('Options', 'rmcommon'),
+                'link'       => $mod->getInfo('rmnative') ? XOOPS_URL . '/modules/rmcommon/settings.php?mod=' . $mod->mid() . '&amp;popup=1&amp;action=configure' : XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->mid(),
+                'icon'       => 'svg-rmcommon-wrench',
+                'type'       => 1,
+                'location'   => 'cu-settings',
                 'attributes' => [
                     'data-action' => 'load-remote-dialog',
                 ],
@@ -206,16 +207,16 @@ class HeliumHelper
     {
         require_once XOOPS_ROOT_PATH . '/modules/system/include/functions.php';
         $confcatHandler = xoops_getHandler('configcategory');
-        $confcats = $confcatHandler->getObjects();
-        $image = system_adminVersion('preferences', 'configcat');
+        $confcats       = $confcatHandler->getObjects();
+        $image          = system_adminVersion('preferences', 'configcat');
 
         $options = [];
 
         foreach (array_keys($confcats) as $i) {
             $options[] = [
                 'title' => self::getPreferenceData(system_AdminIcons('xoops/' . $image[$i]), 'title'),
-                'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=show&confcat_id=' . $confcats[$i]->getVar('confcat_id'),
-                'icon' => self::getPreferenceData(system_AdminIcons('xoops/' . $image[$i]), 'icon'),
+                'link'  => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=show&confcat_id=' . $confcats[$i]->getVar('confcat_id'),
+                'icon'  => self::getPreferenceData(system_AdminIcons('xoops/' . $image[$i]), 'icon'),
             ];
         }
 
@@ -235,25 +236,25 @@ class HeliumHelper
         $id = preg_replace("/^.*\/system_(.*)\.png$/i", '$1', $image);
 
         $replacements_icons = [
-            'main' => 'fa fa-cogs',
-            'user' => 'fa fa-user',
-            'meta' => 'fa fa-info-circle',
-            'word' => 'fa fa-filter',
+            'main'   => 'fa fa-cogs',
+            'user'   => 'fa fa-user',
+            'meta'   => 'fa fa-info-circle',
+            'word'   => 'fa fa-filter',
             'search' => 'fa fa-search',
-            'mail' => 'fa fa-envelope',
-            'auth' => 'fa fa-key',
-            'mods' => 'fa fa-cog',
+            'mail'   => 'fa fa-envelope',
+            'auth'   => 'fa fa-key',
+            'mods'   => 'fa fa-cog',
         ];
 
         $replacements_titles = [
-            'main' => __('General Settings', 'rmcommon'),
-            'user' => __('User Info Settings', 'rmcommon'),
-            'meta' => __('Meta Tags and Footer', 'rmcommon'),
-            'word' => __('Word Censoring', 'rmcommon'),
+            'main'   => __('General Settings', 'rmcommon'),
+            'user'   => __('User Info Settings', 'rmcommon'),
+            'meta'   => __('Meta Tags and Footer', 'rmcommon'),
+            'word'   => __('Word Censoring', 'rmcommon'),
             'search' => __('Search Options', 'rmcommon'),
-            'mail' => __('Email Setup', 'rmcommon'),
-            'auth' => __('Authentication Options', 'rmcommon'),
-            'mods' => __('System Module Settings', 'rmcommon'),
+            'mail'   => __('Email Setup', 'rmcommon'),
+            'auth'   => __('Authentication Options', 'rmcommon'),
+            'mods'   => __('System Module Settings', 'rmcommon'),
         ];
 
         switch ($data) {
@@ -299,27 +300,27 @@ class HeliumHelper
             $accepted = ['preferences' => 'fa fa-wrench'];
         } else {
             $accepted = [
-                'dashboard' => 'fa fa-dashboard',
-                'modules' => 'fa fa-folder',
-                'blocks' => 'fa fa-th-large',
-                'users' => 'fa fa-user',
-                'imgmanager' => 'fa fa-picture-o',
-                'comments' => 'fa fa-comments',
-                'plugins' => 'fa fa-expand',
-                'avatars' => 'fa fa-male',
-                'banners' => 'fa fa-toggle-right',
-                'blocksadmin' => 'fa fa-th-large',
-                'groups' => 'fa fa-group',
-                'images' => 'fa fa-picture-o',
-                'mailusers' => 'fa fa-envelope',
+                'dashboard'    => 'fa fa-dashboard',
+                'modules'      => 'fa fa-folder',
+                'blocks'       => 'fa fa-th-large',
+                'users'        => 'fa fa-user',
+                'imgmanager'   => 'fa fa-picture-o',
+                'comments'     => 'fa fa-comments',
+                'plugins'      => 'fa fa-expand',
+                'avatars'      => 'fa fa-male',
+                'banners'      => 'fa fa-toggle-right',
+                'blocksadmin'  => 'fa fa-th-large',
+                'groups'       => 'fa fa-group',
+                'images'       => 'fa fa-picture-o',
+                'mailusers'    => 'fa fa-envelope',
                 'modulesadmin' => 'fa fa-folder',
-                'maintenance' => 'fa fa-fire-extinguisher',
-                'preferences' => 'fa fa-wrench',
-                'smilies' => 'fa fa-smile-o',
-                'tplsets' => 'fa fa-files-o',
-                'userrank' => 'fa fa-star',
-                'allusers' => 'fa fa-users',
-                'newuser' => 'xicon-plus',
+                'maintenance'  => 'fa fa-fire-extinguisher',
+                'preferences'  => 'fa fa-wrench',
+                'smilies'      => 'fa fa-smile-o',
+                'tplsets'      => 'fa fa-files-o',
+                'userrank'     => 'fa fa-star',
+                'allusers'     => 'fa fa-users',
+                'newuser'      => 'xicon-plus',
             ];
         }
 
@@ -345,7 +346,7 @@ class HeliumHelper
         }
 
         if (isset($menu['icon']) && '' != $menu['icon']) {
-            $pos_fa = mb_strpos($menu['icon'], 'fa fa-');
+            $pos_fa   = mb_strpos($menu['icon'], 'fa fa-');
             $pos_moon = mb_strpos($menu['icon'], 'icon icon-');
             $pos_boot = mb_strpos($menu['icon'], 'glyphicon glyphicon-');
 
