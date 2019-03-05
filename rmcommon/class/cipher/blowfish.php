@@ -258,7 +258,7 @@ class pcrypt_blowfish
      * @access public
      * @param  string $key the key used to encrypt and decrypt
      */
-    public function pcrypt_blowfish($key)
+    public function __construct($key)
     {
         $this->bctx = ['p' => $this->parray,
                             'sb' => [ $this->sbox0, $this->sbox1,
