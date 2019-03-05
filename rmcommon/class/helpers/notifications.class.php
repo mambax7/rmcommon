@@ -109,7 +109,7 @@ class RMNotifications
             }
 
             // Check if users were provided and current user is allowed
-            if (array_key_exists('users', $item->permissions) && count($item->permissions['users']) > 0) {
+            if (is_array($item->permissions['users']) && array_key_exists('users', $item->permissions) && count($item->permissions['users']) > 0) {
                 if (in_array($xoopsUser->uid(), $item->permissions['users'], true)) {
                     $items[] = $item->data();
                     continue;

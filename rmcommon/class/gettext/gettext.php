@@ -36,22 +36,22 @@
 class gettext_reader
 {
     //public:
-   public $error = 0; // public variable that holds error code (0 if no error)
+    public $error = 0; // public variable that holds error code (0 if no error)
 
-   //private:
-  public $BYTEORDER = 0;        // 0: low endian, 1: big endian
-  public $STREAM = null;
-    public $short_circuit = false;
-    public $enable_cache = false;
-    public $originals = null;      // offset of original table
-  public $translations = null;    // offset of translation table
-  public $pluralheader = null;    // cache header field for plural forms
-  public $total = 0;          // total string count
-  public $table_originals = null;  // table for original strings (offsets)
-  public $table_translations = null;  // table for translated strings (offsets)
-  public $cache_translations = null;  // original -> translation mapping
+    //private:
+    public $BYTEORDER          = 0;        // 0: low endian, 1: big endian
+    public $STREAM             = null;
+    public $short_circuit      = false;
+    public $enable_cache       = false;
+    public $originals          = null;      // offset of original table
+    public $translations       = null;    // offset of translation table
+    public $pluralheader       = null;    // cache header field for plural forms
+    public $total              = 0;          // total string count
+    public $table_originals    = null;  // table for original strings (offsets)
+    public $table_translations = null;  // table for translated strings (offsets)
+    public $cache_translations = null;  // original -> translation mapping
 
-  /* Methods */
+    /* Methods */
 
     /**
      * Reads a 32bit Integer from the Stream
@@ -119,7 +119,7 @@ class gettext_reader
         $MAGIC2 = "\xde\x12\x04\x95";
 
         $this->STREAM = $Reader;
-        $magic = $this->read(4);
+        $magic        = $this->read(4);
         if ($magic == $MAGIC1) {
             $this->BYTEORDER = 1;
         } elseif ($magic == $MAGIC2) {
@@ -132,8 +132,8 @@ class gettext_reader
         // FIXME: Do we care about revision? We should.
         $revision = $this->readint();
 
-        $this->total = $this->readint();
-        $this->originals = $this->readint();
+        $this->total        = $this->readint();
+        $this->originals    = $this->readint();
         $this->translations = $this->readint();
 
         return null;
@@ -148,9 +148,9 @@ class gettext_reader
      */
     public function load_tables()
     {
-        if (is_array($this->cache_translations) &&
-      is_array($this->table_originals) &&
-      is_array($this->table_translations)) {
+        if (is_array($this->cache_translations)
+            && is_array($this->table_originals)
+            && is_array($this->table_translations)) {
             return;
         }
 
@@ -167,7 +167,7 @@ class gettext_reader
                 $this->STREAM->seekto($this->table_originals[$i * 2 + 2]);
                 $original = $this->STREAM->read($this->table_originals[$i * 2 + 1]);
                 $this->STREAM->seekto($this->table_translations[$i * 2 + 2]);
-                $translation = $this->STREAM->read($this->table_translations[$i * 2 + 1]);
+                $translation                         = $this->STREAM->read($this->table_translations[$i * 2 + 1]);
                 $this->cache_translations[$original] = $translation;
             }
         }
@@ -232,7 +232,7 @@ class gettext_reader
         if ((-1 == $start) or (-1 == $end)) {
             // find_string is called with only one parameter, set start end end
             $start = 0;
-            $end = $this->total;
+            $end   = $this->total;
         }
         if (abs($start - $end) <= 1) {
             // We're done, now we either found the string, or it doesn't exist
@@ -248,7 +248,7 @@ class gettext_reader
         }
         // Divide table in two parts
         $half = (int)(($start + $end) / 2);
-        $cmp = strcmp($string, $this->get_original_string($half));
+        $cmp  = strcmp($string, $this->get_original_string($half));
         if (0 == $cmp) {
             // string is exactly in the middle => return it
             return $half;
@@ -306,25 +306,25 @@ class gettext_reader
 
         // Add parenthesis for tertiary '?' operator.
         $expr .= ';';
-        $res = '';
-        $p = 0;
+        $res  = '';
+        $p    = 0;
         for ($i = 0; $i < mb_strlen($expr); $i++) {
             $ch = $expr[$i];
             switch ($ch) {
-      case '?':
-        $res .= ' ? (';
-        $p++;
-        break;
-      case ':':
-        $res .= ') : (';
-        break;
-      case ';':
-        $res .= str_repeat(')', $p) . ';';
-        $p = 0;
-        break;
-      default:
-        $res .= $ch;
-      }
+                case '?':
+                    $res .= ' ? (';
+                    $p++;
+                    break;
+                case ':':
+                    $res .= ') : (';
+                    break;
+                case ';':
+                    $res .= str_repeat(')', $p) . ';';
+                    $p   = 0;
+                    break;
+                default:
+                    $res .= $ch;
+            }
         }
 
         return $res;
@@ -376,7 +376,7 @@ class gettext_reader
         $string = str_replace('n', $n, $string);
         $string = str_replace('plural', '$plural', $string);
 
-        $total = 0;
+        $total  = 0;
         $plural = 0;
 
         eval("$string");
@@ -420,7 +420,7 @@ class gettext_reader
                 return (1 != $number) ? $plural : $single;
             }
             $result = $this->cache_translations[$key];
-            $list = explode(chr(0), $result);
+            $list   = explode(chr(0), $result);
 
             return $list[$select];
         }
@@ -429,7 +429,7 @@ class gettext_reader
             return (1 != $number) ? $plural : $single;
         }
         $result = $this->get_translation_string($num);
-        $list = explode(chr(0), $result);
+        $list   = explode(chr(0), $result);
 
         return $list[$select];
     }
