@@ -15,14 +15,14 @@ require_once RMCPATH . '/class/helpers/uris.class.php';
 class RMFunctions
 {
     public $settings = '';
-    public $modules = '';
-    public $uris = '';
+    public $modules  = '';
+    public $uris     = '';
 
     public function __construct()
     {
         $this->settings = new RMSettings();
-        $this->modules = new RMModules();
-        $this->uris = new RMUris();
+        $this->modules  = new RMModules();
+        $this->uris     = new RMUris();
     }
 
     public static function get()
@@ -61,109 +61,49 @@ class RMFunctions
         global $common;
 
         if ('users' == $common->location) {
-            RMTemplate::getInstance()->add_tool(
-                __('Users', 'rmcommon'),
-                'users.php',
-                'icon icon-users',
-                'allusers',
-                ['class' => 'cu-tool tool-users-list']
-            );
+            RMTemplate::getInstance()->add_tool(__('Users', 'rmcommon'), 'users.php', 'icon icon-users', 'allusers', ['class' => 'cu-tool tool-users-list']);
 
-            RMTemplate::getInstance()->add_tool(
-                __('Add', 'rmcommon'),
-                'users.php?action=new',
-                'icon icon-plus',
-                'newuser',
-                ['class' => 'cu-tool tool-user-add']
-            );
+            RMTemplate::getInstance()->add_tool(__('Add', 'rmcommon'), 'users.php?action=new', 'icon icon-plus', 'newuser', ['class' => 'cu-tool tool-user-add']);
         } elseif ('groups' == $common->location) {
-            RMTemplate::getInstance()->add_tool(
-                __('Groups', 'rmcommon'),
-                'groups.php',
-                'icon icon-users',
-                '',
-                [
-                    'class' => 'cu-tool tool-groups',
-                ]
-            );
+            RMTemplate::getInstance()->add_tool(__('Groups', 'rmcommon'), 'groups.php', 'icon icon-users', '', [
+                                                                            'class' => 'cu-tool tool-groups',
+                                                                        ]);
 
-            RMTemplate::getInstance()->add_tool(
-                __('Add', 'rmcommon'),
-                '#',
-                'icon icon-plus',
-                'newgroup',
-                [
-                    'class' => 'cu-tool tool-group-add',
-                    'data-action' => 'load-remote-dialog',
-                    'data-url' => 'groups.php?action=new-group',
-                    'data-parameters' => '{action: \'new-group\'}',
-                ]
-            );
+            RMTemplate::getInstance()->add_tool(__('Add', 'rmcommon'), '#', 'icon icon-plus', 'newgroup', [
+                                                                         'class'           => 'cu-tool tool-group-add',
+                                                                         'data-action'     => 'load-remote-dialog',
+                                                                         'data-url'        => 'groups.php?action=new-group',
+                                                                         'data-parameters' => '{action: \'new-group\'}',
+                                                                     ]);
 
             /*
              * Next buttons are available only when groups list is shown
              */
-            RMTemplate::getInstance()->add_tool(
-                __('Edit', 'rmcommon'),
-                '#',
-                'icon icon-pencil',
-                'editgroup',
-                [
-                    'class' => 'cu-tool tool-group-edit',
-                    'data-activator' => 'groups-list',
-                    'data-oncount' => '== 1',
-                    'data-action' => 'groupsController.edit',
-                    'disabled' => 'disabled',
-                    'title' => __('Edit Group', 'rmcommon'),
-                ]
-            );
+            RMTemplate::getInstance()->add_tool(__('Edit', 'rmcommon'), '#', 'icon icon-pencil', 'editgroup', [
+                                                                          'class'          => 'cu-tool tool-group-edit',
+                                                                          'data-activator' => 'groups-list',
+                                                                          'data-oncount'   => '== 1',
+                                                                          'data-action'    => 'groupsController.edit',
+                                                                          'disabled'       => 'disabled',
+                                                                          'title'          => __('Edit Group', 'rmcommon'),
+                                                                      ]);
 
-            RMTemplate::getInstance()->add_tool(
-                __('Delete', 'rmcommon'),
-                '#',
-                'icon icon-bin',
-                'deletegroup',
-                [
-                    'class' => 'cu-tool tool-group-delete',
-                    'data-activator' => 'groups-list',
-                    'data-oncount' => '> 0',
-                    'disabled' => 'disabled',
-                    'title' => __('Delete Groups', 'rmcommon'),
-                    'data-action' => 'groupsController.delete',
-                ]
-            );
+            RMTemplate::getInstance()->add_tool(__('Delete', 'rmcommon'), '#', 'icon icon-bin', 'deletegroup', [
+                                                                            'class'          => 'cu-tool tool-group-delete',
+                                                                            'data-activator' => 'groups-list',
+                                                                            'data-oncount'   => '> 0',
+                                                                            'disabled'       => 'disabled',
+                                                                            'title'          => __('Delete Groups', 'rmcommon'),
+                                                                            'data-action'    => 'groupsController.delete',
+                                                                        ]);
         } elseif ('imgmanager' == $common->location) {
-            RMTemplate::getInstance()->add_tool(
-                __('Categories', 'rmcommon'),
-                'images.php?action=showcats',
-                'svg-rmcommon-folder text-orange',
-                'showcategories',
-                ['class' => 'cu-tool tool-categories-images']
-            );
-            RMTemplate::getInstance()->add_tool(
-                __('New', 'rmcommon'),
-                'images.php?action=newcat',
-                'svg-rmcommon-folder-plus text-orange',
-                'newcategory',
-                ['class' => 'cu-tool tool-category-add']
-            );
+            RMTemplate::getInstance()->add_tool(__('Categories', 'rmcommon'), 'images.php?action=showcats', 'svg-rmcommon-folder text-orange', 'showcategories', ['class' => 'cu-tool tool-categories-images']);
+            RMTemplate::getInstance()->add_tool(__('New', 'rmcommon'), 'images.php?action=newcat', 'svg-rmcommon-folder-plus text-orange', 'newcategory', ['class' => 'cu-tool tool-category-add']);
             $cat = rmc_server_var($_REQUEST, 'category', 0);
             if ($cat > 0) {
-                RMTemplate::getInstance()->add_tool(
-                    __('Images', 'rmcommon'),
-                    'images.php?category=' . $cat,
-                    'svg-rmcommon-camera',
-                    'showimages',
-                    ['class' => 'cu-tool tool-images']
-                );
+                RMTemplate::getInstance()->add_tool(__('Images', 'rmcommon'), 'images.php?category=' . $cat, 'svg-rmcommon-camera', 'showimages', ['class' => 'cu-tool tool-images']);
             }
-            RMTemplate::getInstance()->add_tool(
-                __('Add', 'rmcommon'),
-                'images.php?action=new' . ($cat > 0 ? "&amp;category=$cat" : ''),
-                'svg-rmcommon-camera-plus text-info',
-                'addimages',
-                ['class' => 'cu-tool tool-images-add']
-            );
+            RMTemplate::getInstance()->add_tool(__('Add', 'rmcommon'), 'images.php?action=new' . ($cat > 0 ? "&amp;category=$cat" : ''), 'svg-rmcommon-camera-plus text-info', 'addimages', ['class' => 'cu-tool tool-images-add']);
         } else {
             RMTemplate::getInstance()->add_tool(__('Dashboard', 'rmcommon'), 'index.php', '', 'dashboard', ['class' => 'cu-tool tool-dashboard']);
             RMTemplate::getInstance()->add_tool(__('Modules', 'rmcommon'), 'modules.php', '', 'modules', ['class' => 'cu-tool tool-modules']);
@@ -200,8 +140,8 @@ class RMFunctions
             $ret[] = __('All', 'rmcommon');
         }
 
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
-        $sql = 'SELECT name FROM ' . $db->prefix('groups') . ' WHERE groupid IN(' . implode(',', $groups) . ')';
+        $db     = XoopsDatabaseFactory::getDatabaseConnection();
+        $sql    = 'SELECT name FROM ' . $db->prefix('groups') . ' WHERE groupid IN(' . implode(',', $groups) . ')';
         $result = $db->query($sql);
         while (false !== ($row = $db->fetchArray($result))) {
             $ret[] = $row['name'];
@@ -217,22 +157,22 @@ class RMFunctions
     /**
      * Load all categories from database
      * @param string SQL Filters
-     * @param bool $object Determines if the return data is an array with objects (true) or values
+     * @param bool  $object Determines if the return data is an array with objects (true) or values
      * @param mixed $filters
      * @return array
      */
     public static function load_images_categories($filters = 'ORDER BY id_cat DESC', $object = false)
     {
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
-        $sql = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_images_categories') . " $filters";
-        $result = $db->query($sql);
+        $db         = XoopsDatabaseFactory::getDatabaseConnection();
+        $sql        = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_images_categories') . " $filters";
+        $result     = $db->query($sql);
         $categories = [];
         while (false !== ($row = $db->fetchArray($result))) {
             $tc = new RMImageCategory();
             $tc->assignVars($row);
             if (!$object) {
                 $categories[] = [
-                    'id' => $tc->id(),
+                    'id'   => $tc->id(),
                     'name' => $tc->getVar('name'),
                 ];
             } else {
@@ -251,11 +191,11 @@ class RMFunctions
      * @param string Object type (eg. module, plugin, etc)
      * @param int Comment parent id, will return all comments under a given parent
      * @param int User that has been posted the comments
-     * @param bool $assign Determines if the output will be assigned to a smarty variable
-     * @param mixed $obj
-     * @param mixed $params
-     * @param mixed $type
-     * @param mixed $parent
+     * @param bool       $assign Determines if the output will be assigned to a smarty variable
+     * @param mixed      $obj
+     * @param mixed      $params
+     * @param mixed      $type
+     * @param mixed      $parent
      * @param null|mixed $user
      * @return array
      */
@@ -264,13 +204,13 @@ class RMFunctions
         global $common;
 
         $parameters = [
-            'url' => $common->uris()->current_url(),
-            'object' => $obj,
-            'type' => 'module',
+            'url'        => $common->uris()->current_url(),
+            'object'     => $obj,
+            'type'       => 'module',
             'identifier' => $params,
-            'parent' => $parent,
-            'user' => $user,
-            'assign' => $assign,
+            'parent'     => $parent,
+            'user'       => $user,
+            'assign'     => $assign,
         ];
 
         return $common->comments()->load($parameters);
@@ -296,11 +236,11 @@ class RMFunctions
         global $common;
 
         $parameters = [
-            'url' => $common->uris()->current_url(),
-            'object' => $obj,
-            'type' => 'module',
+            'url'        => $common->uris()->current_url(),
+            'object'     => $obj,
+            'type'       => 'module',
             'identifier' => $params,
-            'file' => $file,
+            'file'       => $file,
         ];
 
         return $common->comments()->form($parameters);
@@ -320,7 +260,7 @@ class RMFunctions
             return null;
         }
 
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $sql = 'DELETE FROM ' . $db->prefix('mod_rmcommon_comments') . " WHERE id_obj='$module' AND params='$params'";
 
         // Event
@@ -358,7 +298,7 @@ class RMFunctions
 
     /**
      * Get an image from image manager
-     * @param $id int Image id
+     * @param       $id int Image id
      * @param string Size name from category
      * @param mixed $size
      */
@@ -416,8 +356,8 @@ class RMFunctions
             return;
         }
 
-        $tpl = RMTemplate::getInstance();
-        $tc = TextCleaner::getInstance();
+        $tpl         = RMTemplate::getInstance();
+        $tc          = TextCleaner::getInstance();
         $description = strip_tags($description);
         $tpl->add_meta('description', $tc->truncate($description, 255));
         if ('' != $keywords) {
@@ -471,13 +411,13 @@ class RMFunctions
     /**
      * Encode array keys to make a valid url string
      *
-     * @deprecated
      * @param array Array to encode
      * @param string Var name to generate url
      * @param string URL separator
      * @param mixed $array
      * @param mixed $name
      * @param mixed $separator
+     * @deprecated
      */
     public static function urlencode_array($array, $name, $separator = '&')
     {
@@ -488,8 +428,8 @@ class RMFunctions
 
     /**
      * Returns the current url
-     * @deprecated
      * @return string
+     * @deprecated
      */
     public function current_url()
     {
@@ -499,12 +439,12 @@ class RMFunctions
     }
 
     /**
+     * @param string $dir    Directory name for plugin
+     * @param bool   $values Retrieves only key => value (true) or the full array (false)
+     * @return array
      * @deprecated
      * Retrieves the settings for a given plugin.
      * This function is deprecated, use RMSettings::plugins_settings() instead;
-     * @param string $dir Directory name for plugin
-     * @param bool $values Retrieves only key => value (true) or the full array (false)
-     * @return array
      */
     public static function plugin_settings($dir, $values = false)
     {
@@ -519,10 +459,10 @@ class RMFunctions
 
     /**
      * Load a module as XoopsModule object
-     * @deprecated
      * @param int|string Module id or module name
      * @param mixed $mod
      * @return object XoopsModule
+     * @deprecated
      */
     public function load_module($mod)
     {
@@ -533,8 +473,8 @@ class RMFunctions
 
     /**
      * See RMModules::get_modules_list
-     * @deprecated
      * @param mixed $active
+     * @deprecated
      */
     public function get_modules_list($active = -1)
     {
@@ -592,7 +532,7 @@ class RMFunctions
         }
 
         include $file;
-        $class = ucfirst($dirname) . 'Controller';
+        $class      = ucfirst($dirname) . 'Controller';
         $controller = $class::getInstance();
 
         return $controller;

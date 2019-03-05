@@ -107,8 +107,8 @@ class Services
      * Loads an specific service controller
      *
      * @param $name
-     * @throws \Exception
      * @return mixed
+     * @throws \Exception
      */
     public function service($name)
     {
@@ -132,7 +132,7 @@ class Services
             throw new \Exception(sprintf(__('The class %s for service %s does not exists!', 'rmcommon'), '<strong>' . $this->service[$name]['class'] . '</strong>', '<strong>' . $name . '</strong>'));
         }
 
-        $class = $this->services[$name]['class'];
+        $class   = $this->services[$name]['class'];
         $service = $class::getInstance();
 
         return $service;
@@ -211,8 +211,8 @@ class Services
     /**
      * Returns a service provider
      * @param $name
-     * @throws \Exception
      * @return ServiceFallback|mixed
+     * @throws \Exception
      */
     public function __get($name)
     {

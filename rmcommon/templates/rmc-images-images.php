@@ -1,31 +1,32 @@
-<h1 class="cu-section-title"><?php _e('Images Manager', 'rmcommon'); echo ': ' . $category->getVar('name'); ?></h1>
+<h1 class="cu-section-title"><?php _e('Images Manager', 'rmcommon');
+    echo ': ' . $category->getVar('name'); ?></h1>
 <form name="list_images" method="post" action="images.php" id="list-images" class="form-inline">
-<div class="cu-bulk-actions">
-    <div class="row">
-        <div class="col-sm-8">
-            <select name="action" id="action-select" class="form-control">
-                <option value=""><?php _e('Bulk Actions...', 'rmcommon'); ?></option>
-                <option value="delete"><?php _e('Delete', 'rmcommon'); ?></option>
-                <option value="thumbs"><?php _e('Update thumbnails', 'rmcommon'); ?></option>
-            </select>
+    <div class="cu-bulk-actions">
+        <div class="row">
+            <div class="col-sm-8">
+                <select name="action" id="action-select" class="form-control">
+                    <option value=""><?php _e('Bulk Actions...', 'rmcommon'); ?></option>
+                    <option value="delete"><?php _e('Delete', 'rmcommon'); ?></option>
+                    <option value="thumbs"><?php _e('Update thumbnails', 'rmcommon'); ?></option>
+                </select>
 
-            <button type="submit" class="btn btn-default" onclick="if($('#action-select').val()=='delete') return confirm('Do you really want to delete selected images?');"><?php _e('Apply', 'rmcommon'); ?></button>
+                <button type="submit" class="btn btn-default" onclick="if($('#action-select').val()=='delete') return confirm('Do you really want to delete selected images?');"><?php _e('Apply', 'rmcommon'); ?></button>
 
-            <select name="category" onchange="window.location = 'images.php?category='+$(this).val();" id="category-select" class="form-control">
-                <?php foreach ($categories as $catego): ?>
-                    <option value="<?php echo $catego['id']; ?>"<?php echo $catego['id'] == $cat ? ' selected="selected"' : ''; ?>><?php echo $catego['name']; ?></option>
-                <?php endforeach; ?>
-            </select>
+                <select name="category" onchange="window.location = 'images.php?category='+$(this).val();" id="category-select" class="form-control">
+                    <?php foreach ($categories as $catego): ?>
+                        <option value="<?php echo $catego['id']; ?>"<?php echo $catego['id'] == $cat ? ' selected="selected"' : ''; ?>><?php echo $catego['name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-        </div>
-        <div class="col-sm-4 text-right">
-            <a href="javascript:;" onclick="window.location = 'images.php?action=new&category='+$('#category-select').val();" class="btn btn-link">
-                <?php _e('Create Images', 'rmcommon'); ?>
-            </a>
-            <?php $nav->render(false); ?>
+            </div>
+            <div class="col-sm-4 text-right">
+                <a href="javascript:;" onclick="window.location = 'images.php?action=new&category='+$('#category-select').val();" class="btn btn-link">
+                    <?php _e('Create Images', 'rmcommon'); ?>
+                </a>
+                <?php $nav->render(false); ?>
+            </div>
         </div>
     </div>
-</div>
 
 
     <div class="panel panel-default">
@@ -85,6 +86,6 @@
         </div>
     </div>
 
-<input type="hidden" name="category" value="<?php echo $cat; ?>">
-<input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="category" value="<?php echo $cat; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
 </form>

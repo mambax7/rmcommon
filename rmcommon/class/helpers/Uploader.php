@@ -38,16 +38,46 @@ class Uploader
     protected $options = [];
 
     private $acceptedOptions = [
-        'url', 'method', 'parallelUploads', 'maxFilesize', 'filesizeBase', 'paramName', 'uploadMultiple',
-        'headers', 'addRemoveLinks', 'previewsContainer', 'hiddenInputContainer', 'clickable', 'createImageThumbnails',
-        'maxThumbnailFilesize', 'thumbnailWidth', 'thumbnailHeight', 'maxFiles', 'resize', 'init', 'acceptedFiled',
-        'accept', 'renameFilename', 'autoProcessQueue', 'previewTemplate', 'forceFallback', 'fallback',
+        'url',
+        'method',
+        'parallelUploads',
+        'maxFilesize',
+        'filesizeBase',
+        'paramName',
+        'uploadMultiple',
+        'headers',
+        'addRemoveLinks',
+        'previewsContainer',
+        'hiddenInputContainer',
+        'clickable',
+        'createImageThumbnails',
+        'maxThumbnailFilesize',
+        'thumbnailWidth',
+        'thumbnailHeight',
+        'maxFiles',
+        'resize',
+        'init',
+        'acceptedFiled',
+        'accept',
+        'renameFilename',
+        'autoProcessQueue',
+        'previewTemplate',
+        'forceFallback',
+        'fallback',
         //language options
-        'dictDefaultMessage', 'dictFallbackMessage', 'dictFallbackText', 'dictInvalidFileType', 'dictFileTooBig',
-        'dictReponseError', 'dictCancelUpload', 'dictCancelUploadConfirmation', 'dictRemoveFile', 'dictMaxFilesEsceeded',
+        'dictDefaultMessage',
+        'dictFallbackMessage',
+        'dictFallbackText',
+        'dictInvalidFileType',
+        'dictFileTooBig',
+        'dictReponseError',
+        'dictCancelUpload',
+        'dictCancelUploadConfirmation',
+        'dictRemoveFile',
+        'dictMaxFilesEsceeded',
     ];
 
-    protected $htmlID = '';
+    protected $htmlID      = '';
     protected $camelizedID = '';
 
     /**

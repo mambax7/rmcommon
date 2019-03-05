@@ -25,9 +25,9 @@ class Swift_Events_CommandEvent extends Swift_Events_EventObject
     /**
      * An array of codes which a successful response will contain.
      *
-     * @var int[]
+     * @var integer[]
      */
-    private $_successCodes = [];
+    private $_successCodes = array();
 
     /**
      * Create a new CommandEvent for $source with $command.
@@ -36,7 +36,7 @@ class Swift_Events_CommandEvent extends Swift_Events_EventObject
      * @param string          $command
      * @param array           $successCodes
      */
-    public function __construct(Swift_Transport $source, $command, $successCodes = [])
+    public function __construct(Swift_Transport $source, $command, $successCodes = array())
     {
         parent::__construct($source);
         $this->_command = $command;
@@ -56,7 +56,7 @@ class Swift_Events_CommandEvent extends Swift_Events_EventObject
     /**
      * Get the numeric response codes which indicate success for this command.
      *
-     * @return int[]
+     * @return integer[]
      */
     public function getSuccessCodes()
     {

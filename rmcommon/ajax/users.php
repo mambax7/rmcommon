@@ -8,7 +8,7 @@
 // License: GPL 2.0
 // --------------------------------------------------------------
 
-require  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+require dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 //require_once XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php';
 
 $common->ajax()->prepare();
@@ -16,13 +16,13 @@ $common->ajax()->prepare();
 $common->checkToken();
 
 $tpl = new RMTemplate();
-$db = XoopsDatabaseFactory::getDatabaseConnection();
+$db  = XoopsDatabaseFactory::getDatabaseConnection();
 
 $type = 0;
-$s = '';
-$kw = '';
-$ord = 2;
-$all = false;
+$s    = '';
+$kw   = '';
+$ord  = 2;
+$all  = false;
 
 foreach ($_REQUEST as $k => $v) {
     $$k = $v;
@@ -34,7 +34,7 @@ if (!isset($field) || '' == $field) {
 }
 
 $field = addslashes($field);
-$kw = addslashes($kw);
+$kw    = addslashes($kw);
 
 if (is_string($s) && '' != $s) {
     $selected = explode(',', $s);
@@ -53,11 +53,11 @@ if ('' != $kw) {
 
 list($num) = $db->fetchRow($db->query($sql));
 
-$page = isset($pag) ? $pag : 1;
+$page  = isset($pag) ? $pag : 1;
 $limit = isset($limit) && $limit > 0 ? $limit : 36;
 
 $tpages = ceil($num / $limit);
-$page = $page > $tpages ? $tpages : $page;
+$page   = $page > $tpages ? $tpages : $page;
 if ($num % $limit > 0) {
     $tpages++;
 }
@@ -94,7 +94,7 @@ while (false !== ($row = $db->fetchArray($result))) {
 
 $selecteds = [];
 if (is_array($selected) && count($selected) > 0) {
-    $sql = 'SELECT uid,uname FROM ' . $db->prefix('users') . ' WHERE level>0 AND uid IN (' . implode(',', $selected) . ')';
+    $sql    = 'SELECT uid,uname FROM ' . $db->prefix('users') . ' WHERE level>0 AND uid IN (' . implode(',', $selected) . ')';
     $result = $db->query($sql);
     while (false !== ($row = $db->fetchArray($result))) {
         $selecteds[] = ['id' => $row['uid'], 'name' => $row['uname'], 'check' => true];
@@ -109,11 +109,6 @@ ob_start();
 include RMTemplate::get()->get_template('rmc-form-users.php', 'module', 'rmcommon');
 $content = ob_get_clean();
 
-$common->ajax()->response(
-    __('Seleccionar usuario', 'sessions'),
-    0,
-    1,
-    [
-        'content' => $content,
-    ]
-);
+$common->ajax()->response(__('Seleccionar usuario', 'sessions'), 0, 1, [
+                                                                   'content' => $content,
+                                                               ]);

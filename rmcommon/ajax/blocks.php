@@ -8,7 +8,7 @@
 // License: GPL 2.0
 // --------------------------------------------------------------
 
-require  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+require dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
 // Deactivate the logger
 error_reporting(0);
@@ -20,9 +20,9 @@ function response($message, $data = [], $error = 0, $token = 0)
 
     $response = [
         'message' => $message,
-        'data' => $data,
-        'error' => $error,
-        'token' => 1 == $token ? $xoopsSecurity->createToken() : '',
+        'data'    => $data,
+        'error'   => $error,
+        'token'   => 1 == $token ? $xoopsSecurity->createToken() : '',
     ];
 
     echo json_encode($response);
@@ -41,9 +41,9 @@ function insert_block()
 {
     global $xoopsSecurity;
 
-    $mod = RMHttpRequest::post('module', 'string', '');
-    $id = RMHttpRequest::post('block', 'string', '');
-    $token = RMHttpRequest::post('XOOPS_TOKEN_REQUEST', 'string', '');
+    $mod    = RMHttpRequest::post('module', 'string', '');
+    $id     = RMHttpRequest::post('block', 'string', '');
+    $token  = RMHttpRequest::post('XOOPS_TOKEN_REQUEST', 'string', '');
     $canvas = RMHttpRequest::post('canvas', 'integer', 0);
 
     if (!$xoopsSecurity->check()) {
@@ -61,8 +61,8 @@ function insert_block()
 
     $module->loadInfoAsVar($mod);
     $blocks = &$module->getInfo('blocks');
-    $ms = $module->name() . '<br>';
-    $found = false;
+    $ms     = $module->name() . '<br>';
+    $found  = false;
     foreach ($blocks as $bk) {
         $str = isset($bk['show_func']) ? $bk['show_func'] : '';
         $str .= isset($bk['edit_func']) ? $bk['edit_func'] : '';
@@ -83,7 +83,7 @@ function insert_block()
     if ($canvas <= 0) {
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         // Get a default side
-        $sql = 'SELECT id_position FROM ' . $db->prefix('mod_rmcommon_blocks_positions') . ' ORDER BY id_position LIMIT 0, 1';
+        $sql    = 'SELECT id_position FROM ' . $db->prefix('mod_rmcommon_blocks_positions') . ' ORDER BY id_position LIMIT 0, 1';
         $result = $db->query($sql);
         if ($result) {
             list($canvas) = $db->fetchRow($result);
@@ -93,12 +93,7 @@ function insert_block()
     }
 
     if ('' == $canvas) {
-        response(
-            __('There are not blocks positions enabled! You must add or enable at least one position before to add new blocks.', 'rmcommon'),
-            ['error' => __('There are not blocks positions enabled! You must add or enable at least one position before to add new blocks.', 'rmcommon')],
-            1,
-            1
-        );
+        response(__('There are not blocks positions enabled! You must add or enable at least one position before to add new blocks.', 'rmcommon'), ['error' => __('There are not blocks positions enabled! You must add or enable at least one position before to add new blocks.', 'rmcommon')], 1, 1);
     }
 
     $block->setReadGroups([0]);
@@ -129,13 +124,13 @@ function insert_block()
     $pos = RMBlocksFunctions::block_positions();
 
     $ret = [
-        'id' => $block->id(),
-        'title' => $block->getVar('name'),
-        'module' => $block->getVar('element'),
+        'id'          => $block->id(),
+        'title'       => $block->getVar('name'),
+        'module'      => $block->getVar('element'),
         'description' => $block->getVar('description'),
-        'canvas' => $pos[$canvas],
-        'weight' => $block->getVar('weight'),
-        'visible' => $block->getVar('visible'),
+        'canvas'      => $pos[$canvas],
+        'weight'      => $block->getVar('weight'),
+        'visible'     => $block->getVar('visible'),
     ];
 
     response(sprintf(__('Block "%s" was added successfully! Please configure it.', 'rmcommon'), $block->getVar('name')), ['block' => $ret], 0, 1);
@@ -165,27 +160,27 @@ function configure_block()
     }
 
     $positions = RMBlocksFunctions::block_positions(1);
-    $form = new RMForm('', '', '');
-    $canvas = new RMFormModules([
-        'caption' => '',
-        'name' => 'bk_mod',
-        'id' => 'bk_mod',
-        'type' => 'checkbox',
-        'multiple' => null,
-        'selected' => $block->sections(),
-        'subpages' => null,
-        'dirnames' => false,
-        'selectedSubs' => $block->subpages(),
-        'dirnames' => false,
-    ]);
+    $form      = new RMForm('', '', '');
+    $canvas    = new RMFormModules([
+                                       'caption'      => '',
+                                       'name'         => 'bk_mod',
+                                       'id'           => 'bk_mod',
+                                       'type'         => 'checkbox',
+                                       'multiple'     => null,
+                                       'selected'     => $block->sections(),
+                                       'subpages'     => null,
+                                       'dirnames'     => false,
+                                       'selectedSubs' => $block->subpages(),
+                                       'dirnames'     => false,
+                                   ]);
     // Groups
     $groups = new RMFormGroups([
-        'caption' => '',
-        'name' => 'bk_groups',
-        'multiple' => null,
-        'type' => 'checkbox',
-        'value' => $block->readGroups(),
-    ]);
+                                   'caption'  => '',
+                                   'name'     => 'bk_groups',
+                                   'multiple' => null,
+                                   'type'     => 'checkbox',
+                                   'value'    => $block->readGroups(),
+                               ]);
 
     $block_options = $block->getOptions();
 
@@ -194,7 +189,7 @@ function configure_block()
     $form = ob_get_clean();
 
     $ret = [
-        'id' => $block->id(),
+        'id'      => $block->id(),
         'content' => $form,
     ];
     response(sprintf(__('Configuration form for block "%s" was loaded successfully!', 'rmcommon'), $block->getVar('name')), $ret, 0, 1);
@@ -253,10 +248,10 @@ function save_block_config()
     RMEvents::get()->run_event('rmcommon.block.saved', $block);
 
     $ret = [
-        'id' => $block->id(),
-        'canvas' => $block->getVar('canvas'),
+        'id'      => $block->id(),
+        'canvas'  => $block->getVar('canvas'),
         'visible' => $block->getVar('visible'),
-        'weight' => $block->getVar('weight'),
+        'weight'  => $block->getVar('weight'),
     ];
 
     response(sprintf(__('Settings for block "%s" were saved successfully!', 'rmcommon'), $block->getVar('name')), $ret, 0, 1);
@@ -272,9 +267,9 @@ function save_block_position()
         response(__('Session token expired. Please try again.', 'rmcommon'), [], 1, 0);
     }
 
-    $id = rmc_server_var($_POST, 'id', 0);
-    $name = rmc_server_var($_POST, 'name', '');
-    $tag = rmc_server_var($_POST, 'tag', '');
+    $id     = rmc_server_var($_POST, 'id', 0);
+    $name   = rmc_server_var($_POST, 'name', '');
+    $tag    = rmc_server_var($_POST, 'tag', '');
     $active = rmc_server_var($_POST, 'active', 1);
 
     if ($id <= 0) {
@@ -290,7 +285,7 @@ function save_block_position()
         response(__('Specified blocks position does not exists!', 'rmcommon'), [], 1, 1);
     }
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('mod_rmcommon_blocks_positions') . " WHERE (name='$name' OR tag='$tag') AND id_position<>$id";
 
     list($num) = $db->fetchRow($db->query($sql));
@@ -334,11 +329,11 @@ function save_block_order()
         response('', ['position' => $pos_id], 0, 0);
     }
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $ids = [];
     $sql = 'UPDATE ' . $db->prefix('mod_rmcommon_blocks') . " SET canvas = $pos_id, weight = CASE bid\n";
     foreach ($blocks as $i => $block) {
-        $sql .= "WHEN $block[id] THEN $i\n";
+        $sql   .= "WHEN $block[id] THEN $i\n";
         $ids[] = $block['id'];
     }
     $sql .= "END\n WHERE bid IN (" . implode(',', $ids) . ');';
@@ -348,15 +343,10 @@ function save_block_order()
     if ($db->queryF($sql)) {
         response(sprintf(__('Blocks order for position "%s" saved successfully!', 'rmcommon'), $pos->getVar('name')), ['position' => $pos_id], 0, 0);
     } else {
-        response(
-            sprintf(__('Blocks order for position "%s" could not be saved!', 'rmcommon'), $pos->getVar('name')),
-            [
-                'position' => $pos_id,
-                'error' => $db->error(),
-            ],
-            1,
-            0
-        );
+        response(sprintf(__('Blocks order for position "%s" could not be saved!', 'rmcommon'), $pos->getVar('name')), [
+                                                                                                                        'position' => $pos_id,
+                                                                                                                        'error'    => $db->error(),
+                                                                                                                    ], 1, 0);
     }
 }
 
@@ -384,14 +374,9 @@ function change_block_visibility($visible)
     if ($block->save()) {
         response(sprintf(__('The visibility of the block %s was changed successfully!', 'rmcommon'), $block->getVar('name')), ['visible' => $visible], 0, 0);
     } else {
-        response(
-            sprintf(__('Visibility for block %s could not be changed!', 'rmcommon'), $block->getVar('name')),
-            [
-                'error' => $block->error(),
-            ],
-            1,
-            0
-        );
+        response(sprintf(__('Visibility for block %s could not be changed!', 'rmcommon'), $block->getVar('name')), [
+                                                                                                                     'error' => $block->error(),
+                                                                                                                 ], 1, 0);
     }
 }
 
@@ -418,19 +403,9 @@ function delete_block()
     }
 
     if (!$block->delete()) {
-        response(
-            sprintf(__('The block "%s" could not be deleted!', 'rmcommon'), $block->getVar('name')),
-            ['error' => $block->errors()],
-            1,
-            1
-        );
+        response(sprintf(__('The block "%s" could not be deleted!', 'rmcommon'), $block->getVar('name')), ['error' => $block->errors()], 1, 1);
     } else {
-        response(
-            sprintf(__('The block "%s" was deleted successfully!', 'rmcommon'), $block->getVar('name')),
-            [],
-            0,
-            1
-        );
+        response(sprintf(__('The block "%s" was deleted successfully!', 'rmcommon'), $block->getVar('name')), [], 0, 1);
     }
 }
 

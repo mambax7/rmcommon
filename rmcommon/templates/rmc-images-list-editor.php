@@ -11,8 +11,8 @@
     <div id="thumbnail-<?php echo $image['id']; ?>" data-id="<?php echo $image['id']; ?>" class="thumbnail-item" style="background-image: url('<?php echo $image['thumb']; ?>');" alt="<?php echo $image['title']; ?>">
         <span class="thumbnail-cover"></span>
         <?php if ($multi): ?>
-        <a href="#" class="add"><?php echo $cuIcons->getIcon('svg-rmcommon-squares'); ?></a>
-        <span class="check"><?php echo $cuIcons->getIcon('svg-rmcommon-ok'); ?></span>
+            <a href="#" class="add"><?php echo $cuIcons->getIcon('svg-rmcommon-squares'); ?></a>
+            <span class="check"><?php echo $cuIcons->getIcon('svg-rmcommon-ok'); ?></span>
         <?php endif; ?>
         <a href="#" class="insert"><?php echo $cuIcons->getIcon('svg-rmcommon-plus'); ?></a>
     </div>
@@ -32,7 +32,8 @@
                 </a>
                 <div class="media-body">
                     <h5 class="media-heading"><strong>Uploaded by <a href="#" target="_blank"></a></strong></h5>
-                    <small>on <span class="info-date"></span></small><br>
+                    <small>on <span class="info-date"></span></small>
+                    <br>
                 </div>
             </div>
             <ul class="list-unstyled">
@@ -98,15 +99,15 @@
 
             </div>
             <?php if ('markdown' == $type): ?>
-            <div class="form-group" id="md-as">
-                <label><?php _e('Insert as:', 'rmcommon'); ?></label><br>
-                <label class="radio-inline">
-                    <input type="radio" name="insertas" value="md" checked> Markdown
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="insertas" value="html"> HTML
-                </label>
-            </div>
+                <div class="form-group" id="md-as">
+                    <label><?php _e('Insert as:', 'rmcommon'); ?></label><br>
+                    <label class="radio-inline">
+                        <input type="radio" name="insertas" value="md" checked> Markdown
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="insertas" value="html"> HTML
+                    </label>
+                </div>
             <?php endif; ?>
             <div class="form-group">
                 <input type="hidden" name="id" value="" class="img-id">

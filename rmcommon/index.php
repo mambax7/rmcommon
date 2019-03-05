@@ -15,8 +15,8 @@ function get_modules_list()
 {
     $db = XoopsDatabaseFactory::getDatabaseConnection();
 
-    $sql = 'SELECT * FROM ' . $db->prefix('modules') . ' ORDER BY mid, weight';
-    $result = $db->query($sql);
+    $sql            = 'SELECT * FROM ' . $db->prefix('modules') . ' ORDER BY mid, weight';
+    $result         = $db->query($sql);
     $installed_mods = [];
     while (false !== ($row = $db->fetchArray($result))) {
         $mod = new XoopsModule();
@@ -30,20 +30,20 @@ function get_modules_list()
         }
 
         $this_module = [
-            'name' => $mod->getVar('name'),
-            'dirname' => $mod->getVar('dirname'),
-            'real_name' => $mod->getInfo('name'),
-            'version' => is_array($mod->getInfo('rmversion')) ? RMModules::format_module_version($mod->getInfo('rmversion')) : $mod->getVar('version') / 100,
-            'icon' => $module_icon,
-            'logo' => $module_logo,
-            'admin' => $mod->getVar('hasadmin') ? XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . $mod->getInfo('adminindex') : '',
-            'main' => RMUris::anchor($mod->getVar('dirname')),
-            'updated' => RMTimeFormatter::get()->format($mod->getVar('last_update'), __('%d% %T% %Y%', 'rmcommon')),
-            'config' => isset($config_link) ? $config_link : '',
+            'name'        => $mod->getVar('name'),
+            'dirname'     => $mod->getVar('dirname'),
+            'real_name'   => $mod->getInfo('name'),
+            'version'     => is_array($mod->getInfo('rmversion')) ? RMModules::format_module_version($mod->getInfo('rmversion')) : $mod->getVar('version') / 100,
+            'icon'        => $module_icon,
+            'logo'        => $module_logo,
+            'admin'       => $mod->getVar('hasadmin') ? XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . $mod->getInfo('adminindex') : '',
+            'main'        => RMUris::anchor($mod->getVar('dirname')),
+            'updated'     => RMTimeFormatter::get()->format($mod->getVar('last_update'), __('%d% %T% %Y%', 'rmcommon')),
+            'config'      => isset($config_link) ? $config_link : '',
             'description' => $mod->getInfo('description'),
         ];
 
-        $installed_mods[] = (object) $this_module;
+        $installed_mods[] = (object)$this_module;
     }
 
     return $installed_mods;
@@ -55,18 +55,18 @@ function show_dashboard()
 
     //RMFunctions::create_toolbar();
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
-    $sql = 'SELECT * FROM ' . $db->prefix('modules');
-    $result = $db->query($sql);
+    $db             = XoopsDatabaseFactory::getDatabaseConnection();
+    $sql            = 'SELECT * FROM ' . $db->prefix('modules');
+    $result         = $db->query($sql);
     $installed_mods = [];
     while (false !== ($row = $db->fetchArray($result))) {
         $installed_mods[] = $row['dirname'];
     }
 
     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-    $dirlist = XoopsLists::getModulesList();
+    $dirlist        = XoopsLists::getModulesList();
     $available_mods = [];
-    $moduleHandler = xoops_getHandler('module');
+    $moduleHandler  = xoops_getHandler('module');
 
     foreach ($dirlist as $file) {
         clearstatcache();
@@ -84,11 +84,11 @@ function show_dashboard()
 
     // Modules counter
     $counterModules = new Common\Widgets\Counter([
-        'id' => 'counter-modules',
-        'color' => 'red',
-        'icon' => 'svg-rmcommon-module',
-        'class' => 'animated bounceIn',
-    ]);
+                                                     'id'    => 'counter-modules',
+                                                     'color' => 'red',
+                                                     'icon'  => 'svg-rmcommon-module',
+                                                     'class' => 'animated bounceIn',
+                                                 ]);
     $counterModules->addCell(__('Modules', 'rmcommon'), count($available_mods) + count($installed_modules));
     $counterModules->addCell(__('Installed', 'rmcommon'), count($installed_modules));
     $counterModules->addCell(__('Available', 'rmcommon'), count($available_mods));
@@ -101,11 +101,11 @@ function show_dashboard()
     list($inactive) = $db->fetchRow($db->query($sql));
 
     $counterUsers = new Common\Widgets\Counter([
-        'id' => 'counter-users',
-        'color' => 'blue',
-        'icon' => 'svg-rmcommon-users2',
-        'class' => 'animated bounceIn',
-    ]);
+                                                   'id'    => 'counter-users',
+                                                   'color' => 'blue',
+                                                   'icon'  => 'svg-rmcommon-users2',
+                                                   'class' => 'animated bounceIn',
+                                               ]);
 
     $total = $active + $inactive;
 
@@ -122,11 +122,11 @@ function show_dashboard()
 
     // Comments counter
     $counterComments = new Common\Widgets\Counter([
-        'id' => 'counter-comments',
-        'color' => 'green',
-        'icon' => 'svg-rmcommon-comments',
-        'class' => 'animated bounceIn',
-    ]);
+                                                      'id'    => 'counter-comments',
+                                                      'color' => 'green',
+                                                      'icon'  => 'svg-rmcommon-comments',
+                                                      'class' => 'animated bounceIn',
+                                                  ]);
 
     list($approved) = $db->fetchRow($db->query('SELECT COUNT(*) FROM ' . $db->prefix('mod_rmcommon_comments') . " WHERE status = 'approved'"));
     list($waiting) = $db->fetchRow($db->query('SELECT COUNT(*) FROM ' . $db->prefix('mod_rmcommon_comments') . " WHERE status != 'approved'"));
@@ -142,11 +142,11 @@ function show_dashboard()
     $counterComments->addCell(__('Ratio', 'rmcommon'), $ratio * 100 . '%');
 
     $counterSystem = new Common\Widgets\Counter([
-        'id' => 'counter-system',
-        'color' => 'deep-orange',
-        'icon' => 'svg-rmcommon-rmcommon',
-        'class' => 'animated bounceIn',
-    ]);
+                                                    'id'    => 'counter-system',
+                                                    'color' => 'deep-orange',
+                                                    'icon'  => 'svg-rmcommon-rmcommon',
+                                                    'class' => 'animated bounceIn',
+                                                ]);
     $counterSystem->addCell(__('Current Version', 'rmcommon'), RMModules::get_module_version('rmcommon', false));
     $counterSystem->addCell('XOOPS', mb_substr(str_replace('XOOPS ', '', XOOPS_VERSION), 0, 5));
     $version = explode('-', phpversion());
@@ -162,67 +162,67 @@ function show_dashboard()
     $counterSystem->addCell('MySQL', $version[0]);
 
     // Management Tools
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Modules', 'rmcommon'),
-        'link' => 'modules.php',
-        'icon' => 'svg-rmcommon-module',
-        'color' => 'pink',
+        'link'    => 'modules.php',
+        'icon'    => 'svg-rmcommon-module',
+        'color'   => 'pink',
     ];
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Blocks', 'rmcommon'),
-        'link' => 'blocks.php',
-        'icon' => 'svg-rmcommon-blocks',
-        'color' => 'blue',
+        'link'    => 'blocks.php',
+        'icon'    => 'svg-rmcommon-blocks',
+        'color'   => 'blue',
     ];
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Users', 'rmcommon'),
-        'link' => 'users.php',
-        'icon' => 'svg-rmcommon-user2',
-        'color' => 'deep-orange',
+        'link'    => 'users.php',
+        'icon'    => 'svg-rmcommon-user2',
+        'color'   => 'deep-orange',
     ];
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Groups', 'rmcommon'),
-        'link' => 'groups.php',
-        'icon' => 'svg-rmcommon-users2',
-        'color' => 'green',
+        'link'    => 'groups.php',
+        'icon'    => 'svg-rmcommon-users2',
+        'color'   => 'green',
     ];
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Images', 'rmcommon'),
-        'link' => 'images.php',
-        'icon' => 'svg-rmcommon-images',
-        'color' => 'purple',
+        'link'    => 'images.php',
+        'icon'    => 'svg-rmcommon-images',
+        'color'   => 'purple',
     ];
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Comments', 'rmcommon'),
-        'link' => 'comments.php',
-        'icon' => 'svg-rmcommon-comments',
-        'color' => 'red',
+        'link'    => 'comments.php',
+        'icon'    => 'svg-rmcommon-comments',
+        'color'   => 'red',
     ];
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Plugins', 'rmcommon'),
-        'link' => 'plugins.php',
-        'icon' => 'svg-rmcommon-plug',
-        'color' => 'orange',
+        'link'    => 'plugins.php',
+        'icon'    => 'svg-rmcommon-plug',
+        'color'   => 'orange',
     ];
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Updates', 'rmcommon'),
-        'link' => 'updates.php',
-        'icon' => 'svg-rmcommon-update',
-        'color' => 'teal',
+        'link'    => 'updates.php',
+        'icon'    => 'svg-rmcommon-update',
+        'color'   => 'teal',
     ];
 
-    $managementTools[] = (object) [
+    $managementTools[] = (object)[
         'caption' => __('Preferences', 'rmcommon'),
-        'link' => 'settings.php?action=configure&mod=rmcommon',
-        'icon' => 'svg-rmcommon-wrench',
-        'color' => 'light-blue',
+        'link'    => 'settings.php?action=configure&mod=rmcommon',
+        'icon'    => 'svg-rmcommon-wrench',
+        'color'   => 'light-blue',
     ];
 
     $managementTools = RMEvents::get()->trigger('rmcommon.get.system.tools', $managementTools);
 
     // Load recent comments
-    $sql = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_comments') . ' ORDER BY `posted` DESC LIMIT 0, 5';
-    $result = $db->query($sql);
+    $sql      = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_comments') . ' ORDER BY `posted` DESC LIMIT 0, 5';
+    $result   = $db->query($sql);
     $comments = [];
     while (false !== ($row = $db->fetchArray($result))) {
         $com = new RMComment();
@@ -242,22 +242,22 @@ function show_dashboard()
 
             $user = $ucache[$editor->getVar('xuid')];
 
-            $poster = (object) [
-                'id' => $user->getVar('uid'),
-                'name' => $user->getVar('uname'),
-                'email' => $user->getVar('email'),
-                'posts' => $user->getVar('posts'),
+            $poster = (object)[
+                'id'     => $user->getVar('uid'),
+                'name'   => $user->getVar('uname'),
+                'email'  => $user->getVar('email'),
+                'posts'  => $user->getVar('posts'),
                 'avatar' => '' != $user->getVar('image') && 'blank.gif' != $user->getVar('image') ? XOOPS_UPLOAD_URL . '/' . $user->getVar('image') : RMCURL . '/images/avatar.gif',
-                'rank' => $user->rank(),
+                'rank'   => $user->rank(),
             ];
         } else {
-            $poster = (object) [
-                'id' => 0,
-                'name' => $editor->getVar('name'),
-                'email' => $editor->getVar('email'),
-                'posts' => 0,
+            $poster = (object)[
+                'id'     => 0,
+                'name'   => $editor->getVar('name'),
+                'email'  => $editor->getVar('email'),
+                'posts'  => 0,
                 'avatar' => RMCURL . '/images/avatar.gif',
-                'rank' => '',
+                'rank'   => '',
             ];
         }
 
@@ -269,35 +269,29 @@ function show_dashboard()
                 require_once $cpath;
             }
 
-            $class = ucfirst($row['id_obj']) . 'Controller';
+            $class      = ucfirst($row['id_obj']) . 'Controller';
             $controller = new $class();
-            $item = $controller->get_item($row['params'], $com);
+            $item       = $controller->get_item($row['params'], $com);
             if (method_exists($controller, 'get_item_url')) {
                 $item_url = $controller->get_item_url($row['params'], $com);
             }
         } else {
-            $item = __('Unknow', 'rmcommon');
+            $item     = __('Unknow', 'rmcommon');
             $item_url = '';
         }
 
-        $text = TextCleaner::getInstance()->clean_disabled_tags(
-            TextCleaner::getInstance()->popuplinks(
-                TextCleaner::getInstance()->nofollow(
-                    TextCleaner::getInstance()->truncate($com->getVar('content'), 100)
-                )
-            )
-        );
+        $text = TextCleaner::getInstance()->clean_disabled_tags(TextCleaner::getInstance()->popuplinks(TextCleaner::getInstance()->nofollow(TextCleaner::getInstance()->truncate($com->getVar('content'), 100))));
 
-        $comments[] = (object) [
-            'id' => $row['id_com'],
-            'text' => $text,
-            'poster' => $poster,
-            'date' => formatTimestamp($com->getVar('posted'), 'l'),
-            'ip' => $com->getVar('ip'),
-            'item' => $item,
+        $comments[] = (object)[
+            'id'       => $row['id_com'],
+            'text'     => $text,
+            'poster'   => $poster,
+            'date'     => formatTimestamp($com->getVar('posted'), 'l'),
+            'ip'       => $com->getVar('ip'),
+            'item'     => $item,
             'item_url' => $item_url,
-            'module' => $row['id_obj'],
-            'status' => $com->getVar('status'),
+            'module'   => $row['id_obj'],
+            'status'   => $com->getVar('status'),
         ];
     }
 
@@ -324,7 +318,7 @@ function rm_change_theme()
     $theme = rmc_server_var($_GET, 'theme', '');
 
     if (is_file(RMCPATH . '/themes/' . $theme . '/admin-gui.php')) {
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $sql = 'UPDATE ' . $db->prefix('config') . " SET conf_value='$theme' WHERE conf_name='theme' AND conf_modid='" . $xoopsModule->mid() . "'";
         if ($db->queryF($sql)) {
             redirectMsg('index.php', __('Theme changed successfully!', 'rmcommon'), 0);

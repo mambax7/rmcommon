@@ -40,48 +40,31 @@ if ('cu-notification-subscribe' == $page) {
     $result = RMNotifications::get()->subscribe();
 
     if (false === $result) {
-        $response->ajax_response(
-            __('Sorry, your request could not be processed.', 'rmcommon'),
-            1,
-            0
-        );
+        $response->ajax_response(__('Sorry, your request could not be processed.', 'rmcommon'), 1, 0);
     }
 
     $message = 'subscribed' == $result->status ? __('Subscribed', 'rmcommon') : __('Subscription cancelled', 'rmcommon');
 
-    $response->ajax_response(
-        $message,
-        0,
-        0,
-        $event
-    );
+    $response->ajax_response($message, 0, 0, $event);
 } elseif ('cu-notification-list' == $page) {
     // Show subscriptions list
 
     global $xoopsUser, $cuSettings;
 
     if (!$xoopsUser) {
-        RMUris::redirect_with_message(
-            __('You need to register/login to view this page.', 'rmcommon'),
-            XOOPS_URL,
-            RMMSG_WARN
-        );
+        RMUris::redirect_with_message(__('You need to register/login to view this page.', 'rmcommon'), XOOPS_URL, RMMSG_WARN);
     }
 
     $subscriptions = RMNotifications::get()->subscriptions();
 
     if (empty($subscriptions)) {
-        RMUris::redirect_with_message(
-            __('You are not subscribed to any notification event.', 'rmcommon'),
-            XOOPS_URL,
-            RMMSG_WARN
-        );
+        RMUris::redirect_with_message(__('You are not subscribed to any notification event.', 'rmcommon'), XOOPS_URL, RMMSG_WARN);
     }
 
     $elements = [];
-    $items = [];
-    $tf = new RMTimeFormatter(0, __('%M% %d%, %Y%', 'rmcommon'));
-    $crypt = new Crypt(null, $cuSettings->secretkey);
+    $items    = [];
+    $tf       = new RMTimeFormatter(0, __('%M% %d%, %Y%', 'rmcommon'));
+    $crypt    = new Crypt(null, $cuSettings->secretkey);
 
     foreach ($subscriptions as $item) {
         $class = ucfirst($item->element . '_Notifications');
@@ -115,17 +98,17 @@ if ('cu-notification-subscribe' == $page) {
         $items[$item->type . '_' . $item->element][] = [
             'caption' => $event->caption,
             'element' => $elements[$item->type . '_' . $item->element],
-            'params' => $item->params,
-            'type' => $item->type,
-            'event' => $item->event,
-            'object' => $notifications->object_data($item),
-            'date' => $tf->format($item->date),
-            'hash' => $crypt->encrypt(json_encode([
-                'event' => $item->event,
-                'element' => $item->element,
-                'type' => $item->type,
-                'params' => $item->params,
-            ])),
+            'params'  => $item->params,
+            'type'    => $item->type,
+            'event'   => $item->event,
+            'object'  => $notifications->object_data($item),
+            'date'    => $tf->format($item->date),
+            'hash'    => $crypt->encrypt(json_encode([
+                                                         'event'   => $item->event,
+                                                         'element' => $item->element,
+                                                         'type'    => $item->type,
+                                                         'params'  => $item->params,
+                                                     ])),
         ];
     }
 

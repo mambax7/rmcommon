@@ -111,7 +111,7 @@ class Psr4ClassLoader
     public static function addLoader($namespace, $path)
     {
         $loaderClass = get_called_class();
-        $loader = new $loaderClass($namespace, $path);
+        $loader      = new $loaderClass($namespace, $path);
         if (is_array($path)) {
             foreach ($path as $pathdir) {
                 $loader->addNamespace($namespace, $pathdir);
@@ -221,9 +221,7 @@ class Psr4ClassLoader
             // replace the namespace prefix with the base directory,
             // replace namespace separators with directory separators
             // in the relative class name, append with .php
-            $file = $base_dir
-                  . str_replace('\\', '/', $relative_class)
-                  . '.php';
+            $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
 
             // if the mapped file exists, require it
             if ($this->requireFile($file)) {

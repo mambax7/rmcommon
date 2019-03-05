@@ -25,17 +25,17 @@ function show_configurable_items()
     global $xoopsModule, $cuSettings, $xoopsModuleConfig, $rmTpl;
 
     $rmTpl->add_style('settings.css', 'rmcommon', ['footer' => 1]);
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
-    $sql = 'SELECT mid FROM ' . $db->prefix('modules') . " WHERE dirname='system' OR hasconfig=1 ORDER BY name ASC";
+    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $sql    = 'SELECT mid FROM ' . $db->prefix('modules') . " WHERE dirname='system' OR hasconfig=1 ORDER BY name ASC";
     $result = $db->query($sql);
 
-    $mh = xoops_getHandler('module');
+    $mh      = xoops_getHandler('module');
     $modules = [];
 
     while (false !== ($row = $db->fetchArray($result))) {
-        $mod = $mh->get($row['mid']);
+        $mod       = $mh->get($row['mid']);
         $modules[] = [
-            'id' => $mod->mid(),
+            'id'   => $mod->mid(),
             'name' => $mod->getVar('name'),
             'logo' => XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . $mod->getInfo('image'),
         ];
@@ -55,60 +55,43 @@ function show_module_preferences()
 
     $quick = RMHttpRequest::get('popup', 'integer', 0);
     $token = RMHttpRequest::get('CUTOKEN_REQUEST', 'string', '');
-    $ajax = new AjaxResponse();
+    $ajax  = new AjaxResponse();
 
     $is_popup = 1 == $quick && '' != $token;
 
     if ($is_popup) {
         $ajax->prepare();
         if (!$xoopsSecurity->validateToken(false, true, 'CUTOKEN')) {
-            $ajax->response(
-                __('Unauthorized action', 'rmcommon'),
-                1,
-                0,
-                ['reload' => true]
-            );
+            $ajax->response(__('Unauthorized action', 'rmcommon'), 1, 0, ['reload' => true]);
         }
     }
 
     $mod = RMHttpRequest::get('mod', 'integer', 0);
     if ($mod <= 0) {
-        RMUris::redirect_with_message(
-            __('You have not specified a module!', 'rmcommon'),
-            'settings.php',
-            RMMSG_WARN
-        );
+        RMUris::redirect_with_message(__('You have not specified a module!', 'rmcommon'), 'settings.php', RMMSG_WARN);
     }
 
-    $mh = xoops_getHandler('module');
+    $mh     = xoops_getHandler('module');
     $module = $mh->get($mod);
 
     if ($module->isNew()) {
-        RMUris::redirect_with_message(
-            __('You have not specified a valid module ID!', 'rmcommon'),
-            'settings.php',
-            RMMSG_ERROR
-        );
+        RMUris::redirect_with_message(__('You have not specified a valid module ID!', 'rmcommon'), 'settings.php', RMMSG_ERROR);
     }
 
     /**
      * Verify if module is rmcommon native or not
      */
     if (1 != $module->getInfo('rmnative')) {
-        RMUris::redirect_with_message(
-            __('This module can not be configured with Common Utilities', 'rmcommon'),
-            XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $mod,
-            RMMSG_INFO
-        );
+        RMUris::redirect_with_message(__('This module can not be configured with Common Utilities', 'rmcommon'), XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $mod, RMMSG_INFO);
     }
 
     /*
     Cargamos los valores y los datos para formar los campos
     */
-    $values = RMSettings::module_settings($module->getVar('dirname'));
-    $configs = $module->getInfo('config');
+    $values              = RMSettings::module_settings($module->getVar('dirname'));
+    $configs             = $module->getInfo('config');
     $settings_categories = $module->getInfo('categories');
-    $categories = [];
+    $categories          = [];
 
     if (empty($settings_categories)) {
         $categories = [
@@ -133,15 +116,15 @@ function show_module_preferences()
     foreach ($configs as $option) {
         $name = ucfirst($module->getVar('dirname')) . '[' . $option['name'] . ']';
 
-        $field = new stdClass();
-        $field->name = $name;
-        $field->id = $option['name'];
-        $field->value = isset($values->{$option['name']}) ? $values->{$option['name']} : $option['default'];
-        $field->caption = defined($option['title']) ? constant($option['title']) : $option['title'];
+        $field              = new stdClass();
+        $field->name        = $name;
+        $field->id          = $option['name'];
+        $field->value       = isset($values->{$option['name']}) ? $values->{$option['name']} : $option['default'];
+        $field->caption     = defined($option['title']) ? constant($option['title']) : $option['title'];
         $field->description = defined($option['description']) ? constant($option['description']) : $option['description'];
-        $field->field = $option['formtype'];
-        $field->type = $option['valuetype'];
-        $field->options = isset($option['options']) ? $option['options'] : null;
+        $field->field       = $option['formtype'];
+        $field->type        = $option['valuetype'];
+        $field->options     = isset($option['options']) ? $option['options'] : null;
 
         $category = isset($option['category']) ? $option['category'] : 'all';
 
@@ -181,19 +164,14 @@ function show_module_preferences()
         require $rmTpl->get_template('rmc-settings-form.php', 'module', 'rmcommon');
         $response = ob_get_clean();
 
-        $ajax->ajax_response(
-            sprintf(__('%s Settings', 'rmcommon'), $module->getVar('name')),
-            0,
-            1,
-            [
-                'content' => $response,
-                'width' => 'large',
-                'closeButton' => 1,
-                'id' => 'cu-settings-form',
-                'color' => 'primary',
-                'solid' => true,
-            ]
-        );
+        $ajax->ajax_response(sprintf(__('%s Settings', 'rmcommon'), $module->getVar('name')), 0, 1, [
+                                                                                                'content'     => $response,
+                                                                                                'width'       => 'large',
+                                                                                                'closeButton' => 1,
+                                                                                                'id'          => 'cu-settings-form',
+                                                                                                'color'       => 'primary',
+                                                                                                'solid'       => true,
+                                                                                            ]);
     }
 }
 
@@ -204,7 +182,7 @@ function save_module_settings()
 {
     global $xoopsSecurity, $xoopsDB, $common;
 
-    $mod = RMHttpRequest::post('mod', 'string', '');
+    $mod      = RMHttpRequest::post('mod', 'string', '');
     $via_ajax = RMHttpRequest::post('via_ajax', 'integer', 0);
 
     if ($via_ajax) {
@@ -220,11 +198,7 @@ function save_module_settings()
 
     if (!$xoopsSecurity->check(true, false, $via_ajax ? 'CUTOKEN' : 'XOOPS_TOKEN')) {
         if ($via_ajax) {
-            $ajax->ajax_response(
-                __('Session token expired. Please try again.', 'rmcommon'),
-                1,
-                0
-            );
+            $ajax->ajax_response(__('Session token expired. Please try again.', 'rmcommon'), 1, 0);
         } else {
             RMUris::redirect_with_message(__('Session token expired. Please try again.', 'rmcommon'), 'settings.php', RMMSG_WARN);
         }
@@ -233,34 +207,30 @@ function save_module_settings()
     $module = RMModules::load_module($mod);
     if (!$module) {
         if ($via_ajax) {
-            $ajax->ajax_response(
-                __('The specified module does not exists.', 'rmcommon'),
-                1,
-                1
-            );
+            $ajax->ajax_response(__('The specified module does not exists.', 'rmcommon'), 1, 1);
         } else {
             RMUris::redirect_with_message(__('The specified module does not exists.', 'rmcommon'), 'settings.php', RMMSG_ERROR);
         }
     }
 
-    $current_settings = (array) RMSettings::module_settings($module->getVar('dirname'));
-    $new_settings = RMHttpRequest::post(ucfirst($module->getVar('dirname')), 'array', []);
+    $current_settings = (array)RMSettings::module_settings($module->getVar('dirname'));
+    $new_settings     = RMHttpRequest::post(ucfirst($module->getVar('dirname')), 'array', []);
 
     $configs = &$module->getInfo('config');
-    $fields = []; // Container for all fields and values
+    $fields  = []; // Container for all fields and values
     foreach ($configs as $option) {
         $id = $option['name'];
 
-        $field = new stdClass();
-        $field->id = $id;
-        $field->value = isset($values->$id) ? $values->$id : $option['default'];
-        $field->caption = defined($option['title']) ? constant($option['title']) : $option['title'];
+        $field              = new stdClass();
+        $field->id          = $id;
+        $field->value       = isset($values->$id) ? $values->$id : $option['default'];
+        $field->caption     = defined($option['title']) ? constant($option['title']) : $option['title'];
         $field->description = defined($option['description']) ? constant($option['description']) : $option['description'];
-        $field->field = $option['formtype'];
-        $field->type = $option['valuetype'];
-        $field->options = isset($option['options']) ? $option['options'] : null;
+        $field->field       = $option['formtype'];
+        $field->type        = $option['valuetype'];
+        $field->options     = isset($option['options']) ? $option['options'] : null;
 
-        $category = isset($option['category']) ? $option['category'] : 'all';
+        $category    = isset($option['category']) ? $option['category'] : 'all';
         $fields[$id] = $field;
     }
 
@@ -338,18 +308,13 @@ function save_module_settings()
     }
 
     if ($via_ajax) {
-        $ajax->ajax_response(
-            __('Settings saved successfully!', 'rmcommon'),
-            0,
-            1,
-            [
-                'closeWindow' => '#cu-settings-form',
-                'notify' => [
-                    'icon' => 'svg-rmcommon-ok-circle',
-                    'type' => 'alert-success',
-                ],
-            ]
-        );
+        $ajax->ajax_response(__('Settings saved successfully!', 'rmcommon'), 0, 1, [
+                                                                               'closeWindow' => '#cu-settings-form',
+                                                                               'notify'      => [
+                                                                                   'icon' => 'svg-rmcommon-ok-circle',
+                                                                                   'type' => 'alert-success',
+                                                                               ],
+                                                                           ]);
     } else {
         RMUris::redirect_with_message(__('Settings saved successfully!', 'rmcommon'), $goto, RMMSG_SUCCESS, 'fa fa-check');
     }

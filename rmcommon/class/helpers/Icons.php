@@ -32,12 +32,12 @@ namespace Common\Core\Helpers;
 class Icons extends Attributes
 {
     private $iconsProviders = [];
-    private $noIcon = '';
+    private $noIcon         = '';
 
     public function __construct()
     {
         $this->iconsProviders['rmcommon'] = RMCPATH . '/icons';
-        $this->noIcon = '<span class="cu-icon">' . file_get_contents(RMCPATH . '/icons/noicon.svg') . '</span>';
+        $this->noIcon                     = '<span class="cu-icon">' . file_get_contents(RMCPATH . '/icons/noicon.svg') . '</span>';
         $this->loadProviders();
 
         // Add javascript support
@@ -56,8 +56,8 @@ class Icons extends Attributes
      *
      * 'id' key must have an unique identifier to load icons from 'directory'.
      *
-     * @throws \Exception
      * @return bool
+     * @throws \Exception
      */
     private function loadProviders()
     {
@@ -170,7 +170,7 @@ class Icons extends Attributes
     /**
      * Get an icon SVG, font icon or bitmap
      * @param string $icon
-     * @param mixed $attributes
+     * @param mixed  $attributes
      * @return string
      */
     public function getIcon($icon, $attributes = [])
@@ -201,9 +201,9 @@ class Icons extends Attributes
         $renderedAttrs = $this->renderAttributeString();
 
         // Relative or absolute url?
-        $matches = [];
+        $matches  = [];
         $absolute = preg_match("/^(http:\/\/|https:\/\/|ftp:\/\/|\/\/)/m", $icon, $matches, PREG_OFFSET_CAPTURE);
-        $is_svg = '.svg' == mb_substr($icon, -4);
+        $is_svg   = '.svg' == mb_substr($icon, -4);
 
         // Icon with absolute path
         if ($absolute) {

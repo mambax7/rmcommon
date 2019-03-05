@@ -71,18 +71,18 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
     {
         $leftOver = '';
         while (false !== $bytes = $os->read(8192)) {
-            $toencode = $leftOver . $bytes;
+            $toencode = $leftOver.$bytes;
             if ($this->_canonical) {
                 $toencode = $this->_canonicalize($toencode);
             }
-            $wrapped = $this->_safeWordwrap($toencode, $maxLineLength, "\r\n");
-            $lastLinePos = mb_strrpos($wrapped, "\r\n");
-            $leftOver = mb_substr($wrapped, $lastLinePos);
-            $wrapped = mb_substr($wrapped, 0, $lastLinePos);
+            $wrapped = $this->_safeWordWrap($toencode, $maxLineLength, "\r\n");
+            $lastLinePos = strrpos($wrapped, "\r\n");
+            $leftOver = substr($wrapped, $lastLinePos);
+            $wrapped = substr($wrapped, 0, $lastLinePos);
 
             $is->write($wrapped);
         }
-        if (mb_strlen($leftOver)) {
+        if (strlen($leftOver)) {
             $is->write($leftOver);
         }
     }
@@ -99,7 +99,6 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
 
     /**
      * Not used.
-     * @param mixed $charset
      */
     public function charsetChanged($charset)
     {
@@ -116,13 +115,13 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
      */
     private function _safeWordwrap($string, $length = 75, $le = "\r\n")
     {
-        if ($length <= 0) {
+        if (0 >= $length) {
             return $string;
         }
 
         $originalLines = explode($le, $string);
 
-        $lines = [];
+        $lines = array();
         $lineCount = 0;
 
         foreach ($originalLines as $originalLine) {
@@ -133,8 +132,8 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
             $chunks = preg_split('/(?<=\s)/', $originalLine);
 
             foreach ($chunks as $chunk) {
-                if (0 != mb_strlen($currentLine)
-                    && mb_strlen($currentLine . $chunk) > $length) {
+                if (0 != strlen($currentLine)
+                    && strlen($currentLine.$chunk) > $length) {
                     $lines[] = '';
                     $currentLine = &$lines[$lineCount++];
                 }
@@ -155,8 +154,8 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
     private function _canonicalize($string)
     {
         return str_replace(
-            ["\r\n", "\r", "\n"],
-            ["\n", "\n", "\r\n"],
+            array("\r\n", "\r", "\n"),
+            array("\n", "\n", "\r\n"),
             $string
             );
     }

@@ -31,6 +31,7 @@
  * Basado en el archivo kernel/object.php de XOOPS
  * creado por Kazumi Ono (AKA onokazu)
  */
+
 use Common\Core\Helpers\Services;
 
 /**
@@ -101,18 +102,18 @@ class RMObject
      * Almacena el nombre de la clave primaria en la base de datos (columna)
      * esta por defecto es 'id'
      */
-    protected $primary = 'id';
-    protected $db = null;
-    protected $_log = [];
-    protected $_dbtable = '';
-    private $_tblcolumns = [];
-    private $_uniquefield = '';
+    protected $primary      = 'id';
+    protected $db           = null;
+    protected $_log         = [];
+    protected $_dbtable     = '';
+    private   $_tblcolumns  = [];
+    private   $_uniquefield = '';
 
     /**
      * Almacena las columnas (variables) de un objeto
      */
     private $objectColumns = [];
-    private $primaryCols = [];
+    private $primaryCols   = [];
 
     public function id()
     {
@@ -199,14 +200,14 @@ class RMObject
      * initialize variables for the object
      *
      * @access public
-     * @param string $key
-     * @param int $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param string     $key
+     * @param int        $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
      * @param mixed
-     * @param bool $required require html form input?
-     * @param int $maxlength for XOBJ_DTYPE_TXTBOX type only
-     * @param string $option does this data have any select options?
+     * @param bool       $required  require html form input?
+     * @param int        $maxlength for XOBJ_DTYPE_TXTBOX type only
+     * @param string     $option    does this data have any select options?
      * @param null|mixed $value
-     * @param mixed $options
+     * @param mixed      $options
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '')
     {
@@ -218,8 +219,8 @@ class RMObject
 
     /**
      * Establece el tipo de dato para una variable
-     * @param string $var Nombre de la variable
-     * @param int $type Tipo de Dato
+     * @param string $var  Nombre de la variable
+     * @param int    $type Tipo de Dato
      */
     public function setVarType($var, $type)
     {
@@ -233,7 +234,7 @@ class RMObject
     /**
      * Establece la longitud de un campo
      * @param string $var Nombre de la variable
-     * @param int $len Longitud del campo o null
+     * @param int    $len Longitud del campo o null
      */
     public function setVarLen($var, $len = null)
     {
@@ -247,7 +248,7 @@ class RMObject
     /**
      * Establece la obligatoriedad de una variable
      * @param string $var Nombre de la variable
-     * @param bool $required
+     * @param bool   $required
      */
     public function setVarRequired($var, $required)
     {
@@ -262,8 +263,8 @@ class RMObject
      * assign a value to a variable
      *
      * @access public
-     * @param string $key name of the variable to assign
-     * @param mixed $value value to assign
+     * @param string $key   name of the variable to assign
+     * @param mixed  $value value to assign
      */
     public function assignVar($key, $value)
     {
@@ -296,14 +297,14 @@ class RMObject
      * assign a value to a variable
      *
      * @access public
-     * @param string $key name of the variable to assign
-     * @param mixed $value value to assign
-     * @param bool $not_gpc
+     * @param string $key   name of the variable to assign
+     * @param mixed  $value value to assign
+     * @param bool   $not_gpc
      */
     public function setVar($key, $value, $not_gpc = false)
     {
         if (!empty($key) && isset($value) && isset($this->vars[$key])) {
-            $this->vars[$key]['value'] = &$value;
+            $this->vars[$key]['value']   = &$value;
             $this->vars[$key]['not_gpc'] = $not_gpc;
             $this->vars[$key]['changed'] = true;
             $this->setDirty();
@@ -315,7 +316,7 @@ class RMObject
      *
      * @access private
      * @param array $var_arr associative array of values to assign
-     * @param bool $not_gpc
+     * @param bool  $not_gpc
      */
     public function setVars($var_arr, $not_gpc = false)
     {
@@ -332,9 +333,9 @@ class RMObject
      * - avoids polluting of namespace with CGI args
      *
      * @access private
-     * @param array $var_arr associative array of values to assign
-     * @param string $pref prefix (only keys starting with the prefix will be set)
-     * @param mixed $not_gpc
+     * @param array  $var_arr associative array of values to assign
+     * @param string $pref    prefix (only keys starting with the prefix will be set)
+     * @param mixed  $not_gpc
      */
     public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false)
     {
@@ -372,9 +373,9 @@ class RMObject
     /**
      * Returns the values of the specified variables
      *
-     * @param mixed $keys An array containing the names of the keys to retrieve, or null to get all of them
-     * @param string $format Format to use (see getVar)
-     * @param int $maxDepth Maximum level of recursion to use if some vars are objects themselves
+     * @param mixed  $keys     An array containing the names of the keys to retrieve, or null to get all of them
+     * @param string $format   Format to use (see getVar)
+     * @param int    $maxDepth Maximum level of recursion to use if some vars are objects themselves
      * @return array associative array of key->value pairs
      */
     public function getValues($keys = null, $format = 's', $maxDepth = 1)
@@ -402,7 +403,7 @@ class RMObject
      * returns a specific variable for the object in a proper format
      *
      * @access public
-     * @param string $key key of the object's variable to be returned
+     * @param string $key    key of the object's variable to be returned
      * @param string $format format to use for the output
      * @return mixed formatted value of the variable
      */
@@ -453,12 +454,12 @@ class RMObject
                         break;
                     case 'p':
                     case 'preview':
-                        $ts = TextCleaner::getInstance();
-                        $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-                        $xcode = (!isset($this->vars['doxcode']['value']) || 1 == $this->vars['doxcode']['value']) ? 1 : 0;
+                        $ts     = TextCleaner::getInstance();
+                        $html   = !empty($this->vars['dohtml']['value']) ? 1 : 0;
+                        $xcode  = (!isset($this->vars['doxcode']['value']) || 1 == $this->vars['doxcode']['value']) ? 1 : 0;
                         $smiley = (!isset($this->vars['dosmiley']['value']) || 1 == $this->vars['dosmiley']['value']) ? 1 : 0;
-                        $image = (!isset($this->vars['doimage']['value']) || 1 == $this->vars['doimage']['value']) ? 1 : 0;
-                        $br = (!isset($this->vars['dobr']['value']) || 1 == $this->vars['dobr']['value']) ? 1 : 0;
+                        $image  = (!isset($this->vars['doimage']['value']) || 1 == $this->vars['doimage']['value']) ? 1 : 0;
+                        $br     = (!isset($this->vars['dobr']['value']) || 1 == $this->vars['dobr']['value']) ? 1 : 0;
 
                         return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
                         break 1;
@@ -515,9 +516,9 @@ class RMObject
                         case 's':
                         case 'show':
                             $selected = explode('|', $ret);
-                            $options = explode('|', $this->vars[$key]['options']);
-                            $i = 1;
-                            $ret = [];
+                            $options  = explode('|', $this->vars[$key]['options']);
+                            $i        = 1;
+                            $ret      = [];
                             foreach ($options as $op) {
                                 if (in_array($i, $selected, true)) {
                                     $ret[] = $op;
@@ -549,9 +550,9 @@ class RMObject
      */
     public function cleanVars()
     {
-        $ts = TextCleaner::getInstance();
+        $ts              = TextCleaner::getInstance();
         $existing_errors = $this->getErrors();
-        $this->_errors = [];
+        $this->_errors   = [];
         foreach ($this->vars as $k => $v) {
             $cleanv = $v['value'];
             if (!$v['changed']) {
@@ -639,8 +640,8 @@ class RMObject
         foreach ($this->vars as $var) {
             $var['value'] = '';
         }
-        $this->_isNew = true;
-        $this->_errors = [];
+        $this->_isNew   = true;
+        $this->_errors  = [];
         $this->_filters = [];
     }
 
@@ -691,7 +692,7 @@ class RMObject
      * add an error
      *
      * @param string $value error to add
-     * @param mixed $err_str
+     * @param mixed  $err_str
      * @access public
      */
     public function setErrors($err_str)
@@ -777,7 +778,7 @@ class RMObject
      */
     protected function logger($event, $style = '')
     {
-        $rtn = [];
+        $rtn          = [];
         $rtn['event'] = $event;
         $rtn['style'] = $style;
         $this->_log[] = $rtn;
@@ -831,9 +832,9 @@ class RMObject
         static $objectColumns;
         static $primaryCols;
         if (!empty($objectColumns[get_class($this)])) {
-            $this->primary = $primaryCols[get_class($this)];
+            $this->primary      = $primaryCols[get_class($this)];
             $this->_uniquefield = $primaryCols[get_class($this)];
-            $this->_tblcolumns = $objectColumns[get_class($this)];
+            $this->_tblcolumns  = $objectColumns[get_class($this)];
 
             return $objectColumns[get_class($this)];
         }
@@ -841,8 +842,8 @@ class RMObject
             $result = $this->db->queryF('SHOW COLUMNS IN ' . $this->_dbtable);
             while (false !== ($row = $this->db->fetchArray($result))) {
                 if ('auto_increment' == $row['Extra']) {
-                    $this->primary = $row['Field'];
-                    $this->_uniquefield = $row['Field']; // To prevent issues
+                    $this->primary                 = $row['Field'];
+                    $this->_uniquefield            = $row['Field']; // To prevent issues
                     $primaryCols[get_class($this)] = $row['Field'];
                 }
                 $this->_tblcolumns[$row['Field']] = $row;
@@ -876,7 +877,7 @@ class RMObject
                 case 'year':
                 case 'bool':
                     $type = XOBJ_DTYPE_INT;
-                    $lon = null;
+                    $lon  = null;
                     break;
                 case 'float':
                 case 'double':
@@ -884,19 +885,19 @@ class RMObject
                     break;
                 case 'decimal':
                     $type = XOBJ_DTYPE_TXTBOX;
-                    $lon = null;
+                    $lon  = null;
                     break;
                 case 'time':
                     $type = XOBJ_DTYPE_TXTBOX;
-                    $lon = 8;
+                    $lon  = 8;
                     break;
                 case 'datetime':
                     $type = XOBJ_DTYPE_TXTBOX;
-                    $lon = 19;
+                    $lon  = 19;
                     break;
                 case 'date':
                     $type = XOBJ_DTYPE_TXTBOX;
-                    $lon = 10;
+                    $lon  = 10;
                     break;
                 case 'char':
                 case 'tinyblob':
@@ -905,7 +906,7 @@ class RMObject
                 case 'set':
                 case 'varchar':
                     $type = XOBJ_DTYPE_TXTBOX;
-                    $lon = isset($len[3]) ? $len[3] : null;
+                    $lon  = isset($len[3]) ? $len[3] : null;
                     break;
                 case 'text':
                 case 'blob':
@@ -914,11 +915,11 @@ class RMObject
                 case 'longblob':
                 case 'longtext':
                     $type = XOBJ_DTYPE_TXTAREA;
-                    $lon = null;
+                    $lon  = null;
                     break;
                 default:
                     $type = XOBJ_DTYPE_OTHER;
-                    $lon = null;
+                    $lon  = null;
                     break;
             }
 
@@ -934,7 +935,7 @@ class RMObject
     /**
      * Cargaa los valores de un objeto desde la base de datos
      * en base a su clave primaria
-     * @param mixed $id Valor a buscar en la clave primaria
+     * @param mixed $id      Valor a buscar en la clave primaria
      * @param array $filters Additional filters for searches
      * @return bool
      */
@@ -950,7 +951,7 @@ class RMObject
         if (null != $filters && is_array($filters) && false === empty($filters)) {
             foreach ($filters as $column => $value) {
                 $column = $this->escape($column);
-                $value = $this->escape($value);
+                $value  = $this->escape($value);
 
                 if ('' == $column) {
                     continue;
@@ -980,17 +981,16 @@ class RMObject
         /**
          * Added for multilingual support
          */
-        if (
-            Services::getInstance()->isThereProvider('language')
-            && '' != $this->ownerName && '' != $this->ownerType
-        ) {
+        if (Services::getInstance()->isThereProvider('language')
+            && '' != $this->ownerName
+            && '' != $this->ownerType) {
             $this->vars = Services::getInstance()->language->translateVars([
-                'vars' => $this->vars,
-                'element' => $this->ownerName,
-                'type' => $this->ownerType,
-                'id' => $this->vars[$this->_uniquefield]['value'],
-                'object' => mb_strtolower(get_class($this)),
-            ]);
+                                                                               'vars'    => $this->vars,
+                                                                               'element' => $this->ownerName,
+                                                                               'type'    => $this->ownerType,
+                                                                               'id'      => $this->vars[$this->_uniquefield]['value'],
+                                                                               'object'  => mb_strtolower(get_class($this)),
+                                                                           ]);
         }
     }
 
@@ -1004,7 +1004,7 @@ class RMObject
             $filter = stripslashes($filter);
         }
 
-        $sql = "SELECT * FROM $this->_dbtable WHERE $filter";
+        $sql    = "SELECT * FROM $this->_dbtable WHERE $filter";
         $result = $this->db->query($sql);
         if ($this->db->getRowsNum($result) <= 0) {
             return false;
@@ -1034,16 +1034,16 @@ class RMObject
                 $v = stripslashes($v);
             }
             $values[$k] = $this->escape($v);
-            $query .= '' == $query ? "`$k`='$v'" : " AND `$k`='$v'";
+            $query      .= '' == $query ? "`$k`='$v'" : " AND `$k`='$v'";
         }
 
-        $sql = "SELECT * FROM $this->_dbtable WHERE $query";
+        $sql    = "SELECT * FROM $this->_dbtable WHERE $query";
         $result = $this->db->queryF($sql);
         if ($this->db->getRowsNum($result) <= 0) {
             return false;
         }
 
-        $row = $this->db->fetchArray($result);
+        $row  = $this->db->fetchArray($result);
         $myts = TextCleaner::getInstance();
         foreach ($row as $k => $v) {
             $this->setVar($k, $myts->stripslashes($v));
@@ -1057,13 +1057,13 @@ class RMObject
         // Added for translate support
         if (!$this->isNew() && Services::getInstance()->isThereProvider('language') && '' != $this->ownerName && '' != $this->ownerType) {
             $result = Services::getInstance()->language->saveData([
-                'vars' => $this->vars,
-                'clean' => $this->cleanVars,
-                'element' => $this->ownerName,
-                'type' => $this->ownerType,
-                'id' => $this->id(),
-                'object' => mb_strtolower(get_class($this)),
-            ]);
+                                                                      'vars'    => $this->vars,
+                                                                      'clean'   => $this->cleanVars,
+                                                                      'element' => $this->ownerName,
+                                                                      'type'    => $this->ownerType,
+                                                                      'id'      => $this->id(),
+                                                                      'object'  => mb_strtolower(get_class($this)),
+                                                                  ]);
 
             /**
              * If translator service has saved data successfully then exit
@@ -1095,7 +1095,7 @@ class RMObject
             return false;
         }
 
-        $sql = "INSERT INTO $this->_dbtable (";
+        $sql    = "INSERT INTO $this->_dbtable (";
         $fields = '';
         $values = '';
         foreach ($this->_tblcolumns as $k) {
@@ -1140,7 +1140,7 @@ class RMObject
             return false;
         }
 
-        $sql = "UPDATE $this->_dbtable SET ";
+        $sql    = "UPDATE $this->_dbtable SET ";
         $fields = '';
 
         foreach ($this->_tblcolumns as $k) {
@@ -1184,11 +1184,11 @@ class RMObject
         // Added for translate support
         if (!$this->isNew() && Services::getInstance()->isThereProvider('language') && '' != $this->ownerName && '' != $this->ownerType) {
             $result = Services::getInstance()->language->deleteData([
-                'element' => $this->ownerName,
-                'type' => $this->ownerType,
-                'id' => $this->id(),
-                'object' => mb_strtolower(get_class($this)),
-            ]);
+                                                                        'element' => $this->ownerName,
+                                                                        'type'    => $this->ownerType,
+                                                                        'id'      => $this->id(),
+                                                                        'object'  => mb_strtolower(get_class($this)),
+                                                                    ]);
 
             /**
              * If translator service has saved data successfully then exit

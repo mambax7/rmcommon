@@ -16,20 +16,20 @@ class RMDb
 {
     private $_properties = [
         // XOOPS database object
-        'database' => '',
+        'database'    => '',
         // Main table to use
-        'table' => '',
+        'table'       => '',
         // Table columns
-        'columns' => [],
+        'columns'     => [],
         // Primary key
         'primary_key' => '',
         // Relations to other tables
-        'relations' => [],
+        'relations'   => [],
         // Inner Joins sentences
         'inner_joins' => [],
         // Group by instruction
-        'groupby' => '',
-        'filters' => [],
+        'groupby'     => '',
+        'filters'     => [],
     ];
 
     public function __construct()
@@ -43,8 +43,8 @@ class RMDb
      * Returns a property value, or execute a method based on its name.
      *
      * @param string $name the property name or method name
-     * @throws RMException if the property or event is not defined
      * @return mixed the property value or method return
+     * @throws RMException if the property or event is not defined
      * @see __set
      */
     public function __get($name)
@@ -63,10 +63,10 @@ class RMDb
     /**
      * Sets value of a component property.
      *
-     * @param string $name the property name or the method
-     * @param mixed $value the property value
-     * @throws RMException if the property/method is not defined or the property is read only.
+     * @param string $name  the property name or the method
+     * @param mixed  $value the property value
      * @return mixed
+     * @throws RMException if the property/method is not defined or the property is read only.
      * @see __get
      */
     public function __set($name, $value)
@@ -109,7 +109,7 @@ class RMDb
 
         $name = str_replace($this->database->prefix() . '_', '', $name);
 
-        $this->table = $this->database->prefix($name);
+        $this->table                 = $this->database->prefix($name);
         $this->_properties['from'][] = '`' . $this->table . '`';
     }
 
@@ -131,14 +131,14 @@ class RMDb
         while (false !== ($column = $this->database->fetchArray($columns_result))) {
             $this->_properties['columns'][$column['Field']] = [
                 'primary' => 'PRI' == $column['Key'] ? true : false,
-                'type' => preg_replace("/\([0-9]+\)/", '', $column['Type']),
-                'len' => preg_replace('/[^0-9]/', '', $column['Type']),
-                'null' => 'NO' == $column['Null'] ? false : true,
+                'type'    => preg_replace("/\([0-9]+\)/", '', $column['Type']),
+                'len'     => preg_replace('/[^0-9]/', '', $column['Type']),
+                'null'    => 'NO' == $column['Null'] ? false : true,
                 'default' => $column['Default'],
-                'extra' => $column['Extra'],
-                'unique' => 0,
-                'index' => false,
-                'title' => $column['Field'],
+                'extra'   => $column['Extra'],
+                'unique'  => 0,
+                'index'   => false,
+                'title'   => $column['Field'],
             ];
 
             if ('PRI' == $column['Key']) {
@@ -152,7 +152,7 @@ class RMDb
         $indexes = $this->database->queryF('SHOW INDEXES IN ' . $this->table);
         while (false !== ($row = $this->database->fetchArray($indexes))) {
             $this->_properties['columns'][$row['Column_name']]['unique'] = 0 == $row['Non_unique'] ? 1 : 0;
-            $this->_properties['columns'][$row['Column_name']]['index'] = true;
+            $this->_properties['columns'][$row['Column_name']]['index']  = true;
         }
 
         unset($indexes);
@@ -162,7 +162,7 @@ class RMDb
 
     /**
      * Add a new INNER JOIN instruction to SQL statement
-     * @param string $table Table name to join
+     * @param string $table    Table name to join
      * @param string $on_field Field to use in join
      * @throws RMException
      */
@@ -227,9 +227,9 @@ class RMDb
             $conditions = [];
 
             foreach ($filters as $field => $filter) {
-                $condition = '';
-                $condition .= isset($filter['table']) ? '`' . $this->prefix($filter['table']) . '`.' : '';
-                $condition .= '`' . $field . '`' . $filter['operator'] . $this->escape($filter['value']);
+                $condition    = '';
+                $condition    .= isset($filter['table']) ? '`' . $this->prefix($filter['table']) . '`.' : '';
+                $condition    .= '`' . $field . '`' . $filter['operator'] . $this->escape($filter['value']);
                 $conditions[] = $condition;
             }
 

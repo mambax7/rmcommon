@@ -26,6 +26,7 @@
  * @url          http://www.redmexico.com.mx
  * @url          http://www.eduardocortes.mx
  */
+
 use Common\Core\Helpers\Attributes;
 
 /**
@@ -44,8 +45,8 @@ abstract class RMFormElement extends Attributes
     /**
      * __construct
      *
-     * @param array $attributes array of attribute name => value pairs
-     *                           Control attributes:
+     * @param array $attributes      array of attribute name => value pairs
+     *                               Control attributes:
      *                               ElementFactory::FORM_KEY optional form or tray to hold this element
      */
     public function __construct($attributes = [])
@@ -203,7 +204,7 @@ abstract class RMFormElement extends Attributes
     }
 
     /**
-     Gets the caption
+     * Gets the caption
      * @return string
      */
     public function getCaption()
@@ -240,8 +241,8 @@ abstract class RMFormElement extends Attributes
      *
      * Avoid the use of this method.
      *
-     * @param string $extra Extra attribute to insert in element
-     * @param bool $replace Add (true) or replace (false) current content
+     * @param string $extra   Extra attribute to insert in element
+     * @param bool   $replace Add (true) or replace (false) current content
      *
      * @return RMFormElement
      *
@@ -351,10 +352,7 @@ abstract class RMFormElement extends Attributes
             return $this->get('title');
         }
         if ($this->has(':pattern_description')) {
-            return htmlspecialchars(
-                    strip_tags($this->get('caption') . ' - ' . $this->get(':pattern_description')),
-                    ENT_QUOTES
-                );
+            return htmlspecialchars(strip_tags($this->get('caption') . ' - ' . $this->get(':pattern_description')), ENT_QUOTES);
         }
 
         return htmlspecialchars(strip_tags($this->get('caption')), ENT_QUOTES);

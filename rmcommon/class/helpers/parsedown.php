@@ -278,9 +278,9 @@ class RMParsedown
 
             $Block = [
                 'element' => [
-                    'name' => 'pre',
+                    'name'    => 'pre',
                     'handler' => 'element',
-                    'text' => [
+                    'text'    => [
                         'name' => 'code',
                         'text' => $text,
                     ],
@@ -378,11 +378,11 @@ class RMParsedown
             }
 
             $Block = [
-                'char' => $Line['text'][0],
+                'char'    => $Line['text'][0],
                 'element' => [
-                    'name' => 'pre',
+                    'name'    => 'pre',
                     'handler' => 'element',
-                    'text' => $Element,
+                    'text'    => $Element,
                 ],
             ];
 
@@ -446,8 +446,8 @@ class RMParsedown
 
             $Block = [
                 'element' => [
-                    'name' => 'h' . min(6, $level),
-                    'text' => $text,
+                    'name'    => 'h' . min(6, $level),
+                    'text'    => $text,
                     'handler' => 'line',
                 ],
             ];
@@ -465,18 +465,18 @@ class RMParsedown
 
         if (preg_match('/^(' . $pattern . '[ ]+)(.*)/', $Line['text'], $matches)) {
             $Block = [
-                'indent' => $Line['indent'],
+                'indent'  => $Line['indent'],
                 'pattern' => $pattern,
                 'element' => [
-                    'name' => $name,
+                    'name'    => $name,
                     'handler' => 'elements',
                 ],
             ];
 
             $Block['li'] = [
-                'name' => 'li',
+                'name'    => 'li',
                 'handler' => 'li',
-                'text' => [
+                'text'    => [
                     $matches[2],
                 ],
             ];
@@ -501,9 +501,9 @@ class RMParsedown
             $text = isset($matches[1]) ? $matches[1] : '';
 
             $Block['li'] = [
-                'name' => 'li',
+                'name'    => 'li',
                 'handler' => 'li',
-                'text' => [
+                'text'    => [
                     $text,
                 ],
             ];
@@ -546,9 +546,9 @@ class RMParsedown
         if (preg_match('/^>[ ]?(.*)/', $Line['text'], $matches)) {
             $Block = [
                 'element' => [
-                    'name' => 'blockquote',
+                    'name'    => 'blockquote',
                     'handler' => 'lines',
-                    'text' => (array) $matches[1],
+                    'text'    => (array)$matches[1],
                 ],
             ];
 
@@ -626,8 +626,8 @@ class RMParsedown
             }
 
             $Block = [
-                'name' => $matches[1],
-                'depth' => 0,
+                'name'   => $matches[1],
+                'depth'  => 0,
                 'markup' => $Line['text'],
             ];
 
@@ -693,7 +693,7 @@ class RMParsedown
             $id = mb_strtolower($matches[1]);
 
             $Data = [
-                'url' => $matches[2],
+                'url'   => $matches[2],
                 'title' => null,
             ];
 
@@ -765,8 +765,8 @@ class RMParsedown
                 $headerCell = trim($headerCell);
 
                 $HeaderElement = [
-                    'name' => 'th',
-                    'text' => $headerCell,
+                    'name'    => 'th',
+                    'text'    => $headerCell,
                     'handler' => 'line',
                 ];
 
@@ -786,27 +786,27 @@ class RMParsedown
             $Block = [
                 'alignments' => $alignments,
                 'identified' => true,
-                'element' => [
-                    'name' => 'table',
+                'element'    => [
+                    'name'    => 'table',
                     'handler' => 'elements',
                 ],
             ];
 
             $Block['element']['text'] [] = [
-                'name' => 'thead',
+                'name'    => 'thead',
                 'handler' => 'elements',
             ];
 
             $Block['element']['text'] [] = [
-                'name' => 'tbody',
+                'name'    => 'tbody',
                 'handler' => 'elements',
-                'text' => [],
+                'text'    => [],
             ];
 
             $Block['element']['text'][0]['text'] [] = [
-                'name' => 'tr',
+                'name'    => 'tr',
                 'handler' => 'elements',
-                'text' => $HeaderElements,
+                'text'    => $HeaderElements,
             ];
 
             return $Block;
@@ -833,9 +833,9 @@ class RMParsedown
                 $cell = trim($cell);
 
                 $Element = [
-                    'name' => 'td',
+                    'name'    => 'td',
                     'handler' => 'line',
-                    'text' => $cell,
+                    'text'    => $cell,
                 ];
 
                 if (isset($Block['alignments'][$index])) {
@@ -848,9 +848,9 @@ class RMParsedown
             }
 
             $Element = [
-                'name' => 'tr',
+                'name'    => 'tr',
                 'handler' => 'elements',
-                'text' => $Elements,
+                'text'    => $Elements,
             ];
 
             $Block['element']['text'][1]['text'] [] = $Element;
@@ -867,8 +867,8 @@ class RMParsedown
     {
         $Block = [
             'element' => [
-                'name' => 'p',
-                'text' => $Line['text'],
+                'name'    => 'p',
+                'text'    => $Line['text'],
                 'handler' => 'line',
             ],
         ];
@@ -881,17 +881,17 @@ class RMParsedown
     #
 
     protected $InlineTypes = [
-        '"' => ['SpecialCharacter'],
-        '!' => ['Image'],
-        '&' => ['SpecialCharacter'],
-        '*' => ['Emphasis'],
-        ':' => ['Url'],
-        '<' => ['UrlTag', 'EmailTag', 'Markup', 'SpecialCharacter'],
-        '>' => ['SpecialCharacter'],
-        '[' => ['Link'],
-        '_' => ['Emphasis'],
-        '`' => ['Code'],
-        '~' => ['Strikethrough'],
+        '"'  => ['SpecialCharacter'],
+        '!'  => ['Image'],
+        '&'  => ['SpecialCharacter'],
+        '*'  => ['Emphasis'],
+        ':'  => ['Url'],
+        '<'  => ['UrlTag', 'EmailTag', 'Markup', 'SpecialCharacter'],
+        '>'  => ['SpecialCharacter'],
+        '['  => ['Link'],
+        '_'  => ['Emphasis'],
+        '`'  => ['Code'],
+        '~'  => ['Strikethrough'],
         '\\' => ['EscapeSequence'],
     ];
 
@@ -978,7 +978,7 @@ class RMParsedown
             $text = preg_replace("/[ ]*\n/", ' ', $text);
 
             return [
-                'extent' => mb_strlen($matches[0]),
+                'extent'  => mb_strlen($matches[0]),
                 'element' => [
                     'name' => 'code',
                     'text' => $text,
@@ -997,10 +997,10 @@ class RMParsedown
             }
 
             return [
-                'extent' => mb_strlen($matches[0]),
+                'extent'  => mb_strlen($matches[0]),
                 'element' => [
-                    'name' => 'a',
-                    'text' => $matches[1],
+                    'name'       => 'a',
+                    'text'       => $matches[1],
                     'attributes' => [
                         'href' => $url,
                     ],
@@ -1026,11 +1026,11 @@ class RMParsedown
         }
 
         return [
-            'extent' => mb_strlen($matches[0]),
+            'extent'  => mb_strlen($matches[0]),
             'element' => [
-                'name' => $emphasis,
+                'name'    => $emphasis,
                 'handler' => 'line',
-                'text' => $matches[1],
+                'text'    => $matches[1],
             ],
         ];
     }
@@ -1060,9 +1060,9 @@ class RMParsedown
         }
 
         $Inline = [
-            'extent' => $Link['extent'] + 1,
+            'extent'  => $Link['extent'] + 1,
             'element' => [
-                'name' => 'img',
+                'name'       => 'img',
                 'attributes' => [
                     'src' => $Link['element']['attributes']['href'],
                     'alt' => $Link['element']['text'],
@@ -1080,11 +1080,11 @@ class RMParsedown
     protected function inlineLink($Excerpt)
     {
         $Element = [
-            'name' => 'a',
-            'handler' => 'line',
-            'text' => null,
+            'name'       => 'a',
+            'handler'    => 'line',
+            'text'       => null,
             'attributes' => [
-                'href' => null,
+                'href'  => null,
                 'title' => null,
             ],
         ];
@@ -1127,14 +1127,14 @@ class RMParsedown
 
             $Definition = $this->DefinitionData['Reference'][$definition];
 
-            $Element['attributes']['href'] = $Definition['url'];
+            $Element['attributes']['href']  = $Definition['url'];
             $Element['attributes']['title'] = $Definition['title'];
         }
 
         $Element['attributes']['href'] = str_replace(['&', '<'], ['&amp;', '&lt;'], $Element['attributes']['href']);
 
         return [
-            'extent' => $extent,
+            'extent'  => $extent,
             'element' => $Element,
         ];
     }
@@ -1194,10 +1194,10 @@ class RMParsedown
 
         if ('~' === $Excerpt['text'][1] and preg_match('/^~~(?=\S)(.+?)(?<=\S)~~/', $Excerpt['text'], $matches)) {
             return [
-                'extent' => mb_strlen($matches[0]),
+                'extent'  => mb_strlen($matches[0]),
                 'element' => [
-                    'name' => 'del',
-                    'text' => $matches[1],
+                    'name'    => 'del',
+                    'text'    => $matches[1],
                     'handler' => 'line',
                 ],
             ];
@@ -1212,11 +1212,11 @@ class RMParsedown
 
         if (preg_match('/\bhttps?:[\/]{2}[^\s<]+\b\/*/ui', $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
             $Inline = [
-                'extent' => mb_strlen($matches[0][0]),
+                'extent'   => mb_strlen($matches[0][0]),
                 'position' => $matches[0][1],
-                'element' => [
-                    'name' => 'a',
-                    'text' => $matches[0][0],
+                'element'  => [
+                    'name'       => 'a',
+                    'text'       => $matches[0][0],
                     'attributes' => [
                         'href' => $matches[0][0],
                     ],
@@ -1233,10 +1233,10 @@ class RMParsedown
             $url = str_replace(['&', '<'], ['&amp;', '&lt;'], $matches[1]);
 
             return [
-                'extent' => mb_strlen($matches[0]),
+                'extent'  => mb_strlen($matches[0]),
                 'element' => [
-                    'name' => 'a',
-                    'text' => $url,
+                    'name'       => 'a',
+                    'text'       => $url,
                     'attributes' => [
                         'href' => $url,
                     ],
@@ -1367,7 +1367,23 @@ class RMParsedown
     # Read-Only
 
     protected $specialCharacters = [
-        '\\', '`', '*', '_', '{', '}', '[', ']', '(', ')', '>', '#', '+', '-', '.', '!', '|',
+        '\\',
+        '`',
+        '*',
+        '_',
+        '{',
+        '}',
+        '[',
+        ']',
+        '(',
+        ')',
+        '>',
+        '#',
+        '+',
+        '-',
+        '.',
+        '!',
+        '|',
     ];
 
     protected $StrongRegex = [
@@ -1383,18 +1399,60 @@ class RMParsedown
     protected $regexHtmlAttribute = '[a-zA-Z_:][\w:.-]*(?:\s*=\s*(?:[^"\'=<>`\s]+|"[^"]*"|\'[^\']*\'))?';
 
     protected $voidElements = [
-        'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source',
+        'area',
+        'base',
+        'br',
+        'col',
+        'command',
+        'embed',
+        'hr',
+        'img',
+        'input',
+        'link',
+        'meta',
+        'param',
+        'source',
     ];
 
     protected $textLevelElements = [
-        'a', 'br', 'bdo', 'abbr', 'blink', 'nextid', 'acronym', 'basefont',
-        'b', 'em', 'big', 'cite', 'small', 'spacer', 'listing',
-        'i', 'rp', 'del', 'code',          'strike', 'marquee',
-        'q', 'rt', 'ins', 'font',          'strong',
-        's', 'tt', 'sub', 'mark',
-        'u', 'xm', 'sup', 'nobr',
-        'var', 'ruby',
-        'wbr', 'span',
+        'a',
+        'br',
+        'bdo',
+        'abbr',
+        'blink',
+        'nextid',
+        'acronym',
+        'basefont',
+        'b',
+        'em',
+        'big',
+        'cite',
+        'small',
+        'spacer',
+        'listing',
+        'i',
+        'rp',
+        'del',
+        'code',
+        'strike',
+        'marquee',
+        'q',
+        'rt',
+        'ins',
+        'font',
+        'strong',
+        's',
+        'tt',
+        'sub',
+        'mark',
+        'u',
+        'xm',
+        'sup',
+        'nobr',
+        'var',
+        'ruby',
+        'wbr',
+        'span',
         'time',
     ];
 }

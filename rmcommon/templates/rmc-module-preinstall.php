@@ -62,7 +62,8 @@
                         <td><strong><?php _e('Help:', 'rmcommon'); ?></strong></td>
                         <td colspan="2">
                             <?php if ('' != $module->getInfo('help')): ?>
-                                <a href="<?php echo preg_match('/http:|https:/is', $module->getInfo('help')) ? $module->getInfo('help') : XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('help'); ?>" target="_blank"><?php _e('Click here', 'rmcommon'); ?></a><?php endif; ?></td>
+                                <a href="<?php echo preg_match('/http:|https:/is', $module->getInfo('help')) ? $module->getInfo('help') : XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('help'); ?>" target="_blank"><?php _e('Click here',
+                                                                                                                                                                                                                                                               'rmcommon'); ?></a><?php endif; ?></td>
                     </tr>
                 </table>
                 <button type="submit" id="install-ok" class="btn btn-primary btn-lg"><span class="fa fa-check"></span> <?php _e('Install Now', 'rmcommon'); ?></button>
@@ -80,90 +81,93 @@
     <div class="col-sm-6 col-md-7 col-lg-7">
 
         <?php if ($module->getInfo('templates')): ?>
-        <div class="cu-box">
+            <div class="cu-box">
 
-            <div class="box-header">
-                <span class="fa fa-caret-down box-handler"></span>
-                <h3 class="box-title"><?php _e('Module Templates', 'rmcommon'); ?> (<?php echo count($module->getInfo('templates')); ?>)</h3>
+                <div class="box-header">
+                    <span class="fa fa-caret-down box-handler"></span>
+                    <h3 class="box-title"><?php _e('Module Templates', 'rmcommon'); ?> (<?php echo count($module->getInfo('templates')); ?>)</h3>
+                </div>
+
+                <div class="box-content" style="display: none;">
+                    <ol>
+                        <?php foreach ($module->getInfo('templates') as $tpl): ?>
+                            <div class="<?php echo tpl_cycle('even,odd'); ?>">
+                                <li><?php echo $tpl['file']; ?>
+                                    <?php if ('' != $tpl['description']): ?><span class="help-block">
+                                        <small><?php echo defined($tpl['description']) ? constant($tpl['description']) : $tpl['description']; ?></small></span><?php endif; ?></li>
+                            </div>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+
             </div>
-
-            <div class="box-content" style="display: none;">
-                <ol>
-                    <?php foreach ($module->getInfo('templates') as $tpl): ?>
-                        <div class="<?php echo tpl_cycle('even,odd'); ?>">
-                            <li><?php echo $tpl['file']; ?>
-                                <?php if ('' != $tpl['description']): ?><span class="help-block"><small><?php echo defined($tpl['description']) ? constant($tpl['description']) : $tpl['description']; ?></small></span><?php endif; ?></li>
-                        </div>
-                    <?php endforeach; ?>
-                </ol>
-            </div>
-
-        </div>
         <?php endif; ?>
 
         <?php if ($module->getInfo('tables')): ?>
-        <div class="cu-box">
+            <div class="cu-box">
 
-            <div class="box-header">
-                <span class="fa fa-caret-down box-handler"></span>
-                <h3 class="box-title"><?php _e('Database Tables', 'rmcommon'); ?> (<?php echo count($module->getInfo('tables')); ?>)</h3>
+                <div class="box-header">
+                    <span class="fa fa-caret-down box-handler"></span>
+                    <h3 class="box-title"><?php _e('Database Tables', 'rmcommon'); ?> (<?php echo count($module->getInfo('tables')); ?>)</h3>
+                </div>
+
+                <div class="box-content" style="display: none;">
+                    <ol>
+                        <?php foreach ($module->getInfo('tables') as $table): ?>
+                            <div class="<?php echo tpl_cycle('even,odd'); ?>">
+                                <li><?php echo $table; ?></li>
+                            </div>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+
             </div>
-
-            <div class="box-content" style="display: none;">
-                <ol>
-                    <?php foreach ($module->getInfo('tables') as $table): ?>
-                        <div class="<?php echo tpl_cycle('even,odd'); ?>">
-                            <li><?php echo $table; ?></li>
-                        </div>
-                    <?php endforeach; ?>
-                </ol>
-            </div>
-
-        </div>
         <?php endif; ?>
 
         <?php if ($module->getInfo('config')): ?>
-        <div class="cu-box">
+            <div class="cu-box">
 
-            <div class="box-header">
-                <span class="fa fa-caret-down box-handler"></span>
-                <h3 class="box-title"><?php _e('Option settings to insert', 'rmcommon'); ?> (<?php echo count($module->getInfo('config')); ?>)</h3>
+                <div class="box-header">
+                    <span class="fa fa-caret-down box-handler"></span>
+                    <h3 class="box-title"><?php _e('Option settings to insert', 'rmcommon'); ?> (<?php echo count($module->getInfo('config')); ?>)</h3>
+                </div>
+
+                <div class="box-content" style="display: none;">
+                    <ol>
+                        <?php foreach ($module->getInfo('config') as $item): ?>
+                            <div class="<?php echo tpl_cycle('even,odd'); ?>">
+                                <li><strong><?php echo defined($item['title']) ? constant($item['title']) : $item['title']; ?></strong>
+                                    <?php if ('' != $item['description']): ?><span class="help-block">
+                                        <small><?php echo defined($item['description']) ? constant($item['description']) : $item['description']; ?></small></span><?php endif; ?></li>
+                            </div>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+
             </div>
-
-            <div class="box-content" style="display: none;">
-                <ol>
-                    <?php foreach ($module->getInfo('config') as $item): ?>
-                        <div class="<?php echo tpl_cycle('even,odd'); ?>">
-                            <li><strong><?php echo defined($item['title']) ? constant($item['title']) : $item['title']; ?></strong>
-                                <?php if ('' != $item['description']): ?><span class="help-block"><small><?php echo defined($item['description']) ? constant($item['description']) : $item['description']; ?></small></span><?php endif; ?></li>
-                        </div>
-                    <?php endforeach; ?>
-                </ol>
-            </div>
-
-        </div>
         <?php endif; ?>
 
         <?php if ($module->getInfo('blocks')): ?>
-        <div class="cu-box">
+            <div class="cu-box">
 
-            <div class="box-header">
-                <span class="fa fa-caret-down box-handler"></span>
-                <h3 class="box-title"><?php _e('Bloks to insert', 'rmcommon'); ?> (<?php echo count($module->getInfo('blocks')); ?>)</h3>
+                <div class="box-header">
+                    <span class="fa fa-caret-down box-handler"></span>
+                    <h3 class="box-title"><?php _e('Bloks to insert', 'rmcommon'); ?> (<?php echo count($module->getInfo('blocks')); ?>)</h3>
+                </div>
+
+                <div class="box-content" style="display: none;">
+                    <ol>
+                        <?php foreach ($module->getInfo('blocks') as $item): ?>
+                            <div class="<?php echo tpl_cycle('even,odd'); ?>">
+                                <li><strong><?php echo defined($item['name']) ? constant($item['name']) : $item['name']; ?></strong><br>
+                                    <?php if ('' != $item['description']): ?><span class="help-block">
+                                        <small><?php echo defined($item['description']) ? constant($item['description']) : $item['description']; ?></small></span><?php endif; ?></li>
+                            </div>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+
             </div>
-
-            <div class="box-content" style="display: none;">
-                <ol>
-                    <?php foreach ($module->getInfo('blocks') as $item): ?>
-                        <div class="<?php echo tpl_cycle('even,odd'); ?>">
-                            <li><strong><?php echo defined($item['name']) ? constant($item['name']) : $item['name']; ?></strong><br>
-                                <?php if ('' != $item['description']): ?><span class="help-block"><small><?php echo defined($item['description']) ? constant($item['description']) : $item['description']; ?></small></span><?php endif; ?></li>
-                        </div>
-                    <?php endforeach; ?>
-                </ol>
-            </div>
-
-        </div>
         <?php endif; ?>
 
     </div>

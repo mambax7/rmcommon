@@ -44,8 +44,8 @@ use RMUtilities;
 
 class Common
 {
-    public $isAjax = false;
-    private $helps = [];
+    public  $isAjax = false;
+    private $helps  = [];
 
     /**
      * Determines if current theme is a native theme (xThemes)
@@ -283,7 +283,7 @@ class Common
 
     /**
      * Check the session token sent via HTTP and redirect if not valid
-     * @param bool $ajax
+     * @param bool   $ajax
      * @param string $url Used only when $ajax is false
      * @return bool
      */
@@ -294,18 +294,9 @@ class Common
         }
 
         if ($ajax) {
-            $this->ajax()->response(
-                __('Session token expired!', 'rmcommon'),
-                1,
-                0,
-                ['reload' => true]
-            );
+            $this->ajax()->response(__('Session token expired!', 'rmcommon'), 1, 0, ['reload' => true]);
         } else {
-            $this->uris()->redirect_with_message(
-                __('Session token expired!', 'rmcommon'),
-                '' == $url ? XOOPS_URL : $url,
-                RMMSG_ERROR
-            );
+            $this->uris()->redirect_with_message(__('Session token expired!', 'rmcommon'), '' == $url ? XOOPS_URL : $url, RMMSG_ERROR);
         }
     }
 

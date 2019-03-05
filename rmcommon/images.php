@@ -46,12 +46,12 @@ function show_images()
     /**
      * Paginacion de Resultados
      */
-    $page = rmc_server_var($_GET, 'page', 1);
+    $page  = rmc_server_var($_GET, 'page', 1);
     $limit = $xoopsModuleConfig['imgsnumber'];
     list($num) = $db->fetchRow($db->query($sql));
 
     $tpages = ceil($num / $limit);
-    $page = $page > $tpages ? $tpages : $page;
+    $page   = $page > $tpages ? $tpages : $page;
 
     $start = $num <= 0 ? 0 : ($page - 1) * $limit;
 
@@ -61,13 +61,13 @@ function show_images()
     // Get categories
     $sql = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_images') . ' ' . ($cat > 0 ? "WHERE cat='$cat'" : '') . " ORDER BY id_img DESC LIMIT $start,$limit";
 
-    $result = $db->query($sql);
-    $images = [];
+    $result     = $db->query($sql);
+    $images     = [];
     $categories = [];
-    $authors = [];
+    $authors    = [];
 
-    $category = new RMImageCategory($cat);
-    $sizes = $category->getVar('sizes');
+    $category     = new RMImageCategory($cat);
+    $sizes        = $category->getVar('sizes');
     $current_size = [];
 
     foreach ($sizes as $size) {
@@ -94,14 +94,14 @@ function show_images()
         $fd = pathinfo($img->getVar('file'));
 
         $images[] = [
-            'id' => $img->id(),
-            'title' => $img->getVar('title'),
-            'date' => $img->getVar('date'),
-            'desc' => $img->getVar('desc', 'n'),
-            'cat' => $categories[$img->getVar('cat')]->getVar('name'),
+            'id'     => $img->id(),
+            'title'  => $img->getVar('title'),
+            'date'   => $img->getVar('date'),
+            'desc'   => $img->getVar('desc', 'n'),
+            'cat'    => $categories[$img->getVar('cat')]->getVar('name'),
             'author' => $authors[$img->getVar('uid')],
-            'file' => XOOPS_UPLOAD_URL . '/' . date('Y', $img->getVar('date')) . '/' . date('m', $img->getVar('date')) . '/sizes/' . $fd['filename'] . '-' . $current_size['name'] . '.' . $fd['extension'],
-            'big' => XOOPS_UPLOAD_URL . '/' . date('Y', $img->getVar('date')) . '/' . date('m', $img->getVar('date')) . '/' . $fd['filename'] . '.' . $fd['extension'],
+            'file'   => XOOPS_UPLOAD_URL . '/' . date('Y', $img->getVar('date')) . '/' . date('m', $img->getVar('date')) . '/sizes/' . $fd['filename'] . '-' . $current_size['name'] . '.' . $fd['extension'],
+            'big'    => XOOPS_UPLOAD_URL . '/' . date('Y', $img->getVar('date')) . '/' . date('m', $img->getVar('date')) . '/' . $fd['filename'] . '.' . $fd['extension'],
         ];
     }
 
@@ -133,7 +133,7 @@ function images_form($edit = 0)
     define('RMCSUBLOCATION', 'addimages');
 
     $category = rmc_server_var($_GET, 'category', 0);
-    $cat = new RMImageCategory($category);
+    $cat      = new RMImageCategory($category);
 
     if (!$cat->isNew() && 'open' != $cat->getVar('status')) {
         showMessage(sprintf(__('Category %s is closed. Please, select another category.', 'rmcommon'), '"' . $cat->getVar('name') . '"'), 1);
@@ -143,7 +143,7 @@ function images_form($edit = 0)
     /*$upload = new RMFlashUploader('images', 'images.php');*/
     if (!$cat->isNew()) {
         $showControls = true;
-        $uploader = new Common\Core\Helpers\Uploader('images-uploader');
+        $uploader     = new Common\Core\Helpers\Uploader('images-uploader');
         $uploader->includeDropzone();
 
         $script = "(function(){cuImagesManager.init('" . RMCURL . "/include/upload.php', " . (($cat->getVar('filesize') * $cat->getVar('sizeunit')) / 1000000) . ');}());';
@@ -181,17 +181,17 @@ function show_categories()
 
     define('RMCSUBLOCATION', 'showcategories');
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('mod_rmcommon_images_categories');
     /**
      * Paginacion de Resultados
      */
-    $page = rmc_server_var($_GET, 'page', 1);
+    $page  = rmc_server_var($_GET, 'page', 1);
     $limit = $xoopsModuleConfig['catsnumber'];
     list($num) = $db->fetchRow($db->query($sql));
 
     $tpages = ceil($num / $limit);
-    $page = $page > $tpages ? $tpages : $page;
+    $page   = $page > $tpages ? $tpages : $page;
 
     $start = $num <= 0 ? 0 : ($page - 1) * $limit;
 
@@ -201,20 +201,20 @@ function show_categories()
     // Get categories
     $sql = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_images_categories') . " ORDER BY id_cat DESC LIMIT $start,$limit";
 
-    $result = $db->query($sql);
+    $result     = $db->query($sql);
     $categories = [];
 
     while (false !== ($row = $db->fetchArray($result))) {
         $cat = new RMImageCategory();
         $cat->assignVars($row);
-        $groups = $cat->getVar('groups');
+        $groups       = $cat->getVar('groups');
         $categories[] = [
-            'id' => $cat->id(),
-            'name' => $cat->getVar('name'),
+            'id'     => $cat->id(),
+            'name'   => $cat->getVar('name'),
             'status' => $cat->getVar('status'),
             'gwrite' => RMFunctions::get_groups_names($groups['write']),
-            'gread' => RMFunctions::get_groups_names($groups['read']),
-            'sizes' => $cat->getVar('sizes'),
+            'gread'  => RMFunctions::get_groups_names($groups['read']),
+            'sizes'  => $cat->getVar('sizes'),
             'images' => RMFunctions::get_num_records('mod_rmcommon_images', 'cat=' . $cat->id()),
         ];
     }
@@ -247,7 +247,7 @@ function new_category($edit = 0)
     define('RMCSUBLOCATION', 'newcategory');
 
     $active = 'open';
-    $name = '';
+    $name   = '';
 
     extract($_GET);
 
@@ -268,7 +268,7 @@ function new_category($edit = 0)
         // Write and read permissions
         $perms = $cat->getVar('groups');
         $write = isset($write) ? $write : $perms['write'];
-        $read = isset($read) ? $read : $perms['read'];
+        $read  = isset($read) ? $read : $perms['read'];
         // Active
         $active = $cat->getVar('status');
     }
@@ -282,9 +282,9 @@ function new_category($edit = 0)
 
     xoops_cp_header();
 
-    $form = new RMForm('', '', '');
+    $form   = new RMForm('', '', '');
     $fwrite = new RMFormGroups('', 'write', true, 1, 3, isset($write) ? $write : [XOOPS_GROUP_ADMIN]);
-    $fread = new RMFormGroups('', 'read', true, 1, 3, isset($read) ? $read : [0]);
+    $fread  = new RMFormGroups('', 'read', true, 1, 3, isset($read) ? $read : [0]);
 
     RMTemplate::get()->add_script('imgmanager.js', 'rmcommon');
     include RMTemplate::get()->get_template('rmc-categories-form.php', 'module', 'rmcommon');
@@ -397,7 +397,7 @@ function category_status($action = 'open')
         $cats[] = $id;
     }
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('mod_rmcommon_images_categories') . " SET status='" . $action . "' WHERE id_cat IN(" . implode(',', $cats) . ')';
 
     if ($db->queryF($sql)) {
@@ -410,7 +410,7 @@ function category_status($action = 'open')
 
 function send_error($message)
 {
-    $data['error'] = 1;
+    $data['error']   = 1;
     $data['message'] = $message;
     echo json_encode($data);
     die();
@@ -506,15 +506,10 @@ function resize_images()
         }
     }
 
-    $common->ajax()->response(
-        sprintf(__('%s done!', 'rmcommon'), $image->getVar('file')),
-        0,
-        1,
-        [
-            'file' => $tfile,
-            'title' => $image->title,
-        ]
-    );
+    $common->ajax()->response(sprintf(__('%s done!', 'rmcommon'), $image->getVar('file')), 0, 1, [
+                                                                                             'file'  => $tfile,
+                                                                                             'title' => $image->title,
+                                                                                         ]);
 }
 
 /**
@@ -524,7 +519,7 @@ function edit_image()
 {
     global $xoopsUser, $xoopsSecurity, $rmTpl, $rmEvents;
 
-    $id = rmc_server_var($_GET, 'id', 0);
+    $id   = rmc_server_var($_GET, 'id', 0);
     $page = rmc_server_var($_GET, 'page', '');
     if ($id <= 0) {
         redirectMsg('images.php', __('Invalid image ID', 'rmcommon'), 1);
@@ -537,11 +532,11 @@ function edit_image()
         die();
     }
 
-    $cat = new RMImageCategory($image->getVar('cat'));
-    $sizes = $cat->getVar('sizes');
+    $cat          = new RMImageCategory($image->getVar('cat'));
+    $sizes        = $cat->getVar('sizes');
     $current_size = [];
 
-    $fd = pathinfo($image->getVar('file'));
+    $fd    = pathinfo($image->getVar('file'));
     $updir = '/' . date('Y', $image->getVar('date')) . '/' . date('m', $image->getVar('date'));
 
     foreach ($sizes as $size) {
@@ -567,13 +562,13 @@ function edit_image()
     }
 
     $image_data['thumbnail'] = XOOPS_UPLOAD_URL . $updir . '/sizes/' . $fd['filename'] . '-' . $current_size['name'] . '.' . $fd['extension'];
-    $mimes = include XOOPS_ROOT_PATH . '/include/mimetypes.inc.php';
-    $image_data['mime'] = isset($mimes[$fd['extension']]) ? $mimes[$fd['extension']] : 'application/octet-stream';
-    $image_data['file'] = $image->getVar('file');
-    $image_data['date'] = $image->getVar('date');
-    $image_data['title'] = $image->getVar('title');
-    $image_data['desc'] = $image->getVar('desc', 'e');
-    $image_data['url'] = XOOPS_UPLOAD_URL . $updir . '/' . $image->getVar('file');
+    $mimes                   = include XOOPS_ROOT_PATH . '/include/mimetypes.inc.php';
+    $image_data['mime']      = isset($mimes[$fd['extension']]) ? $mimes[$fd['extension']] : 'application/octet-stream';
+    $image_data['file']      = $image->getVar('file');
+    $image_data['date']      = $image->getVar('date');
+    $image_data['title']     = $image->getVar('title');
+    $image_data['desc']      = $image->getVar('desc', 'e');
+    $image_data['url']       = XOOPS_UPLOAD_URL . $updir . '/' . $image->getVar('file');
 
     $categories = RMFunctions::load_images_categories("WHERE status='open' ORDER BY id_cat DESC");
 
@@ -602,11 +597,11 @@ function update_image()
 
     set_time_limit(0);
 
-    $title = rmc_server_var($_POST, 'title', '');
+    $title    = rmc_server_var($_POST, 'title', '');
     $category = rmc_server_var($_POST, 'cat', '');
-    $desc = rmc_server_var($_POST, 'desc', '');
-    $page = rmc_server_var($_POST, 'page', 1);
-    $id = rmc_server_var($_POST, 'id', 0);
+    $desc     = rmc_server_var($_POST, 'desc', '');
+    $page     = rmc_server_var($_POST, 'page', 1);
+    $id       = rmc_server_var($_POST, 'id', 0);
 
     if (!$xoopsSecurity->check()) {
         redirectMsg('images.php', __('Operation not allowed!', 'rmcommon'), 1);
@@ -656,7 +651,7 @@ function update_image()
         die();
     }
 
-    $fd = pathinfo($image->getVar('file'));
+    $fd    = pathinfo($image->getVar('file'));
     $updir = XOOPS_UPLOAD_PATH . '/' . date('Y', $image->getVar('date')) . '/' . date('m', time());
 
     // Delete current image files
@@ -674,7 +669,7 @@ function update_image()
             continue;
         }
 
-        $name = $updir . '/sizes/' . $fd['filename'] . '-' . $size['name'] . '.' . $fd['extension'];
+        $name  = $updir . '/sizes/' . $fd['filename'] . '-' . $size['name'] . '.' . $fd['extension'];
         $sizer = new RMImageResizer($updir . '/' . $image->getVar('file'), $name);
 
         switch ($size['type']) {
@@ -692,7 +687,7 @@ function update_image()
 
         $width = 0 == $width ? $size['width'] : $width;
         if ($width < $size['width']) {
-            $with = $size['width'];
+            $with  = $size['width'];
             $tfile = str_replace(XOOPS_UPLOAD_PATH, XOOPS_UPLOAD_URL, $name);
         }
     }
@@ -705,8 +700,8 @@ function update_image()
  */
 function delete_image()
 {
-    $ids = rmc_server_var($_REQUEST, 'imgs', []);
-    $page = rmc_server_var($_REQUEST, 'page', 0);
+    $ids      = rmc_server_var($_REQUEST, 'imgs', []);
+    $page     = rmc_server_var($_REQUEST, 'page', 0);
     $category = rmc_server_var($_REQUEST, 'category', 0);
 
     if (count($ids) <= 0) {
@@ -725,7 +720,7 @@ function delete_image()
 
         $cat = new RMImageCategory($image->getVar('cat'));
 
-        $fd = pathinfo($image->getVar('file'));
+        $fd    = pathinfo($image->getVar('file'));
         $updir = XOOPS_UPLOAD_PATH . '/' . date('Y', $image->getVar('date')) . '/' . date('m', time());
 
         // Delete current image files
@@ -786,8 +781,8 @@ function delete_category()
         $sizes[] = '-' . $size['name'];
     }
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
-    $sql = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_images') . " WHERE cat='" . $cat->id() . "'";
+    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $sql    = 'SELECT * FROM ' . $db->prefix('mod_rmcommon_images') . " WHERE cat='" . $cat->id() . "'";
     $result = $db->query($sql);
 
     while (false !== ($row = $db->fetchArray($result))) {
@@ -795,7 +790,7 @@ function delete_category()
         $image->assignVars($row);
 
         $updir = XOOPS_UPLOAD_PATH . '/' . date('Y', $image->getVar('date')) . '/' . date('m', time());
-        $fd = pathinfo($image->getVar('file'));
+        $fd    = pathinfo($image->getVar('file'));
 
         foreach ($sizes as $size) {
             $file = $updir . '/sizes/' . $fd['filename'] . $size . '.' . $fd['extension'];
@@ -821,25 +816,17 @@ function update_thumbnails()
     global $xoopsUser, $xoopsSecurity, $common;
 
     $catId = $common->httpRequest()->post('category', 'integer', 0);
-    $imgs = $common->httpRequest()->post('imgs', 'array', []);
-    $page = $common->httpRequest()->post('page', 'integer', 1);
+    $imgs  = $common->httpRequest()->post('imgs', 'array', []);
+    $page  = $common->httpRequest()->post('page', 'integer', 1);
 
     if ($catId <= 0) {
-        $common->uris()->redirect_with_message(
-            __('No category ID has been provided!', 'rmcommon'),
-            'images.php?page=' . $page,
-            RMMSG_WARN
-        );
+        $common->uris()->redirect_with_message(__('No category ID has been provided!', 'rmcommon'), 'images.php?page=' . $page, RMMSG_WARN);
     }
 
     $cat = new RMImageCategory($catId);
 
     if ($cat->isNew()) {
-        $common->uris()->redirect_with_message(
-            __('Specified category does not exists!', 'rmcommon'),
-            'images.php?page=' . $page,
-            RMMSG_WARN
-        );
+        $common->uris()->redirect_with_message(__('Specified category does not exists!', 'rmcommon'), 'images.php?page=' . $page, RMMSG_WARN);
     }
 
     $ids = implode(',', $imgs);

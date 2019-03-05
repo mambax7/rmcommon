@@ -1,15 +1,16 @@
 <?php
+
 /**
-----------------------------------------
-Smart-B ERP
-@package:   Sistema Base
-@author     Red México
-@author     http://www.redmexico.com.mx
-@author     Eduardo Cortés
-@copyright  2013 Red México
-@version    $Id$
-----------------------------------------
-**/
+ * ----------------------------------------
+ * Smart-B ERP
+ * @package    :   Sistema Base
+ * @author     Red México
+ * @author     http://www.redmexico.com.mx
+ * @author     Eduardo Cortés
+ * @copyright  2013 Red México
+ * @version    $Id$
+ * ----------------------------------------
+ **/
 class RMPrivileges
 {
     use RMModuleAjax;
@@ -22,7 +23,7 @@ class RMPrivileges
     {
         global $xoopsUser, $xoopsDB;
 
-        $privileges = UserPrivileges::get();
+        $privileges          = UserPrivileges::get();
         $privileges->allowed = [];
 
         // User must not have any permission
@@ -32,7 +33,7 @@ class RMPrivileges
 
         $groups = $xoopsUser->getGroups();
 
-        $sql = 'SELECT * FROM ' . $xoopsDB->prefix('mod_rmcommon_permissions') . ' WHERE
+        $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('mod_rmcommon_permissions') . ' WHERE
                 `group` IN (' . implode(',', $groups) . ')';
         $result = $xoopsDB->query($sql);
 
@@ -46,7 +47,7 @@ class RMPrivileges
      * @param string $module Module name
      * @param string $action Action identifier
      * @param string $method 'ajax' or ''
-     * @param bool $redirect
+     * @param bool   $redirect
      * @return mixed
      */
     public static function verify($module, $action, $method = 'ajax', $redirect = true)
@@ -156,7 +157,7 @@ class RMPrivileges
         $sql = 'SELECT * FROM ' . $xoopsDB->prefix('mod_rmcommon_permissions') . " WHERE
                 `group` = $group AND element='$directory'";
 
-        $result = $xoopsDB->query($sql);
+        $result      = $xoopsDB->query($sql);
         $permissions = new stdClass();
 
         while (false !== ($row = $xoopsDB->fetchArray($result))) {
@@ -172,14 +173,9 @@ class RMPrivileges
 
         if ('ajax' == $method) {
             $common->ajax()->prepare();
-            $common->ajax()->response(
-                __('You don\'t have required rights to do this action!', 'rmcommon'),
-                1,
-                0,
-                [
-                    'goto' => XOOPS_URL,
-                ]
-            );
+            $common->ajax()->response(__('You don\'t have required rights to do this action!', 'rmcommon'), 1, 0, [
+                                                                                                              'goto' => XOOPS_URL,
+                                                                                                          ]);
         } else {
             RMUris::redirect_with_message(__('You don\'t have required rights to do this action!', 'rmcommon'), XOOPS_URL, RMMSG_WARN, 'fa fa-warning');
         }

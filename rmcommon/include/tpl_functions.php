@@ -44,8 +44,6 @@ function tpl_cycle($values, $delimiter = ',', $reset = false)
 }
 
 /**
- * @deprecated
- * GET Predefined Variable
  * @param var Server VAR ($_POST, $_GET, $_SERVER, etc.)
  * @param string Value key
  * @param mixed Default value to return if the var is not located.
@@ -53,6 +51,8 @@ function tpl_cycle($values, $delimiter = ',', $reset = false)
  * @param mixed $key
  * @param mixed $default
  * @return any
+ * @deprecated
+ * GET Predefined Variable
  */
 function rmc_server_var($from, $key, $default = '')
 {
@@ -71,11 +71,11 @@ function showMessage($message, $level = 0, $icon = '')
 =========================*/
 
 /**
+ * @param string $url   Pgina en la que se mostrar el error
+ * @param string $msg   Mensaje de Error
+ * @param int    $level Indicates the level of the message (error, info, warn, etc.) You can use the constants RMMSG_INFO, RMMSG_WARN... or you can specify your own level number
+ * @param string $icon  URL for an icon to show in message. This value is used by templates.
  * @deprecated
- * @param string $url Pgina en la que se mostrar el error
- * @param string $msg Mensaje de Error
- * @param int $level Indicates the level of the message (error, info, warn, etc.) You can use the constants RMMSG_INFO, RMMSG_WARN... or you can specify your own level number
- * @param string $icon URL for an icon to show in message. This value is used by templates.
  */
 function redirectMsg($url, $msg = '', $level = 5, $icon = '')
 {
@@ -83,8 +83,8 @@ function redirectMsg($url, $msg = '', $level = 5, $icon = '')
 }
 
 /**
- * @deprecated
  * @param mixed $location
+ * @deprecated
  */
 function xoops_cp_location($location)
 {

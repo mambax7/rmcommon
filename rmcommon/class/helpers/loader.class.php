@@ -1,15 +1,16 @@
 <?php
+
 /**
-----------------------------------------
-Smart-B ERP
-@package:   Sistema Base
-@author     Red México
-@author     http://www.redmexico.com.mx
-@author     Eduardo Cortés
-@copyright  2013 Red México
-@version    $Id$
-----------------------------------------
-**/
+ * ----------------------------------------
+ * Smart-B ERP
+ * @package    :   Sistema Base
+ * @author     Red México
+ * @author     http://www.redmexico.com.mx
+ * @author     Eduardo Cortés
+ * @copyright  2013 Red México
+ * @version    $Id$
+ * ----------------------------------------
+ **/
 class RMLoader
 {
     public static function api($name, $class)

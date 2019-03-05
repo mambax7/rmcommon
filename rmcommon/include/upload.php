@@ -8,14 +8,14 @@
 // License: GPL 2.0
 // --------------------------------------------------------------
 
-require  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+require dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
 /*XoopsLogger::getInstance()->activated = false;
 XoopsLogger::getInstance()->renderingEnabled = false;*/
 
 function error($message)
 {
-    $data['error'] = 1;
+    $data['error']   = 1;
     $data['message'] = $message;
     echo json_encode($data);
     die();
@@ -24,10 +24,7 @@ function error($message)
 $common->ajax()->prepare();
 
 if (!$common->security()->check(false, false, 'CUTOKEN')) {
-    $common->ajax()->notifyError(
-        __('Session token invalid!', 'rmcommon'),
-        0
-    );
+    $common->ajax()->notifyError(__('Session token invalid!', 'rmcommon'), 0);
 }
 
 /**
@@ -102,13 +99,8 @@ if (!$image->save()) {
     $common->ajax()->notifyError(__('File could not be inserted to database!', 'rmcommon'));
 }
 
-$common->ajax()->response(
-    sprintf(__('File <strong>%s</strong> has been uploaded successfully', 'rmcommon'), $uploader->savedFileName),
-    0,
-    1,
-    [
-        'id' => $image->id(),
-    ]
-);
+$common->ajax()->response(sprintf(__('File <strong>%s</strong> has been uploaded successfully', 'rmcommon'), $uploader->savedFileName), 0, 1, [
+                                                                                                                                          'id' => $image->id(),
+                                                                                                                                      ]);
 
 die();

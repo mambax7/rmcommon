@@ -97,8 +97,8 @@ class RMActiveForm
             throw new RMException(sprintf(__('Form element "%s" must be called providing required parameters.', 'rmcommon'), $object));
         }
 
-        $model = $arguments[0];
-        $field = $arguments[1];
+        $model      = $arguments[0];
+        $field      = $arguments[1];
         $parameters = isset($arguments[2]) ? $arguments[2] : [];
 
         $file = __DIR__ . '/form-objects/' . mb_strtolower($object) . '.php';
@@ -126,24 +126,16 @@ class RMActiveForm
      */
     public function open()
     {
-        $form = '<form ';
+        $form  = '<form ';
         $class = 'active-form';
 
-        RMTemplate::get()->add_script(
-            'forms/active-form.js',
-            'rmcommon',
-            [
-                'location' => 'footer',
-            ]
-        );
+        RMTemplate::get()->add_script('forms/active-form.js', 'rmcommon', [
+                                                                'location' => 'footer',
+                                                            ]);
 
-        RMTemplate::get()->add_style(
-            'active-form.css',
-            'rmcommon',
-            [
-                'location' => 'footer',
-            ]
-        );
+        RMTemplate::get()->add_style('active-form.css', 'rmcommon', [
+                                                          'location' => 'footer',
+                                                      ]);
 
         foreach ($this->attributes as $attr => $value) {
             switch ($attr) {

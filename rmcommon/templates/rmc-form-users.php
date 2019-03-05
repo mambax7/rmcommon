@@ -37,7 +37,9 @@
                                 </label></li>
                         <?php endforeach; ?>
                     </ul>
-                    <div align="center"><button type="button" class="btn btn-default" onclick="usersField.insert_users(<?php echo $type; ?>);"><?php echo _e('Insert Users', 'rmcommon'); ?></button></div>
+                    <div align="center">
+                        <button type="button" class="btn btn-default" onclick="usersField.insert_users(<?php echo $type; ?>);"><?php echo _e('Insert Users', 'rmcommon'); ?></button>
+                    </div>
                 </div>
             </div>
         <?php endif; ?>
@@ -48,16 +50,17 @@
 
                 <div class="col-lg-12">
                     <ul class="list-unstyled">
-                    <?php foreach ($users as $user): ?>
-                        <li>
-                            <div class="<?php echo $field_type; ?>">
-                                <label>
-                                <input <?php if ($type): ?>onchange="usersField.add_to_list(<?php echo $user['id']; ?>);"<?php else: ?>onclick="usersField.insert_users(<?php echo $type . ',' . $user['id']; ?>);"<?php endif; ?> type="<?php echo $field_type ?>" id="<?php echo $field; ?>-user-<?php echo $user['id']; ?>" name="users<?php echo 'checkbox' == $field_type ? '[]' : ''; ?>" value="<?php echo $user['id']; ?>"<?php echo $user['check'] ? ' checked' : ''; ?>>
-                                <span id="<?php echo $field; ?>-username-<?php echo $user['id']; ?>"><?php echo $user['name']; ?></span>
-                                </label>
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
+                        <?php foreach ($users as $user): ?>
+                            <li>
+                                <div class="<?php echo $field_type; ?>">
+                                    <label>
+                                        <input <?php if ($type): ?>onchange="usersField.add_to_list(<?php echo $user['id']; ?>);" <?php else: ?>onclick="usersField.insert_users(<?php echo $type . ',' . $user['id']; ?>);"<?php endif; ?> type="<?php echo $field_type ?>"
+                                               id="<?php echo $field; ?>-user-<?php echo $user['id']; ?>" name="users<?php echo 'checkbox' == $field_type ? '[]' : ''; ?>" value="<?php echo $user['id']; ?>"<?php echo $user['check'] ? ' checked' : ''; ?>>
+                                        <span id="<?php echo $field; ?>-username-<?php echo $user['id']; ?>"><?php echo $user['name']; ?></span>
+                                    </label>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                     <?php $nav->display(false); ?>
                 </div>
@@ -67,8 +70,8 @@
         </div>
     </div>
 
-<?php $cols = 'radio' == $field_type ? 5 : 3; ?>
-<?php if (!$type): ?>
-<input type="hidden" name="s" value="<?php echo $selected_string; ?>" id="s">
-<?php endif; ?>
+    <?php $cols = 'radio' == $field_type ? 5 : 3; ?>
+    <?php if (!$type): ?>
+        <input type="hidden" name="s" value="<?php echo $selected_string; ?>" id="s">
+    <?php endif; ?>
 </form>

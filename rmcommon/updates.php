@@ -28,9 +28,9 @@
 require_once dirname(__DIR__) . '/../include/cp_header.php';
 $common->location = 'updates';
 
-$updfile = XOOPS_CACHE_PATH . '/updates.chk';
+$updfile   = XOOPS_CACHE_PATH . '/updates.chk';
 $ftpConfig = new stdClass();
-$runFiles = [];
+$runFiles  = [];
 
 class UpdateManager
 {
@@ -77,7 +77,7 @@ class UpdateManager
 
         $rmFunc = RMFunctions::get();
         $rmUtil = RMUtilities::get();
-        $tf = new RMTimeFormatter('', '%T% %d%, %Y% at %h%:%i%');
+        $tf     = new RMTimeFormatter('', '%T% %d%, %Y% at %h%:%i%');
 
         if (is_file($updfile)) {
             $updates = unserialize(base64_decode(file_get_contents($updfile), true));
@@ -94,7 +94,7 @@ class UpdateManager
         $ftpserver = $ftpserver['host'];
 
         $pathinfo = parse_url(XOOPS_URL);
-        $ftpdir = str_replace($pathinfo['scheme'] . '://' . $pathinfo['host'], '', XOOPS_URL);
+        $ftpdir   = str_replace($pathinfo['scheme'] . '://' . $pathinfo['host'], '', XOOPS_URL);
         unset($pathinfo);
 
         RMBreadCrumb::get()->add_crumb(__('Available Updates', 'rmcommon'));
@@ -115,7 +115,7 @@ class UpdateManager
         $rmUtil = RMUtilities::get();
 
         $xoopsLogger->activated = false;
-        $updates = [];
+        $updates                = [];
         if (is_file($updfile)) {
             $updates = unserialize(base64_decode(file_get_contents($updfile), true));
         }
@@ -171,7 +171,7 @@ class UpdateManager
         // "remote" param is mandatory
         $action = $common->httpRequest()::post('remote', 'string', '');
         // Query can contain a received server data
-        $api = $common->httpRequest()::post('api', 'integer', 0);
+        $api    = $common->httpRequest()::post('api', 'integer', 0);
         $serial = $common->httpRequest()::post('serial', 'integer', 0);
         // Data for login
         $credentials = $common->httpRequest()::post('credentials', 'string', '');
@@ -184,7 +184,7 @@ class UpdateManager
             $common->ajax()->notifyError(__('No action to process!', 'rmcommon'));
         }
 
-        $query = explode('?', $url);
+        $query    = explode('?', $url);
         $query[1] = ('' != $query[1] ? $query[1] . '&' : '') . 'action=' . $action;
 
         if ('' != $credentials) {
@@ -198,48 +198,35 @@ class UpdateManager
             $vars = [];
             parse_str($query[1], $vars);
             $license = new \Common\Core\License(md5($vars['type'] . '-' . $vars['id']));
-            $data = $license->data;
+            $data    = $license->data;
 
             if ($license->isNew() && 'module' == $vars['type']) {
                 $controller = RMFunctions::loadModuleController($vars['id']);
                 if (false === $controller) {
-                    $common->ajax()->notifyError(
-                        __('Module is not compatible with this update process', 'rmcommon'),
-                        1,
-                        1
-                    );
+                    $common->ajax()->notifyError(__('Module is not compatible with this update process', 'rmcommon'), 1, 1);
                 }
                 $data = $controller->licenseData();
             }
 
             if ('' == $data) {
-                $common->ajax()->notifyError(
-                    __('This element must be registered before to update', 'rmcommon'),
-                    1,
-                    1
-                );
+                $common->ajax()->notifyError(__('This element must be registered before to update', 'rmcommon'), 1, 1);
             }
             $query[1] .= '&data=' . $data;
         }
 
-        $siteID = urlencode(md5(crypt(XOOPS_LICENSE_KEY . XOOPS_URL, $common->settings->secretkey)));
+        $siteID   = urlencode(md5(crypt(XOOPS_LICENSE_KEY . XOOPS_URL, $common->settings->secretkey)));
         $query[1] .= '&site=' . $siteID;
 
         $response = json_decode($common->httpRequest()::load_url($query[0], $query[1], true), true);
 
-        $type = 0;
+        $type    = 0;
         $message = __('Response from server', 'rmcommon');
 
         if ('error' == $response['type']) {
-            $type = 1;
+            $type    = 1;
             $message = $response['message'];
 
-            $common->ajax()->response(
-                $message,
-                $type,
-                1,
-                $response
-            );
+            $common->ajax()->response($message, $type, 1, $response);
         }
 
         if (false === isset($response['code']) || '' == $response['code']) {
@@ -247,7 +234,7 @@ class UpdateManager
         }
 
         $code = $response['code'];
-        $dir = $response['dir'];
+        $dir  = $response['dir'];
         $type = $response['itemtype'];
         dt_download_file($url, $code, $siteID, $dir, $type);
     }
@@ -259,9 +246,9 @@ function jsonReturn($message, $error = 1, $data = [], $token = 1)
 
     $ret = [
         'message' => $message,
-        'error' => $error,
-        'data' => $data,
-        'token' => $token ? $xoopsSecurity->createToken() : '',
+        'error'   => $error,
+        'data'    => $data,
+        'token'   => $token ? $xoopsSecurity->createToken() : '',
     ];
     echo json_encode($ret);
     die();
@@ -383,10 +370,10 @@ function dt_download_file($url, $code, $siteID, $dir, $type)
 
         global $ftpConfig;
         $ftpConfig->server = $ftp_server;
-        $ftpConfig->user = $ftp_user;
-        $ftpConfig->pass = $ftp_pass;
-        $ftpConfig->dir = $ftp_dir;
-        $ftpConfig->port = $ftp_port > 0 ? $ftp_port : 21;
+        $ftpConfig->user   = $ftp_user;
+        $ftpConfig->pass   = $ftp_pass;
+        $ftpConfig->dir    = $ftp_dir;
+        $ftpConfig->port   = $ftp_port > 0 ? $ftp_port : 21;
 
         $ftp = new RMFtpClient($ftp_server, $ftp_port > 0 ? $ftp_port : 21, $ftp_user, $ftp_pass);
 
@@ -394,7 +381,7 @@ function dt_download_file($url, $code, $siteID, $dir, $type)
             $common->ajax()->notifyError(sprintf(__('Unable to connect FTP server %s', 'rmcommon'), '<strong>' . $ftp_server . '</strong>'));
         }
 
-        $ftpConfig->base = $ftpConfig->dir . '/modules/' . ('plugin' == $type ? 'rmcommon/plugins/' : '') . $dir;
+        $ftpConfig->base   = $ftpConfig->dir . '/modules/' . ('plugin' == $type ? 'rmcommon/plugins/' : '') . $dir;
         $ftpConfig->source = $source;
         $ftpConfig->target = $target;
 
@@ -406,7 +393,7 @@ function dt_download_file($url, $code, $siteID, $dir, $type)
 
     // Update uploads file
     $updates = unserialize(base64_decode(file_get_contents(XOOPS_CACHE_PATH . '/updates.chk'), true));
-    $new = [];
+    $new     = [];
     foreach ($updates['updates'] as $upd) {
         if ($upd['data']['type'] == $type && $upd['data']['dir'] == $dir) {
             continue;
@@ -416,18 +403,13 @@ function dt_download_file($url, $code, $siteID, $dir, $type)
 
     file_put_contents(XOOPS_CACHE_PATH . '/updates.chk', base64_encode(serialize(['date' => $updates['date'], 'total' => (int)$updates['total'] - 1, 'updates' => $new])));
 
-    $common->ajax()->response(
-        sprintf(__('%s has been updated', 'rmcommon'), '<strong>' . $dir . '</strong>'),
-        0,
-        1,
-        [
-            'notify' => [
-                'icon' => 'svg-rmcommon-ok',
-                'type' => 'alert-success',
-            ],
-            'response' => 'installed',
-    ]
-    );
+    $common->ajax()->response(sprintf(__('%s has been updated', 'rmcommon'), '<strong>' . $dir . '</strong>'), 0, 1, [
+                                                                                                                 'notify'   => [
+                                                                                                                     'icon' => 'svg-rmcommon-ok',
+                                                                                                                     'type' => 'alert-success',
+                                                                                                                 ],
+                                                                                                                 'response' => 'installed',
+                                                                                                             ]);
 }
 
 function processFile($file, $ftp)
@@ -530,10 +512,10 @@ function download_for_later()
 
     $xoopsLogger->activated = false;
 
-    $url = rmc_server_var($_POST, 'url', '');
+    $url  = rmc_server_var($_POST, 'url', '');
     $cred = rmc_server_var($_POST, 'credentials', '');
     $type = rmc_server_var($_POST, 'type', '');
-    $dir = rmc_server_var($_POST, 'dir', '');
+    $dir  = rmc_server_var($_POST, 'dir', '');
 
     if ('' == $url) {
         jsonReturn(__('Invalid parameters!', 'rmcommon'));
@@ -602,7 +584,7 @@ function update_locally()
         jsonReturn(__('Wrong action!', 'rmcommon'), 1, [], 0);
     }
 
-    $dir = RMHttpRequest::post('module', 'string', '');
+    $dir  = RMHttpRequest::post('module', 'string', '');
     $type = RMHttpRequest::post('type', 'string', '');
 
     if ('' == $dir || '' == $type) {
@@ -649,9 +631,9 @@ function module_update($dirname)
 {
     global $xoopsConfig, $xoopsDB;
 
-    $dirname = trim($dirname);
+    $dirname       = trim($dirname);
     $moduleHandler = xoops_getHandler('module');
-    $module = $moduleHandler->getByDirname($dirname);
+    $module        = $moduleHandler->getByDirname($dirname);
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
     require_once XOOPS_ROOT_PATH . '/class/template.php';
@@ -667,12 +649,12 @@ function module_update($dirname)
     if (!$moduleHandler->insert($module)) {
         $log .= sprintf(__('Could not update %s', 'rmcommon'), $module->getVar('name'));
     } else {
-        $newmid = $module->getVar('mid');
-        $msgs = [];
-        $msgs[] = sprintf(__('Updating module %s', 'rmcommon'), $module->getVar('name'));
+        $newmid         = $module->getVar('mid');
+        $msgs           = [];
+        $msgs[]         = sprintf(__('Updating module %s', 'rmcommon'), $module->getVar('name'));
         $tplfileHandler = xoops_getHandler('tplfile');
-        $deltpl = $tplfileHandler->find('default', 'module', $module->getVar('mid'));
-        $delng = [];
+        $deltpl         = $tplfileHandler->find('default', 'module', $module->getVar('mid'));
+        $delng          = [];
         if (is_array($deltpl)) {
             // delete template file entry in db
             $dcount = count($deltpl);
@@ -706,7 +688,7 @@ function module_update($dirname)
                     if (!$tplfileHandler->insert($tplfile)) {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(__('Template %s could not be inserted!', 'rmcommon'), '<strong>' . $tpl['file'] . '</strong>') . '</span>';
                     } else {
-                        $newid = $tplfile->getVar('tpl_id');
+                        $newid  = $tplfile->getVar('tpl_id');
                         $msgs[] = '&nbsp;&nbsp;' . sprintf(__('Template %s inserted to the database.', 'rmcommon'), '<strong>' . $tpl['file'] . '</strong>');
                         if ('default' == $xoopsConfig['template_set']) {
                             if (!xoops_template_touch($newid)) {
@@ -729,10 +711,10 @@ function module_update($dirname)
             $funcfiles = [];
             foreach ($blocks as $i => $block) {
                 if (isset($block['show_func']) && '' != $block['show_func'] && isset($block['file']) && '' != $block['file']) {
-                    $editfunc = isset($block['edit_func']) ? $block['edit_func'] : '';
+                    $editfunc    = isset($block['edit_func']) ? $block['edit_func'] : '';
                     $showfuncs[] = $block['show_func'];
                     $funcfiles[] = $block['file'];
-                    $template = '';
+                    $template    = '';
                     if (isset($block['template']) && '' != trim($block['template'])) {
                         $content = &xoops_module_gettemplate($dirname, $block['template'], 'blocks');
                     }
@@ -746,12 +728,12 @@ function module_update($dirname)
                     if (!empty($block['options'])) {
                         $options = $block['options'];
                     }
-                    $sql = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
+                    $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
                     $fresult = $xoopsDB->query($sql);
-                    $fcount = 0;
+                    $fcount  = 0;
                     while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
                         $fcount++;
-                        $sql = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes($block['name']) . "', edit_func='" . addslashes($editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
+                        $sql    = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes($block['name']) . "', edit_func='" . addslashes($editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(__('ERROR: Could not update %s'), $fblock['name']);
@@ -789,14 +771,40 @@ function module_update($dirname)
                         }
                     }
                     if (0 == $fcount) {
-                        $newbid = $xoopsDB->genId($xoopsDB->prefix('newblocks') . '_bid_seq');
+                        $newbid     = $xoopsDB->genId($xoopsDB->prefix('newblocks') . '_bid_seq');
                         $block_name = addslashes($block['name']);
                         $block_type = ('system' == $module->getVar('dirname')) ? 'S' : 'M';
-                        $sql = 'INSERT INTO ' . $xoopsDB->prefix('newblocks') . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (' . $newbid . ', ' . $module->getVar('mid') . ', ' . $i . ",'" . addslashes($options) . "','" . $block_name . "', '" . $block_name . "', '', 0, 0, 0, '{$block_type}', 1, '" . addslashes($dirname) . "', '" . addslashes($block['file']) . "', '" . addslashes($block['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', " . time() . ')';
-                        $result = $xoopsDB->query($sql);
+                        $sql        = 'INSERT INTO '
+                                      . $xoopsDB->prefix('newblocks')
+                                      . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES ('
+                                      . $newbid
+                                      . ', '
+                                      . $module->getVar('mid')
+                                      . ', '
+                                      . $i
+                                      . ",'"
+                                      . addslashes($options)
+                                      . "','"
+                                      . $block_name
+                                      . "', '"
+                                      . $block_name
+                                      . "', '', 0, 0, 0, '{$block_type}', 1, '"
+                                      . addslashes($dirname)
+                                      . "', '"
+                                      . addslashes($block['file'])
+                                      . "', '"
+                                      . addslashes($block['show_func'])
+                                      . "', '"
+                                      . addslashes($editfunc)
+                                      . "', '"
+                                      . $template
+                                      . "', "
+                                      . time()
+                                      . ')';
+                        $result     = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_('ERROR: Could not create %s', 'rmcommon'), $block['name']);
-                            $log .= $sql;
+                            $log    .= $sql;
                         } else {
                             if (empty($newbid)) {
                                 $newbid = $xoopsDB->getInsertId();
@@ -814,7 +822,8 @@ function module_update($dirname)
                                 $bperm->setVar('gperm_name', 'block_read');
                                 $bperm->setVar('gperm_modid', 1);
                                 if (!$gpermHandler->insert($bperm)) {
-                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . __('ERROR: Could not add block access right', 'rmcommon') . ' ' . sprintf(__('Block ID: %s', 'rmcommon'), '<strong>' . $newbid . '</strong>') . ' ' . sprintf(__('Group ID: %s', 'rmcommon'), '<strong>' . $mygroup . '</strong>') . '</span>';
+                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . __('ERROR: Could not add block access right', 'rmcommon') . ' ' . sprintf(__('Block ID: %s', 'rmcommon'), '<strong>' . $newbid . '</strong>') . ' ' . sprintf(__('Group ID: %s', 'rmcommon'),
+                                                                                                                                                                                                                                                          '<strong>' . $mygroup . '</strong>') . '</span>';
                                 } else {
                                     $msgs[] = '&nbsp;&nbsp;' . __('Added block access right', 'rmcommon') . ' ' . sprintf(__('Block ID: %s', 'rmcommon'), '<strong>' . $newbid . '</strong>') . ' ' . sprintf(__('Group ID: %s', 'rmcommon'), '<strong>' . $mygroup . '</strong>');
                                 }
@@ -834,7 +843,7 @@ function module_update($dirname)
                                 if (!$tplfileHandler->insert($tplfile)) {
                                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(__('ERROR: Could not insert template %s to the database.', 'rmcommon'), '<strong>' . $block['template'] . '</strong>') . '</span>';
                                 } else {
-                                    $newid = $tplfile->getVar('tpl_id');
+                                    $newid  = $tplfile->getVar('tpl_id');
                                     $msgs[] = '&nbsp;&nbsp;' . sprintf(__('Template %s added to the database', 'rmcommon'), '<strong>' . $block['template'] . '</strong>');
                                     if ('default' == $xoopsConfig['template_set']) {
                                         if (!xoops_template_touch($newid)) {
@@ -846,7 +855,7 @@ function module_update($dirname)
                                 }
                             }
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(__('Block %s created', 'rmcommon'), '<strong>' . $block['name'] . '</strong>') . sprintf(__('Block ID: %s', 'rmcommon'), '<strong>' . $newbid . '</strong>');
-                            $sql = 'INSERT INTO ' . $xoopsDB->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
+                            $sql    = 'INSERT INTO ' . $xoopsDB->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
                             $xoopsDB->query($sql);
                         }
                     }
@@ -883,9 +892,9 @@ function module_update($dirname)
 
         // first delete all config entries
         $configHandler = xoops_getHandler('config');
-        $configs = $configHandler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
-        $confcount = count($configs);
-        $config_delng = [];
+        $configs       = $configHandler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
+        $confcount     = count($configs);
+        $config_delng  = [];
         if ($confcount > 0) {
             $msgs[] = __('Deleting module config options...', 'rmcommon');
             for ($i = 0; $i < $confcount; $i++) {
@@ -894,10 +903,10 @@ function module_update($dirname)
                     // save the name of config failed to delete for later use
                     $config_delng[] = $configs[$i]->getvar('conf_name');
                 } else {
-                    $config_old[$configs[$i]->getvar('conf_name')]['value'] = $configs[$i]->getvar('conf_value', 'N');
-                    $config_old[$configs[$i]->getvar('conf_name')]['formtype'] = $configs[$i]->getvar('conf_formtype');
+                    $config_old[$configs[$i]->getvar('conf_name')]['value']     = $configs[$i]->getvar('conf_value', 'N');
+                    $config_old[$configs[$i]->getvar('conf_name')]['formtype']  = $configs[$i]->getvar('conf_formtype');
                     $config_old[$configs[$i]->getvar('conf_name')]['valuetype'] = $configs[$i]->getvar('conf_valuetype');
-                    $msgs[] = '&nbsp;&nbsp;' . __('Config data deleted from the database.', 'rmcommon') . ' ' . sprintf(__('Config ID: %s', 'rmcommon'), '<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
+                    $msgs[]                                                     = '&nbsp;&nbsp;' . __('Config data deleted from the database.', 'rmcommon') . ' ' . sprintf(__('Config ID: %s', 'rmcommon'), '<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
                 }
             }
         }
@@ -908,14 +917,29 @@ function module_update($dirname)
         if (false !== $configs) {
             if (0 != $module->getVar('hascomments')) {
                 require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                array_push($configs, ['name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]]);
+                array_push($configs, [
+                    'name'        => 'com_rule',
+                    'title'       => '_CM_COMRULES',
+                    'description' => '',
+                    'formtype'    => 'select',
+                    'valuetype'   => 'int',
+                    'default'     => 1,
+                    'options'     => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]
+                ]);
                 array_push($configs, ['name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0]);
             }
         } else {
             if (0 != $module->getVar('hascomments')) {
                 $configs = [];
                 require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                $configs[] = ['name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]];
+                $configs[] = ['name'        => 'com_rule',
+                              'title'       => '_CM_COMRULES',
+                              'description' => '',
+                              'formtype'    => 'select',
+                              'valuetype'   => 'int',
+                              'default'     => 1,
+                              'options'     => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]
+                ];
                 $configs[] = ['name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0];
             }
         }
@@ -927,18 +951,18 @@ function module_update($dirname)
             // Main notification options
             require_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
             require_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
-            $options = [];
-            $options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
-            $options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
+            $options                             = [];
+            $options['_NOT_CONFIG_DISABLE']      = XOOPS_NOTIFICATION_DISABLE;
+            $options['_NOT_CONFIG_ENABLEBLOCK']  = XOOPS_NOTIFICATION_ENABLEBLOCK;
             $options['_NOT_CONFIG_ENABLEINLINE'] = XOOPS_NOTIFICATION_ENABLEINLINE;
-            $options['_NOT_CONFIG_ENABLEBOTH'] = XOOPS_NOTIFICATION_ENABLEBOTH;
+            $options['_NOT_CONFIG_ENABLEBOTH']   = XOOPS_NOTIFICATION_ENABLEBOTH;
 
             //$configs[] = array ('name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLED', 'description' => '_NOT_CONFIG_ENABLEDDSC', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
             $configs[] = ['name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLE', 'description' => '_NOT_CONFIG_ENABLEDSC', 'formtype' => 'select', 'valuetype' => 'int', 'default' => XOOPS_NOTIFICATION_ENABLEBOTH, 'options' => $options];
             // Event specific notification options
             // FIXME: for some reason the default doesn't come up properly
             //  initially is ok, but not when 'update' module..
-            $options = [];
+            $options    = [];
             $categories = &notificationCategoryInfo('', $module->getVar('mid'));
             foreach ($categories as $category) {
                 $events = &notificationEvents($category['name'], false, $module->getVar('mid'));
@@ -946,8 +970,8 @@ function module_update($dirname)
                     if (!empty($event['invisible'])) {
                         continue;
                     }
-                    $option_name = $category['title'] . ' : ' . $event['title'];
-                    $option_value = $category['name'] . '-' . $event['name'];
+                    $option_name           = $category['title'] . ' : ' . $event['title'];
+                    $option_value          = $category['name'] . '-' . $event['name'];
                     $options[$option_name] = $option_value;
                     //$configs[] = array ('name' => notificationGenerateConfig($category,$event,'name'), 'title' => notificationGenerateConfig($category,$event,'title_constant'), 'description' => notificationGenerateConfig($category,$event,'description_constant'), 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
                 }
@@ -956,9 +980,9 @@ function module_update($dirname)
         }
 
         if (false !== $configs) {
-            $msgs[] = 'Adding module config data...';
+            $msgs[]        = 'Adding module config data...';
             $configHandler = xoops_getHandler('config');
-            $order = 0;
+            $order         = 0;
             foreach ($configs as $config) {
                 // only insert ones that have been deleted previously with success
                 if (!in_array($config['name'], $config_delng, true)) {

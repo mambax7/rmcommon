@@ -11,6 +11,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
     exit();
 }
+
 /**
  * Clase para el manejo de bloques en Common Utilities
  */
@@ -39,10 +40,19 @@ class RMInternalBlock extends RMObject
 
         // Prevent to be translated
         $this->noTranslate = [
-            'element', 'element_type', 'description', 'type', 'content_type', 'dirname', 'file', 'show_func', 'edit_func', 'template',
+            'element',
+            'element_type',
+            'description',
+            'type',
+            'content_type',
+            'dirname',
+            'file',
+            'show_func',
+            'edit_func',
+            'template',
         ];
 
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db       = XoopsDatabaseFactory::getDatabaseConnection();
         $this->_dbtable = $this->db->prefix('mod_rmcommon_blocks');
         $this->setNew();
         $this->initVarsFromTable();
@@ -86,9 +96,9 @@ class RMInternalBlock extends RMObject
     public function readGroups()
     {
         if (empty($this->rgroups)) {
-            $sql = 'SELECT gperm_groupid FROM ' . $this->db->prefix('group_permission') . " WHERE gperm_itemid='" . $this->id() . "' AND gperm_name='rmblock_read'";
+            $sql    = 'SELECT gperm_groupid FROM ' . $this->db->prefix('group_permission') . " WHERE gperm_itemid='" . $this->id() . "' AND gperm_name='rmblock_read'";
             $result = $this->db->query($sql);
-            $ret = [];
+            $ret    = [];
             while (false !== ($row = $this->db->fetchArray($result))) {
                 $this->rgroups[] = $row['gperm_groupid'];
             }
@@ -114,9 +124,9 @@ class RMInternalBlock extends RMObject
     public function adminGroups($object = false)
     {
         if (empty($this->wgroups)) {
-            $sql = 'SELECT gperm_groupid FROM ' . $this->db->prefix('group_permission') . " WHERE gperm_itemid='" . $this->id() . "' AND gperm_name='block_admin'";
+            $sql    = 'SELECT gperm_groupid FROM ' . $this->db->prefix('group_permission') . " WHERE gperm_itemid='" . $this->id() . "' AND gperm_name='block_admin'";
             $result = $this->db->query($sql);
-            $ret = [];
+            $ret    = [];
             while (false !== ($row = $this->db->fetchArray($result))) {
                 $this->wgroups[] = $row['gperm_groupid'];
             }
@@ -154,9 +164,9 @@ class RMInternalBlock extends RMObject
         if (func_num_args() <= 0) {
             // Load all sections
             if (empty($this->sections)) {
-                $sql = 'SELECT mid FROM ' . $this->db->prefix('mod_rmcommon_blocks_assignations') . " WHERE bid='" . $this->id() . "'";
+                $sql    = 'SELECT mid FROM ' . $this->db->prefix('mod_rmcommon_blocks_assignations') . " WHERE bid='" . $this->id() . "'";
                 $result = $this->db->query($sql);
-                $ret = [];
+                $ret    = [];
                 while (false !== ($row = $this->db->fetchArray($result))) {
                     $this->sections[] = $row['mid'];
                 }
@@ -164,7 +174,7 @@ class RMInternalBlock extends RMObject
 
             return $this->sections;
         }
-        $value = func_get_arg(0);
+        $value          = func_get_arg(0);
         $this->sections = $value;
 
         return null;
@@ -176,9 +186,9 @@ class RMInternalBlock extends RMObject
      */
     public function subpages()
     {
-        $sql = 'SELECT mid, page FROM ' . $this->db->prefix('mod_rmcommon_blocks_assignations') . " WHERE bid='" . $this->id() . "'";
+        $sql    = 'SELECT mid, page FROM ' . $this->db->prefix('mod_rmcommon_blocks_assignations') . " WHERE bid='" . $this->id() . "'";
         $result = $this->db->query($sql);
-        $ret = [];
+        $ret    = [];
         while (false !== ($row = $this->db->fetchArray($result))) {
             $ret[$row['mid']][] = $row['page'];
         }
@@ -190,7 +200,7 @@ class RMInternalBlock extends RMObject
      * Comprueba si un grupo especifico cuenta con
      * permisos de admnistración/lectura para un
      * bloque específico
-     * @param int $gid Identificador del grupo
+     * @param int $gid   Identificador del grupo
      * @param int $level Nivel de Acceso
      * @return bool
      */
@@ -210,8 +220,8 @@ class RMInternalBlock extends RMObject
     /**
      * Devuelve el contenido de un bloque
      *
-     * @param string $format Uso: 'S' para mostrar y 'E' para editar
-     * @param $c_type    Tipo de Contenido
+     * @param string $format    Uso: 'S' para mostrar y 'E' para editar
+     * @param        $c_type    Tipo de Contenido
      * @returns string
      */
     public function getContent($format = 'S')
@@ -236,9 +246,9 @@ class RMInternalBlock extends RMObject
 
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $tc->to_display($this->getVar('content', 'N'), 1, 1));
                 }
-                    $tc = TextCleaner::getInstance();
+                $tc = TextCleaner::getInstance();
 
-                    return str_replace('{X_SITEURL}', XOOPS_URL . '/', $tc->to_display($this->getVar('content', 'N'), 1, 0));
+                return str_replace('{X_SITEURL}', XOOPS_URL . '/', $tc->to_display($this->getVar('content', 'N'), 1, 0));
                 break;
             case 'E':
                 return $this->getVar('content', 'E');
@@ -285,7 +295,7 @@ class RMInternalBlock extends RMObject
 
             require_once $file;
             $options = $this->getVar('options');
-            $option = is_array($options) ? $options : explode('|', $options);
+            $option  = is_array($options) ? $options : explode('|', $options);
             if (function_exists($show_func)) {
                 $block = $show_func($option);
                 if (!$block) {
@@ -409,7 +419,7 @@ class RMInternalBlock extends RMObject
                 $this->db->queryF('DELETE FROM ' . $this->db->prefix('mod_rmcommon_blocks_assignations') . " WHERE bid='" . $this->id() . "'");
             }
 
-            $sql = 'INSERT INTO ' . $this->db->prefix('mod_rmcommon_blocks_assignations') . ' (`bid`,`mid`,`page`) VALUES ';
+            $sql  = 'INSERT INTO ' . $this->db->prefix('mod_rmcommon_blocks_assignations') . ' (`bid`,`mid`,`page`) VALUES ';
             $sql1 = '';
             foreach ($this->sections as $id => $k) {
                 if (is_array($k) && isset($k['subpages'])) {
@@ -431,7 +441,7 @@ class RMInternalBlock extends RMObject
                 $this->db->queryF('DELETE FROM ' . $this->db->prefix('group_permission') . " WHERE gperm_itemid='" . $this->id() . "' AND gperm_name='rmblock_read'");
             }
 
-            $sql = 'INSERT INTO ' . $this->db->prefix('group_permission') . ' (`gperm_groupid`,`gperm_itemid`,`gperm_modid`,`gperm_name`) VALUES ';
+            $sql  = 'INSERT INTO ' . $this->db->prefix('group_permission') . ' (`gperm_groupid`,`gperm_itemid`,`gperm_modid`,`gperm_name`) VALUES ';
             $sql1 = '';
             foreach ($this->rgroups as $k) {
                 $sql1 .= '' == $sql1 ? "('$k','" . $this->id() . "','1','rmblock_read')" : ", ('$k','" . $this->id() . "','1','rmblock_read')";
@@ -476,7 +486,7 @@ class RMInternalBlockHandler
     {
         $orderby = '' == $orderby ? 'b.weight,b.bid' : $orderby;
 
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = [];
         $sql = 'SELECT DISTINCT gperm_itemid FROM ' . $db->prefix('group_permission') . " WHERE gperm_name = 'rmblock_read' AND gperm_modid = 1";
         if (is_array($groupid)) {
@@ -487,7 +497,7 @@ class RMInternalBlockHandler
             }
         }
 
-        $result = $db->query($sql);
+        $result   = $db->query($sql);
         $blockids = [];
         while (false !== ($myrow = $db->fetchArray($result))) {
             $blockids[] = $myrow['gperm_itemid'];
@@ -512,9 +522,9 @@ class RMInternalBlockHandler
                     $sql .= ' AND m.app_id=0';
                 }*/
             }
-            $sql .= '' != $subpage ? " AND (m.subpage='$subpage' OR m.subpage='--')" : '';
-            $sql .= ' AND b.bid IN (' . implode(',', $blockids) . ')';
-            $sql .= ' ORDER BY ' . $orderby;
+            $sql    .= '' != $subpage ? " AND (m.subpage='$subpage' OR m.subpage='--')" : '';
+            $sql    .= ' AND b.bid IN (' . implode(',', $blockids) . ')';
+            $sql    .= ' ORDER BY ' . $orderby;
             $result = $db->query($sql);
             //echo $sql; die();
             while (false !== ($myrow = $db->fetchArray($result))) {
@@ -544,7 +554,7 @@ class RMInternalBlockHandler
             $sql = 'SELECT bid FROM ' . $db->prefix('mod_rmcommon_blocks') . " WHERE $col=" . $moduleid . '';
         }
         $result = $db->query($sql);
-        $ret = [];
+        $ret    = [];
         while (false !== ($myrow = $db->fetchArray($result))) {
             if ($asobject) {
                 $ret[] = new RMInternalBlock($myrow['bid']);

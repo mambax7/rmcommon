@@ -1,4 +1,5 @@
 <?php
+
 /**
  * kses 0.2.2 - HTML/XHTML filter that only allows some elements and attributes
  * Copyright (C) 2002, 2003, 2005  Ulf Harnhammar
@@ -22,364 +23,364 @@
  *
  * Added wp_ prefix to avoid conflicts with existing kses users
  *
- * @version 0.2.2
+ * @version       0.2.2
  * @copyright (C) 2002, 2003, 2005
- * @author Ulf Harnhammar <http://advogato.org/person/metaur>
- * @author Eduardo Cortés <http://eduardocortes.mx>
+ * @author        Ulf Harnhammar <http://advogato.org/person/metaur>
+ * @author        Eduardo Cortés <http://eduardocortes.mx>
  *
- * @package Helpers
- * @subpackage KSES
+ * @package       Helpers
+ * @subpackage    KSES
  */
 class RMKses
 {
     use RMSingleton;
 
     private $post_tags = [
-        'address' => [],
-        'a' => [
-            'href' => true,
-            'rel' => true,
-            'rev' => true,
-            'name' => true,
+        'address'    => [],
+        'a'          => [
+            'href'   => true,
+            'rel'    => true,
+            'rev'    => true,
+            'name'   => true,
             'target' => true,
         ],
-        'abbr' => [],
-        'acronym' => [],
-        'area' => [
-            'alt' => true,
+        'abbr'       => [],
+        'acronym'    => [],
+        'area'       => [
+            'alt'    => true,
             'coords' => true,
-            'href' => true,
+            'href'   => true,
             'nohref' => true,
-            'shape' => true,
+            'shape'  => true,
             'target' => true,
         ],
-        'article' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'article'    => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'aside' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'aside'      => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'b' => [],
-        'big' => [],
+        'b'          => [],
+        'big'        => [],
         'blockquote' => [
-            'cite' => true,
-            'lang' => true,
+            'cite'     => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'br' => [],
-        'button' => [
+        'br'         => [],
+        'button'     => [
             'disabled' => true,
-            'name' => true,
-            'type' => true,
-            'value' => true,
+            'name'     => true,
+            'type'     => true,
+            'value'    => true,
         ],
-        'caption' => [
+        'caption'    => [
             'align' => true,
         ],
-        'cite' => [
-            'dir' => true,
+        'cite'       => [
+            'dir'  => true,
             'lang' => true,
         ],
-        'code' => [],
-        'col' => [
-            'align' => true,
-            'char' => true,
+        'code'       => [],
+        'col'        => [
+            'align'   => true,
+            'char'    => true,
             'charoff' => true,
-            'span' => true,
-            'dir' => true,
-            'valign' => true,
-            'width' => true,
+            'span'    => true,
+            'dir'     => true,
+            'valign'  => true,
+            'width'   => true,
         ],
-        'del' => [
+        'del'        => [
             'datetime' => true,
         ],
-        'dd' => [],
-        'dfn' => [],
-        'details' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
-            'open' => true,
+        'dd'         => [],
+        'dfn'        => [],
+        'details'    => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
+            'open'     => true,
             'xml:lang' => true,
         ],
-        'div' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'div'        => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'dl' => [],
-        'dt' => [],
-        'em' => [],
-        'fieldset' => [],
-        'figure' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'dl'         => [],
+        'dt'         => [],
+        'em'         => [],
+        'fieldset'   => [],
+        'figure'     => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
         'figcaption' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'font' => [
+        'font'       => [
             'color' => true,
-            'face' => true,
-            'size' => true,
+            'face'  => true,
+            'size'  => true,
         ],
-        'footer' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'footer'     => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'form' => [
-            'action' => true,
-            'accept' => true,
+        'form'       => [
+            'action'         => true,
+            'accept'         => true,
             'accept-charset' => true,
-            'enctype' => true,
-            'method' => true,
-            'name' => true,
-            'target' => true,
+            'enctype'        => true,
+            'method'         => true,
+            'name'           => true,
+            'target'         => true,
         ],
-        'h1' => [
+        'h1'         => [
             'align' => true,
         ],
-        'h2' => [
+        'h2'         => [
             'align' => true,
         ],
-        'h3' => [
+        'h3'         => [
             'align' => true,
         ],
-        'h4' => [
+        'h4'         => [
             'align' => true,
         ],
-        'h5' => [
+        'h5'         => [
             'align' => true,
         ],
-        'h6' => [
+        'h6'         => [
             'align' => true,
         ],
-        'header' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'header'     => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'hgroup' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'hgroup'     => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'hr' => [
-            'align' => true,
+        'hr'         => [
+            'align'   => true,
             'noshade' => true,
-            'size' => true,
-            'width' => true,
+            'size'    => true,
+            'width'   => true,
         ],
-        'i' => [],
-        'img' => [
-            'alt' => true,
-            'align' => true,
-            'border' => true,
-            'height' => true,
-            'hspace' => true,
+        'i'          => [],
+        'img'        => [
+            'alt'      => true,
+            'align'    => true,
+            'border'   => true,
+            'height'   => true,
+            'hspace'   => true,
             'longdesc' => true,
-            'vspace' => true,
-            'src' => true,
-            'usemap' => true,
-            'width' => true,
+            'vspace'   => true,
+            'src'      => true,
+            'usemap'   => true,
+            'width'    => true,
         ],
-        'ins' => [
+        'ins'        => [
             'datetime' => true,
-            'cite' => true,
+            'cite'     => true,
         ],
-        'kbd' => [],
-        'label' => [
+        'kbd'        => [],
+        'label'      => [
             'for' => true,
         ],
-        'legend' => [
+        'legend'     => [
             'align' => true,
         ],
-        'li' => [
+        'li'         => [
             'align' => true,
             'value' => true,
         ],
-        'map' => [
+        'map'        => [
             'name' => true,
         ],
-        'mark' => [],
-        'menu' => [
+        'mark'       => [],
+        'menu'       => [
             'type' => true,
         ],
-        'nav' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'nav'        => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'p' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'p'          => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'pre' => [
+        'pre'        => [
             'width' => true,
         ],
-        'q' => [
+        'q'          => [
             'cite' => true,
         ],
-        's' => [],
-        'samp' => [],
-        'span' => [
-            'dir' => true,
-            'align' => true,
-            'lang' => true,
+        's'          => [],
+        'samp'       => [],
+        'span'       => [
+            'dir'      => true,
+            'align'    => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'section' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'section'    => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'small' => [],
-        'strike' => [],
-        'strong' => [],
-        'sub' => [],
-        'summary' => [
-            'align' => true,
-            'dir' => true,
-            'lang' => true,
+        'small'      => [],
+        'strike'     => [],
+        'strong'     => [],
+        'sub'        => [],
+        'summary'    => [
+            'align'    => true,
+            'dir'      => true,
+            'lang'     => true,
             'xml:lang' => true,
         ],
-        'sup' => [],
-        'table' => [
-            'align' => true,
-            'bgcolor' => true,
-            'border' => true,
+        'sup'        => [],
+        'table'      => [
+            'align'       => true,
+            'bgcolor'     => true,
+            'border'      => true,
             'cellpadding' => true,
             'cellspacing' => true,
-            'dir' => true,
-            'rules' => true,
-            'summary' => true,
-            'width' => true,
+            'dir'         => true,
+            'rules'       => true,
+            'summary'     => true,
+            'width'       => true,
         ],
-        'tbody' => [
-            'align' => true,
-            'char' => true,
+        'tbody'      => [
+            'align'   => true,
+            'char'    => true,
             'charoff' => true,
-            'valign' => true,
+            'valign'  => true,
         ],
-        'td' => [
-            'abbr' => true,
-            'align' => true,
-            'axis' => true,
+        'td'         => [
+            'abbr'    => true,
+            'align'   => true,
+            'axis'    => true,
             'bgcolor' => true,
-            'char' => true,
+            'char'    => true,
             'charoff' => true,
             'colspan' => true,
-            'dir' => true,
+            'dir'     => true,
             'headers' => true,
-            'height' => true,
-            'nowrap' => true,
+            'height'  => true,
+            'nowrap'  => true,
             'rowspan' => true,
-            'scope' => true,
-            'valign' => true,
-            'width' => true,
+            'scope'   => true,
+            'valign'  => true,
+            'width'   => true,
         ],
-        'textarea' => [
-            'cols' => true,
-            'rows' => true,
+        'textarea'   => [
+            'cols'     => true,
+            'rows'     => true,
             'disabled' => true,
-            'name' => true,
+            'name'     => true,
             'readonly' => true,
         ],
-        'tfoot' => [
-            'align' => true,
-            'char' => true,
+        'tfoot'      => [
+            'align'   => true,
+            'char'    => true,
             'charoff' => true,
-            'valign' => true,
+            'valign'  => true,
         ],
-        'th' => [
-            'abbr' => true,
-            'align' => true,
-            'axis' => true,
+        'th'         => [
+            'abbr'    => true,
+            'align'   => true,
+            'axis'    => true,
             'bgcolor' => true,
-            'char' => true,
+            'char'    => true,
             'charoff' => true,
             'colspan' => true,
             'headers' => true,
-            'height' => true,
-            'nowrap' => true,
+            'height'  => true,
+            'nowrap'  => true,
             'rowspan' => true,
-            'scope' => true,
-            'valign' => true,
-            'width' => true,
+            'scope'   => true,
+            'valign'  => true,
+            'width'   => true,
         ],
-        'thead' => [
-            'align' => true,
-            'char' => true,
+        'thead'      => [
+            'align'   => true,
+            'char'    => true,
             'charoff' => true,
-            'valign' => true,
+            'valign'  => true,
         ],
-        'title' => [],
-        'tr' => [
-            'align' => true,
+        'title'      => [],
+        'tr'         => [
+            'align'   => true,
             'bgcolor' => true,
-            'char' => true,
+            'char'    => true,
             'charoff' => true,
-            'valign' => true,
+            'valign'  => true,
         ],
-        'tt' => [],
-        'u' => [],
-        'ul' => [
+        'tt'         => [],
+        'u'          => [],
+        'ul'         => [
             'type' => true,
         ],
-        'ol' => [
+        'ol'         => [
             'start' => true,
-            'type' => true,
+            'type'  => true,
         ],
-        'var' => [],
+        'var'        => [],
     ];
 
     private $tags = [
-        'a' => [
-            'href' => true,
+        'a'          => [
+            'href'  => true,
             'title' => true,
         ],
-        'abbr' => [
+        'abbr'       => [
             'title' => true,
         ],
-        'acronym' => [
+        'acronym'    => [
             'title' => true,
         ],
-        'b' => [],
+        'b'          => [],
         'blockquote' => [
             'cite' => true,
         ],
-        'cite' => [],
-        'code' => [],
-        'del' => [
+        'cite'       => [],
+        'code'       => [],
+        'del'        => [
             'datetime' => true,
         ],
-        'em' => [],
-        'i' => [],
-        'q' => [
+        'em'         => [],
+        'i'          => [],
+        'q'          => [
             'cite' => true,
         ],
-        'strike' => [],
-        'strong' => [],
+        'strike'     => [],
+        'strong'     => [],
     ];
 
     private $entity_names = [
@@ -428,7 +429,7 @@ class RMKses
         'there4',
     ];
 
-    private $protocols = [ 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet', 'mms', 'rtsp', 'svn', 'tel', 'fax', 'xmpp' ];
+    private $protocols = ['http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet', 'mms', 'rtsp', 'svn', 'tel', 'fax', 'xmpp'];
 
     public function __construct()
     {
@@ -448,9 +449,9 @@ class RMKses
      * covers all common link protocols, except for 'javascript' which should not
      * be allowed for untrusted users.
      *
-     * @param string $string Content to filter through kses
-     * @param array $allowed_html List of allowed HTML elements
-     * @param array $allowed_protocols Optional. Allowed protocol in links.
+     * @param string $string            Content to filter through kses
+     * @param array  $allowed_html      List of allowed HTML elements
+     * @param array  $allowed_protocols Optional. Allowed protocol in links.
      * @return string Filtered content with only allowed HTML elements
      */
     public function filter($string, $allowed_html, $allowed_protocols = [])
@@ -511,9 +512,9 @@ class RMKses
 
         # Change back the allowed entities in our entity whitelist
 
-        $string = preg_replace_callback('/&amp;([A-Za-z]{2,8}[0-9]{0,2});/', [ $this, 'named_entities' ], $string);
-        $string = preg_replace_callback('/&amp;#(0*[0-9]{1,7});/', [ $this, 'normalize_entities2' ], $string);
-        $string = preg_replace_callback('/&amp;#[Xx](0*[0-9A-Fa-f]{1,6});/', [ $this, 'normalize_entities3' ], $string);
+        $string = preg_replace_callback('/&amp;([A-Za-z]{2,8}[0-9]{0,2});/', [$this, 'named_entities'], $string);
+        $string = preg_replace_callback('/&amp;#(0*[0-9]{1,7});/', [$this, 'normalize_entities2'], $string);
+        $string = preg_replace_callback('/&amp;#[Xx](0*[0-9A-Fa-f]{1,6});/', [$this, 'normalize_entities3'], $string);
 
         return $string;
     }
@@ -588,10 +589,10 @@ class RMKses
      */
     protected function valid_unicode($i)
     {
-        return (0x9 == $i || 0xa == $i || 0xd == $i ||
-            ($i >= 0x20 && $i <= 0xd7ff) ||
-            ($i >= 0xe000 && $i <= 0xfffd) ||
-            ($i >= 0x10000 && $i <= 0x10ffff));
+        return (0x9 == $i || 0xa == $i || 0xd == $i
+                || ($i >= 0x20 && $i <= 0xd7ff)
+                || ($i >= 0xe000 && $i <= 0xfffd)
+                || ($i >= 0x10000 && $i <= 0x10ffff));
     }
 
     /**
@@ -599,18 +600,18 @@ class RMKses
      *
      * It also matches stray ">" characters.
      *
-     * @param string $string Content to filter
-     * @param array $allowed_html Allowed HTML elements
-     * @param array $allowed_protocols Allowed protocols to keep
+     * @param string $string            Content to filter
+     * @param array  $allowed_html      Allowed HTML elements
+     * @param array  $allowed_protocols Allowed protocols to keep
      * @return string Content with fixed HTML tags
      */
     protected function split($string, $allowed_html, $allowed_protocols)
     {
         global $pass_allowed_html, $pass_allowed_protocols;
-        $pass_allowed_html = $allowed_html;
+        $pass_allowed_html      = $allowed_html;
         $pass_allowed_protocols = $allowed_protocols;
 
-        return preg_replace_callback('%(<!--.*?(-->|$))|(<[^>]*(>|$)|>)%', [ $this, 'split_callback' ], $string);
+        return preg_replace_callback('%(<!--.*?(-->|$))|(<[^>]*(>|$)|>)%', [$this, 'split_callback'], $string);
     }
 
     private function split_callback($match)
@@ -630,9 +631,9 @@ class RMKses
      * through another filter which will remove illegal attributes and once that is
      * completed, will be returned.
      *
-     * @param string $string Content to filter
-     * @param array $allowed_html Allowed HTML elements
-     * @param array $allowed_protocols Allowed protocols to keep
+     * @param string $string            Content to filter
+     * @param array  $allowed_html      Allowed HTML elements
+     * @param array  $allowed_protocols Allowed protocols to keep
      * @return string Fixed HTML element
      */
     private function split2($string, $allowed_html, $allowed_protocols)
@@ -666,8 +667,8 @@ class RMKses
         }
         # It's seriously malformed
 
-        $slash = trim($matches[1]);
-        $elem = $matches[2];
+        $slash    = trim($matches[1]);
+        $elem     = $matches[2];
         $attrlist = $matches[3];
 
         if (!is_array($allowed_html)) {
@@ -691,7 +692,7 @@ class RMKses
      * Return a list of allowed tags and attributes for a given context.
      *
      * @param string $context The context for which to retrieve tags. Allowed values are
-     *  post | strip | data | entities or the name of a field filter such as pre_user_description.
+     *                        post | strip | data | entities or the name of a field filter such as pre_user_description.
      * @return array List of allowed tags and their allowed attributes.
      */
     protected function allowed_html($context = '')
@@ -701,7 +702,7 @@ class RMKses
                 return RMEvents::get()->run_event('rmcommon.kses.allowed.html', $this->post_tags, $context);
                 break;
             case 'reduced':
-                $tags = $this->tags;
+                $tags             = $this->tags;
                 $tags['a']['rel'] = true;
 
                 return RMEvents::get()->run_event('rmcommon.kses.allowed.html', $tags, $context);
@@ -726,10 +727,10 @@ class RMKses
      * is to check if the tag has a closing XHTML slash, and if it does, it puts one
      * in the returned code as well.
      *
-     * @param string $element HTML element/tag
-     * @param string $attr HTML attributes from HTML element to closing HTML element tag
-     * @param array $allowed_html Allowed HTML elements
-     * @param array $allowed_protocols Allowed protocols to keep
+     * @param string $element           HTML element/tag
+     * @param string $attr              HTML attributes from HTML element to closing HTML element tag
+     * @param array  $allowed_html      Allowed HTML elements
+     * @param array  $allowed_protocols Allowed protocols to keep
      * @return string Sanitized HTML element
      */
     protected function attr($element, $attr, $allowed_html, $allowed_protocols)
@@ -770,7 +771,7 @@ class RMKses
 
             if ('style' == mb_strtolower($arreach['name'])) {
                 $orig_value = $arreach['value'];
-                $value = $this->safecss_filter_attr($orig_value);
+                $value      = $this->safecss_filter_attr($orig_value);
 
                 if (empty($value)) {
                     continue;
@@ -782,7 +783,7 @@ class RMKses
 
             if (!is_array($current)) {
                 $attr2 .= ' ' . $arreach['whole'];
-            # there are no checks
+                # there are no checks
             } else {
                 # there are some checks
                 $ok = true;
@@ -816,16 +817,16 @@ class RMKses
      * from attribute values. It also reduces duplicate attributes by using the
      * attribute defined first (foo='bar' foo='baz' will result in foo='bar').
      *
-     * @param string $attr Attribute list from HTML element to closing HTML element tag
-     * @param array $allowed_protocols Allowed protocols to keep
+     * @param string $attr              Attribute list from HTML element to closing HTML element tag
+     * @param array  $allowed_protocols Allowed protocols to keep
      * @return array List of attributes after parsing
      */
     protected function hair($attr, $allowed_protocols)
     {
-        $attrarr = [];
-        $mode = 0;
+        $attrarr  = [];
+        $mode     = 0;
         $attrname = '';
-        $uris = ['xmlns', 'profile', 'href', 'src', 'cite', 'classid', 'codebase', 'data', 'usemap', 'longdesc', 'action'];
+        $uris     = ['xmlns', 'profile', 'href', 'src', 'cite', 'classid', 'codebase', 'data', 'usemap', 'longdesc', 'action'];
 
         # Loop through the whole attribute list
 
@@ -837,8 +838,8 @@ class RMKses
 
                     if (preg_match('/^([-a-zA-Z:]+)/', $attr, $match)) {
                         $attrname = $match[1];
-                        $working = $mode = 1;
-                        $attr = preg_replace('/^[-a-zA-Z:]+/', '', $attr);
+                        $working  = $mode = 1;
+                        $attr     = preg_replace('/^[-a-zA-Z:]+/', '', $attr);
                     }
 
                     break;
@@ -846,14 +847,14 @@ class RMKses
 
                     if (preg_match('/^\s*=\s*/', $attr)) { # equals sign
                         $working = 1;
-                        $mode = 2;
-                        $attr = preg_replace('/^\s*=\s*/', '', $attr);
+                        $mode    = 2;
+                        $attr    = preg_replace('/^\s*=\s*/', '', $attr);
                         break;
                     }
 
                     if (preg_match('/^\s+/', $attr)) { # valueless
                         $working = 1;
-                        $mode = 0;
+                        $mode    = 0;
                         if (false === array_key_exists($attrname, $attrarr)) {
                             $attrarr[$attrname] = ['name' => $attrname, 'value' => '', 'whole' => $attrname, 'vless' => 'y'];
                         }
@@ -874,8 +875,8 @@ class RMKses
                             $attrarr[$attrname] = ['name' => $attrname, 'value' => $thisval, 'whole' => "$attrname=\"$thisval\"", 'vless' => 'n'];
                         }
                         $working = 1;
-                        $mode = 0;
-                        $attr = preg_replace('/^"[^"]*"(\s+|$)/', '', $attr);
+                        $mode    = 0;
+                        $attr    = preg_replace('/^"[^"]*"(\s+|$)/', '', $attr);
                         break;
                     }
 
@@ -890,8 +891,8 @@ class RMKses
                             $attrarr[$attrname] = ['name' => $attrname, 'value' => $thisval, 'whole' => "$attrname='$thisval'", 'vless' => 'n'];
                         }
                         $working = 1;
-                        $mode = 0;
-                        $attr = preg_replace("/^'[^']*'(\s+|$)/", '', $attr);
+                        $mode    = 0;
+                        $attr    = preg_replace("/^'[^']*'(\s+|$)/", '', $attr);
                         break;
                     }
 
@@ -907,8 +908,8 @@ class RMKses
                         }
                         # We add quotes to conform to W3C's HTML spec.
                         $working = 1;
-                        $mode = 0;
-                        $attr = preg_replace("%^[^\s\"']+(\s+|$)%", '', $attr);
+                        $mode    = 0;
+                        $attr    = preg_replace("%^[^\s\"']+(\s+|$)%", '', $attr);
                     }
 
                     break;
@@ -937,18 +938,18 @@ class RMKses
      * understand HTML entities. It does its work in a while loop, so it won't be
      * fooled by a string like "javascript:javascript:alert(57)".
      *
-     * @param string $string Content to filter bad protocols from
-     * @param array $allowed_protocols Allowed protocols to keep
+     * @param string $string            Content to filter bad protocols from
+     * @param array  $allowed_protocols Allowed protocols to keep
      * @return string Filtered content
      */
     public function bad_protocol($string, $allowed_protocols)
     {
-        $string = $this->no_null($string);
+        $string     = $this->no_null($string);
         $iterations = 0;
 
         do {
             $original_string = $string;
-            $string = $this->bad_protocol_once($string, $allowed_protocols);
+            $string          = $this->bad_protocol_once($string, $allowed_protocols);
         } while ($original_string != $string && ++$iterations < 6);
 
         if ($original_string != $string) {
@@ -964,16 +965,16 @@ class RMKses
      * This function searches for URL protocols at the beginning of $string, while
      * handling whitespace and HTML entities.
      *
-     * @param string $string Content to check for bad protocols
+     * @param string $string            Content to check for bad protocols
      * @param string $allowed_protocols Allowed protocols
-     * @param mixed $count
+     * @param mixed  $count
      * @return string Sanitized content
      */
     private function bad_protocol_once($string, $allowed_protocols, $count = 1)
     {
         $string2 = preg_split('/:|&#0*58;|&#x0*3a;/i', $string, 2);
         if (isset($string2[1]) && !preg_match('%/\?%', $string2[0])) {
-            $string = trim($string2[1]);
+            $string   = trim($string2[1]);
             $protocol = $this->bad_protocol_once2($string2[0], $allowed_protocols);
             if ('feed:' == $protocol) {
                 if ($count > 2) {
@@ -994,7 +995,7 @@ class RMKses
      * This function processes URL protocols, checks to see if they're in the
      * whitelist or not, and returns different data depending on the answer.
      *
-     * @param string $string URI scheme to check against the whitelist
+     * @param string $string            URI scheme to check against the whitelist
      * @param string $allowed_protocols Allowed protocols
      * @return string Sanitized content
      */
@@ -1006,7 +1007,7 @@ class RMKses
         $string2 = mb_strtolower($string2);
 
         $allowed = false;
-        foreach ((array) $allowed_protocols as $one_protocol) {
+        foreach ((array)$allowed_protocols as $one_protocol) {
             if (mb_strtolower($one_protocol) == $string2) {
                 $allowed = true;
                 break;
@@ -1032,8 +1033,8 @@ class RMKses
      */
     protected function decode_entities($string)
     {
-        $string = preg_replace_callback('/&#([0-9]+);/', [ $this, 'decode_entities_chr' ], $string);
-        $string = preg_replace_callback('/&#[Xx]([0-9A-Fa-f]+);/', [ $this, 'decode_entities_chr_hexdec' ], $string);
+        $string = preg_replace_callback('/&#([0-9]+);/', [$this, 'decode_entities_chr'], $string);
+        $string = preg_replace_callback('/&#[Xx]([0-9A-Fa-f]+);/', [$this, 'decode_entities_chr_hexdec'], $string);
 
         return $string;
     }
@@ -1090,17 +1091,63 @@ class RMKses
          *
          * @param array $attr List of allowed CSS attributes.
          */
-        $allowed_attr = apply_filters('safe_style_css', [ 'text-align', 'margin', 'color', 'float',
-            'border', 'background', 'background-color', 'border-bottom', 'border-bottom-color',
-            'border-bottom-style', 'border-bottom-width', 'border-collapse', 'border-color', 'border-left',
-            'border-left-color', 'border-left-style', 'border-left-width', 'border-right', 'border-right-color',
-            'border-right-style', 'border-right-width', 'border-spacing', 'border-style', 'border-top',
-            'border-top-color', 'border-top-style', 'border-top-width', 'border-width', 'caption-side',
-            'clear', 'cursor', 'direction', 'font', 'font-family', 'font-size', 'font-style',
-            'font-variant', 'font-weight', 'height', 'letter-spacing', 'line-height', 'margin-bottom',
-            'margin-left', 'margin-right', 'margin-top', 'overflow', 'padding', 'padding-bottom',
-            'padding-left', 'padding-right', 'padding-top', 'text-decoration', 'text-indent', 'vertical-align',
-            'width', ]);
+        $allowed_attr = apply_filters('safe_style_css', [
+            'text-align',
+            'margin',
+            'color',
+            'float',
+            'border',
+            'background',
+            'background-color',
+            'border-bottom',
+            'border-bottom-color',
+            'border-bottom-style',
+            'border-bottom-width',
+            'border-collapse',
+            'border-color',
+            'border-left',
+            'border-left-color',
+            'border-left-style',
+            'border-left-width',
+            'border-right',
+            'border-right-color',
+            'border-right-style',
+            'border-right-width',
+            'border-spacing',
+            'border-style',
+            'border-top',
+            'border-top-color',
+            'border-top-style',
+            'border-top-width',
+            'border-width',
+            'caption-side',
+            'clear',
+            'cursor',
+            'direction',
+            'font',
+            'font-family',
+            'font-size',
+            'font-style',
+            'font-variant',
+            'font-weight',
+            'height',
+            'letter-spacing',
+            'line-height',
+            'margin-bottom',
+            'margin-left',
+            'margin-right',
+            'margin-top',
+            'overflow',
+            'padding',
+            'padding-bottom',
+            'padding-left',
+            'padding-right',
+            'padding-top',
+            'text-decoration',
+            'text-indent',
+            'vertical-align',
+            'width',
+        ]);
 
         if (empty($allowed_attr)) {
             return $css;
@@ -1112,7 +1159,7 @@ class RMKses
                 continue;
             }
             $css_item = trim($css_item);
-            $found = false;
+            $found    = false;
             if (false === mb_strpos($css_item, ':')) {
                 $found = true;
             } else {
@@ -1138,10 +1185,10 @@ class RMKses
      * The currently implemented checks are "maxlen", "minlen", "maxval", "minval"
      * and "valueless".
      *
-     * @param string $value Attribute value
-     * @param string $vless Whether the value is valueless. Use 'y' or 'n'
-     * @param string $checkname What $checkvalue is checking for.
-     * @param mixed $checkvalue What constraint the value should pass
+     * @param string $value      Attribute value
+     * @param string $vless      Whether the value is valueless. Use 'y' or 'n'
+     * @param string $checkname  What $checkvalue is checking for.
+     * @param mixed  $checkvalue What constraint the value should pass
      * @return bool Whether check passes
      */
     protected function check_attr_val($value, $vless, $checkname, $checkvalue)
@@ -1241,10 +1288,10 @@ class RMKses
     {
         $global_attributes = [
             'class' => true,
-            'id' => true,
+            'id'    => true,
             'style' => true,
             'title' => true,
-            'role' => true,
+            'role'  => true,
         ];
 
         if (true === $value) {

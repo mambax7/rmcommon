@@ -13,7 +13,7 @@
                                name="notifications[<?php echo $item['event']; ?>]"
                                data-event="<?php echo $item['hash']; ?>"
                                class="notification-item"
-                               <?php echo $item['subscribed'] ? 'checked' : ''; ?>>
+                            <?php echo $item['subscribed'] ? 'checked' : ''; ?>>
                         <?php echo $item['caption']; ?>
                     </label>
                 </div>

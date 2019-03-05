@@ -33,7 +33,7 @@ use Common\API\Editors\Editor;
 class Quill implements Editor
 {
     private $options = [];
-    private $name = '';
+    private $name    = '';
 
     public function __construct($name)
     {
@@ -42,21 +42,21 @@ class Quill implements Editor
         $this->name = \TextCleaner::sweetstring($name);
 
         $this->options = [
-            'theme' => 'snow',
-            'debug' => 'info',
-            'modules' => [
-                'syntax' => true,
+            'theme'       => 'snow',
+            'debug'       => 'info',
+            'modules'     => [
+                'syntax'  => true,
                 'toolbar' => '#' . $this->name . '-toolbar',
             ],
             'placeholder' => '',
-            'readOnly' => false,
+            'readOnly'    => false,
         ];
     }
 
     /**
      * Visit {@link https://quilljs.com/docs/configuration/} Configuración de Quill
      * @param string|array $name Name of the option key or an array with all name => value
-     * @param mixed $value
+     * @param mixed        $value
      */
     public function setOptions($name, $value)
     {
@@ -81,16 +81,12 @@ class Quill implements Editor
         global $common;
 
         // Add js to HTML page
-        $common->template()->add_script(
-            'quill.min.js',
-            'rmcommon',
-            [
-                'footer' => 1,
-                'required' => 'jquery',
-                'directory' => 'api/editors/Quill',
-                'id' => 'quill-js',
-            ]
-        );
+        $common->template()->add_script('quill.min.js', 'rmcommon', [
+                                                          'footer'    => 1,
+                                                          'required'  => 'jquery',
+                                                          'directory' => 'api/editors/Quill',
+                                                          'id'        => 'quill-js',
+                                                      ]);
 
         $theme = $this->options['theme'];
         if ('' == $theme) {
@@ -98,14 +94,10 @@ class Quill implements Editor
         }
 
         // Add CSS to HTMl page
-        $common->template()->add_style(
-            'quill.' . $theme . '.css',
-            'rmcommon',
-            [
-                'directory' => 'api/editors/Quill',
-                'id' => 'quill-css',
-            ]
-        );
+        $common->template()->add_style('quill.' . $theme . '.css', 'rmcommon', [
+                                                                     'directory' => 'api/editors/Quill',
+                                                                     'id'        => 'quill-css',
+                                                                 ]);
 
         if ('' == $template || false === file_exists($template)) {
             $template = $common->template()->path('api/quill.php', 'module', 'rmcommon');

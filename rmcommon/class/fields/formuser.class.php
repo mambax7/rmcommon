@@ -93,22 +93,22 @@ class RMFormUser extends RMFormElement
         $attributes = $this->renderAttributeString();
 
         $rtn = '<div id="' . $this->id() . '-users-container" ' . $attributes . '>
-				<ul id="' . $this->id() . '-users-list">';
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+                <ul id="' . $this->id() . '-users-list">';
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
 
         if ($this->get('showall') && in_array(0, $this->get('selected'), true)) {
             $rtn .= "<li id='" . $this->id() . "-exmuser-0'>\n
                         <label>
                         <a href='#' onclick=\"users_field_name='" . $this->id() . "'; usersField.remove(0); return false;\">&times;</a>
                         <input type='" . ($this->get('multi') ? 'checkbox' : 'radio') . "' name='" . ($this->get('multi') ? $this->get('name') . '[]' : $this->get('name')) . "' id='" . $this->id() . "-0'
-				 		value='0' checked> " . __('All Users', 'rmcommon') . '
+                        value='0' checked> " . __('All Users', 'rmcommon') . '
                         </label></li>';
         }
 
         $selected = $this->get('selected');
 
         if (is_array($selected) && !empty($selected) && !(1 == count($selected) && 0 == $selected[0])) {
-            $sql = 'SELECT uid,uname FROM ' . $db->prefix('users') . ' WHERE ';
+            $sql  = 'SELECT uid,uname FROM ' . $db->prefix('users') . ' WHERE ';
             $sql1 = '';
             if ($this->get('multi')) {
                 foreach ($selected as $id) {
@@ -121,14 +121,14 @@ class RMFormUser extends RMFormElement
                     $sql1 = "uid='" . $selected[0] . "'";
                 }
             }
-            $result = $db->query($sql . $sql1);
+            $result   = $db->query($sql . $sql1);
             $selected = '';
             while (false !== ($row = $db->fetchArray($result))) {
                 $rtn .= "<li id='" . $this->id() . "-exmuser-$row[uid]'>\n
-						<label>";
+                        <label>";
                 $rtn .= $this->get('can_change') ? " <a href='#' onclick=\"users_field_name='" . $this->id() . "'; usersField.remove($row[uid]); return false;\">&times;</a>" : '';
                 $rtn .= "<input type='" . ($this->get('multi') ? 'checkbox' : 'radio') . "' name='" . ($this->get('multi') ? $this->get('name') . '[]' : $this->get('name')) . "' id='" . $this->id() . '-' . $row['uid'] . "'
-				 		value='$row[uid]' checked> 
+                        value='$row[uid]' checked>
                         $row[uname] ";
                 $rtn .= '</label></li>';
             }
@@ -136,7 +136,19 @@ class RMFormUser extends RMFormElement
 
         $rtn .= '</ul><br>';
         if ($this->get('can_change')) {
-            $rtn .= "<button type='button' class='btn btn-info btn-sm' data-title='" . $this->get('title') . "' onclick=\"usersField.form_search_users('" . $this->id() . "'," . $this->get('limit') . ',' . intval($this->get('multi')) . ",'" . XOOPS_URL . "');\">" . __('Users...', 'rmcommon') . '</button>';
+            $rtn .= "<button type='button' class='btn btn-info btn-sm' data-title='"
+                    . $this->get('title')
+                    . "' onclick=\"usersField.form_search_users('"
+                    . $this->id()
+                    . "',"
+                    . $this->get('limit')
+                    . ','
+                    . intval($this->get('multi'))
+                    . ",'"
+                    . XOOPS_URL
+                    . "');\">"
+                    . __('Users...', 'rmcommon')
+                    . '</button>';
             /*$rtn .= '<div class="modal fade smartb-form-dialog users-form-selector" id="'.$this->id().'-dialog-search">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -160,10 +172,10 @@ class RMFormUser extends RMFormElement
 class RMFormFormUserSelect extends RMFormElement
 {
     private $selected = [];
-    private $limit = 100;
-    private $width = 600;
-    private $height = 300;
-    private $showall = 0;
+    private $limit    = 100;
+    private $width    = 600;
+    private $height   = 300;
+    private $showall  = 0;
 
     // Eventos
     private $_onchange = '';
@@ -187,11 +199,11 @@ class RMFormFormUserSelect extends RMFormElement
     public function __construct($caption, $name, $select = [], $limit = 36, $width = 600, $height = 300, $showall = 0)
     {
         $this->selected = $select;
-        $this->limit = $limit;
+        $this->limit    = $limit;
         $this->setCaption($caption);
         $this->setName($name);
-        $this->width = $width <= 0 ? 600 : $width;
-        $this->height = $height <= 0 ? 300 : $height;
+        $this->width   = $width <= 0 ? 600 : $width;
+        $this->height  = $height <= 0 ? 300 : $height;
         $this->showall = $showall;
         !defined('RM_FRAME_USERS_CREATED') ? define('RM_FRAME_USERS_CREATED', 1) : '';
     }

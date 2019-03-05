@@ -19,13 +19,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * -----------------------------------------------------------------
- * @package      xThemes
- * @author       Eduardo Cortés <yo@eduardocortes.mx>
+ * @param mixed $params
+ * @param mixed $smarty
  * @copyright    2009 - 2014 Eduardo Cortés
  * @license      GPL v2
  * @link         http://eduardocortes.mx
- * @param mixed $params
- * @param mixed $smarty
+ * @package      xThemes
+ * @author       Eduardo Cortés <yo@eduardocortes.mx>
  */
 
 /**

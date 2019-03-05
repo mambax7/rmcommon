@@ -42,7 +42,7 @@ switch ($action) {
         $common->ajax()->prepare();
         $common->checkToken(true);
         $provider = $common->httpRequest()->get('provider', 'string', '');
-        $size = $common->httpRequest()->get('size', 'integer', 32);
+        $size     = $common->httpRequest()->get('size', 'integer', 32);
 
         $tempProviders = [];
         foreach ($providers as $item) {
@@ -67,14 +67,9 @@ switch ($action) {
         $common->template()->assign('providerPrefix', 'svg-' . $selected['id'] . '-');
         $common->template()->assign('size', $size);
 
-        $common->ajax()->response(
-            sprintf(__('Icons from %s', 'rmcommon'), $name),
-            0,
-            1,
-            [
-                'content' => $common->template()->render('ajax/ajax-icons.php', 'module', 'rmcommon'),
-            ]
-        );
+        $common->ajax()->response(sprintf(__('Icons from %s', 'rmcommon'), $name), 0, 1, [
+                                                                                     'content' => $common->template()->render('ajax/ajax-icons.php', 'module', 'rmcommon'),
+                                                                                 ]);
 
         break;
     default:

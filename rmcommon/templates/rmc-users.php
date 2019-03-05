@@ -1,24 +1,24 @@
 <h1 class="cu-section-title"><i class="glyphicon glyphicon-user"></i> <?php _e('Users Management', 'rmcommon'); ?></h1>
 <div id="users-filter-options">
     <form name="filterForm" id="filter-form" method="get" action="users.php">
-    <div class="basic_options">
-	<span class="sections">
-		<label for="search-key"><?php _e('Search:', 'rmcommon'); ?></label>
-		<input class="form-control" type="text" name="keyw" id="search-key" size="15" value="<?php echo $srhkeyw; ?>">
-	</span>
-	<span class="sections">
-		<label for="users-number"><?php _e('Show:', 'rmcommon'); ?></label>
-		<input class="form-control" type="text" name="limit" id="users-number" size="6" value="<?php echo $limit; ?>">
-	</span>
-	<span class="sections">
+        <div class="basic_options">
+    <span class="sections">
+        <label for="search-key"><?php _e('Search:', 'rmcommon'); ?></label>
+        <input class="form-control" type="text" name="keyw" id="search-key" size="15" value="<?php echo $srhkeyw; ?>">
+    </span>
+            <span class="sections">
+        <label for="users-number"><?php _e('Show:', 'rmcommon'); ?></label>
+        <input class="form-control" type="text" name="limit" id="users-number" size="6" value="<?php echo $limit; ?>">
+    </span>
+            <span class="sections">
         <label>&nbsp;</label>
-		<button type="submit" class="btn btn-primary form-control"><?php _e('Go Now!', 'rmcommon'); ?></button>
-	</span>
-	<span class="sections_right pull-right">
+        <button type="submit" class="btn btn-primary form-control"><?php _e('Go Now!', 'rmcommon'); ?></button>
+    </span>
+            <span class="sections_right pull-right">
         <label>&nbsp;</label>
-		<a href="javascript:;" id="show-search" class="btn btn-link"><?php _e('Advanced Search', 'rmcommon'); ?></a>
-	</span>
-    </div>
+        <a href="javascript:;" id="show-search" class="btn btn-link"><?php _e('Advanced Search', 'rmcommon'); ?></a>
+    </span>
+        </div>
 
         <div id="users-advanced-options">
             <div class="panel panel-default">
@@ -69,9 +69,9 @@
                         <div class="col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="<?php _e('Posts between:', 'rmcommon'); ?>"><?php _e('Posts between:', 'rmcommon'); ?></label><br>
-                                <input type="text" class="form-control inline" name="posts1" id="users-posts1" value="<?php echo (int) $srhposts1; ?>" size="5">
+                                <input type="text" class="form-control inline" name="posts1" id="users-posts1" value="<?php echo (int)$srhposts1; ?>" size="5">
                                 <?php _e('and', 'rmcommon'); ?>
-                                <input type="text" class="form-control inline" name="posts2" id="users-posts2" value="<?php echo (int) $srhposts2 > 0 ? (int) $posts2 : ''; ?>" size="5">
+                                <input type="text" class="form-control inline" name="posts2" id="users-posts2" value="<?php echo (int)$srhposts2 > 0 ? (int)$posts2 : ''; ?>" size="5">
                             </div>
                         </div>
 
@@ -142,40 +142,39 @@
         </div>
 
 
-
-	</form>
+    </form>
 </div>
 <form name="frmUsers" id="form-users" method="post" action="users.php" class="form-inline">
-<!-- Navigation Options -->
-<div class="cu-bulk-actions">
+    <!-- Navigation Options -->
+    <div class="cu-bulk-actions">
 
-    <div class="row">
-        <div class="col-sm-6 col-md-3">
-            <select name="order" id="user-order" class="form-control">
-                <option value=""<?php echo '' == $order ? ' selected="selected"' : ''; ?>><?php _e('Order by...', 'rmcommon'); ?></option>
-                <option value="uid"<?php echo 'uid' == $order ? ' selected="selected"' : ''; ?>><?php _e('ID', 'rmcommon'); ?></option>
-                <option value="uname"<?php echo 'uname' == $order ? ' selected="selected"' : ''; ?>><?php _e('Username', 'rmcommon'); ?></option>
-                <option value="name"<?php echo 'name' == $order ? ' selected="selected"' : ''; ?>><?php _e('Name', 'rmcommon'); ?></option>
-                <option value="email"<?php echo 'email' == $order ? ' selected="selected"' : ''; ?>><?php _e('Email', 'rmcommon'); ?></option>
-            </select>
-            <button type="button" class="btn btn-default" onclick="$('#order').val($('#user-order').val()); submit();"><?php _e('Sort', 'rmcommon'); ?></button>
-        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <select name="order" id="user-order" class="form-control">
+                    <option value=""<?php echo '' == $order ? ' selected="selected"' : ''; ?>><?php _e('Order by...', 'rmcommon'); ?></option>
+                    <option value="uid"<?php echo 'uid' == $order ? ' selected="selected"' : ''; ?>><?php _e('ID', 'rmcommon'); ?></option>
+                    <option value="uname"<?php echo 'uname' == $order ? ' selected="selected"' : ''; ?>><?php _e('Username', 'rmcommon'); ?></option>
+                    <option value="name"<?php echo 'name' == $order ? ' selected="selected"' : ''; ?>><?php _e('Name', 'rmcommon'); ?></option>
+                    <option value="email"<?php echo 'email' == $order ? ' selected="selected"' : ''; ?>><?php _e('Email', 'rmcommon'); ?></option>
+                </select>
+                <button type="button" class="btn btn-default" onclick="$('#order').val($('#user-order').val()); submit();"><?php _e('Sort', 'rmcommon'); ?></button>
+            </div>
 
-        <div class="col-sm-6 col-md-9">
-            <select name="action" id="bulk-top" class="form-control">
-                <option value=""><?php _e('Bulk Actions...', 'rmcommon'); ?></option>
-                <option value="activate"><?php _e('Activate', 'rmcommon'); ?></option>
-                <option value="deactivate"><?php _e('Deactivate', 'rmcommon'); ?></option>
-                <option value="mailer"><?php _e('Send email', 'rmcommon'); ?></option>
-                <option value="delete"><?php _e('Delete', 'rmcommon'); ?></option>
-            </select>
-            <button type="button" onclick="before_submit('form-users');" class="btn btn-default" id="the-op-top"><?php _e('Apply', 'rmcommon'); ?></button>
+            <div class="col-sm-6 col-md-9">
+                <select name="action" id="bulk-top" class="form-control">
+                    <option value=""><?php _e('Bulk Actions...', 'rmcommon'); ?></option>
+                    <option value="activate"><?php _e('Activate', 'rmcommon'); ?></option>
+                    <option value="deactivate"><?php _e('Deactivate', 'rmcommon'); ?></option>
+                    <option value="mailer"><?php _e('Send email', 'rmcommon'); ?></option>
+                    <option value="delete"><?php _e('Delete', 'rmcommon'); ?></option>
+                </select>
+                <button type="button" onclick="before_submit('form-users');" class="btn btn-default" id="the-op-top"><?php _e('Apply', 'rmcommon'); ?></button>
+            </div>
+
         </div>
 
     </div>
-
-</div>
-<!-- Navigation Options -->
+    <!-- Navigation Options -->
 
     <div class="panel panel-default">
         <div class="table-responsive">
@@ -215,7 +214,7 @@
                         <td class="text-center"><?php echo $user['uid']; ?></td>
                         <td nowrap="nowrap">
                             <strong><?php echo $user['uname']; ?></strong>
-                                <span class="cu-item-options">
+                            <span class="cu-item-options">
                                     <a href="users.php?action=edit&amp;uid=<?php echo $user['uid']; ?>&amp;query=<?php echo base64_encode($qstring); ?>"><?php _e('Edit', 'rmcommon'); ?></a>
                                     <a href="users.php?action=mailer&amp;uid=<?php echo $user['uid']; ?>&amp;query=<?php echo base64_encode($qstring); ?>"><?php _e('Email', 'rmcommon'); ?></a>
                                     <a href="#" onclick="select_option(<?php echo $user['uid']; ?>,'delete','form-users');"><?php _e('Delete', 'rmcommon'); ?></a>
@@ -243,7 +242,8 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-md-6">
-                    <?php $nav->render(); echo $nav->get_showing(); ?>
+                    <?php $nav->render();
+                    echo $nav->get_showing(); ?>
                 </div>
                 <div class="col-md-6">
                     <?php $nav->display(false); ?>
@@ -252,7 +252,7 @@
         </div>
     </div>
 
-<!-- Navigation Options -->
+    <!-- Navigation Options -->
     <div class="cu-bulk-actions visible-md visible-lg">
 
         <div class="row">
@@ -280,7 +280,7 @@
         </div>
 
     </div>
-<?php echo $xoopsSecurity->getTokenHTML(); ?>
+    <?php echo $xoopsSecurity->getTokenHTML(); ?>
     <input type="hidden" name="query" value="<?php echo urlencode($query); ?>">
-<!-- Navigation Options -->
+    <!-- Navigation Options -->
 </form>

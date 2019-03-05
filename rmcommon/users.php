@@ -30,7 +30,7 @@
  * This file allow to manage users registered.
  * plugins can extend this file functionallity
  */
-require  dirname(dirname(__DIR__)) . '/include/cp_header.php';
+require dirname(dirname(__DIR__)) . '/include/cp_header.php';
 $common->location = 'users';
 
 /**
@@ -40,23 +40,23 @@ function formatSQL()
 {
     global $op;
 
-    $keyw = '';
-    $email = '';
-    $url = '';
-    $srhmethod = '';
-    $from = '';
-    $login1 = '';
-    $login2 = '';
+    $keyw        = '';
+    $email       = '';
+    $url         = '';
+    $srhmethod   = '';
+    $from        = '';
+    $login1      = '';
+    $login2      = '';
     $registered1 = '';
     $registered2 = '';
-    $posts1 = '';
-    $posts2 = '';
-    $mailok = -1;
-    $actives = 'all';
-    $show = '';
+    $posts1      = '';
+    $posts2      = '';
+    $mailok      = -1;
+    $actives     = 'all';
+    $show        = '';
 
-    $tpl = RMTemplate::getInstance();
-    $sql = '';
+    $tpl      = RMTemplate::getInstance();
+    $sql      = '';
     $tcleaner = TextCleaner::getInstance();
 
     foreach ($_REQUEST as $k => $v) {
@@ -80,8 +80,14 @@ function formatSQL()
     }
 
     if ('' == $keyw && '' == $email && '' == $url && '' == $from
-        && '' == $login1 && '' == $login2 && '' == $registered1 && '' == $registered2 && '' == $posts1
-        && '' == $posts2 && -1 == $mailok && -1 == $actives) {
+        && '' == $login1
+        && '' == $login2
+        && '' == $registered1
+        && '' == $registered2
+        && '' == $posts1
+        && '' == $posts2
+        && -1 == $mailok
+        && -1 == $actives) {
         if ('inactives' == $show) {
             $sql = ' level<=0';
         } elseif ('actives' == $show) {
@@ -96,77 +102,77 @@ function formatSQL()
         return '' != $sql ? "WHERE $sql" : '';
     }
 
-    $or = false;
-    $ao = $srhmethod;
+    $or   = false;
+    $ao   = $srhmethod;
     $show = false;
 
     if ('' != $keyw) {
         $sql .= "uname LIKE '%$keyw%' $ao name LIKE '%$keyw%'";
-        $or = true;
+        $or  = true;
     }
 
     if ('' != $email) {
-        $sql .= ($or ? " $ao " : '') . "email LIKE '%$email%'";
-        $or = true;
+        $sql  .= ($or ? " $ao " : '') . "email LIKE '%$email%'";
+        $or   = true;
         $show = true;
     }
 
     if ('' != $url) {
-        $sql .= ($or ? " $ao " : '') . "url LIKE '%$url%'";
-        $or = true;
+        $sql  .= ($or ? " $ao " : '') . "url LIKE '%$url%'";
+        $or   = true;
         $show = true;
     }
 
     if ('' != $from) {
-        $sql .= ($or ? " $ao " : '') . "user_from LIKE '%$from%'";
-        $or = true;
+        $sql  .= ($or ? " $ao " : '') . "user_from LIKE '%$from%'";
+        $or   = true;
         $show = true;
     }
 
     if ('' != $login1) {
-        $sql .= ($or ? " $ao " : '') . ('' != $login2 ? '(' : '') . "last_login>='$login1'";
-        $or = true;
+        $sql  .= ($or ? " $ao " : '') . ('' != $login2 ? '(' : '') . "last_login>='$login1'";
+        $or   = true;
         $show = true;
     }
 
     if ('' != $login2) {
-        $sql .= ($or ? ('' != $login1 ? ' AND ' : " $ao ") : '') . "last_login<='$login2'" . ('' != $login1 ? ')' : '');
-        $or = true;
+        $sql  .= ($or ? ('' != $login1 ? ' AND ' : " $ao ") : '') . "last_login<='$login2'" . ('' != $login1 ? ')' : '');
+        $or   = true;
         $show = true;
     }
 
     if ('' != $registered1) {
-        $sql .= ($or ? " $ao " : '') . ('' != $registered2 ? '(' : '') . "last_login>='$registered1'";
-        $or = true;
+        $sql  .= ($or ? " $ao " : '') . ('' != $registered2 ? '(' : '') . "last_login>='$registered1'";
+        $or   = true;
         $show = true;
     }
 
     if ('' != $registered2) {
-        $sql .= ($or ? ('' != $registered1 ? ' AND ' : " $ao ") : '') . "last_login<='$registered2'" . ('' != $registered1 ? ')' : '');
-        $or = true;
+        $sql  .= ($or ? ('' != $registered1 ? ' AND ' : " $ao ") : '') . "last_login<='$registered2'" . ('' != $registered1 ? ')' : '');
+        $or   = true;
         $show = true;
     }
 
     if ($posts1 > 0) {
-        $sql .= ($or ? " $ao " : '') . ('' != $posts2 ? '(' : '') . "posts>='$posts1'";
-        $or = true;
+        $sql  .= ($or ? " $ao " : '') . ('' != $posts2 ? '(' : '') . "posts>='$posts1'";
+        $or   = true;
         $show = true;
     }
 
     if ($posts2 > 0) {
-        $sql .= ($or ? ('' != $posts1 ? ' AND ' : " $ao ") : '') . "posts<='$posts2'" . ('' != $posts1 ? ')' : '');
-        $or = true;
+        $sql  .= ($or ? ('' != $posts1 ? ' AND ' : " $ao ") : '') . "posts<='$posts2'" . ('' != $posts1 ? ')' : '');
+        $or   = true;
         $show = true;
     }
 
     if ($mailok > -1) {
         $sql .= ($or ? " $ao " : '') . "user_mailok='$mailok'";
-        $or = true;
+        $or  = true;
     }
 
     if ('all' != $actives) {
         $sql .= ($or ? " $ao " : '') . 'level' . ('active' == $actives ? ' > 0' : ' <= 0 ');
-        $or = true;
+        $or  = true;
     }
 
     if ($show) {
@@ -226,34 +232,34 @@ function show_users()
 
     $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('users') . ' ' . formatSQL();
 
-    $page = rmc_server_var($_REQUEST, 'pag', 1);
+    $page  = rmc_server_var($_REQUEST, 'pag', 1);
     $limit = rmc_server_var($_REQUEST, 'limit', 15);
     $order = rmc_server_var($_GET, 'order', 'uid');
     list($num) = $db->fetchRow($db->query($sql));
 
     $tpages = ceil($num / $limit);
-    $page = $page > $tpages ? $tpages : $page;
+    $page   = $page > $tpages ? $tpages : $page;
 
     $start = $num <= 0 ? 0 : ($page - 1) * $limit;
 
-    $sql = str_replace('COUNT(*)', '*', $sql);
-    $sql .= "ORDER BY $order LIMIT $start, $limit";
+    $sql    = str_replace('COUNT(*)', '*', $sql);
+    $sql    .= "ORDER BY $order LIMIT $start, $limit";
     $result = $db->query($sql);
 
     $users = [];
-    $t = []; // Temporary
+    $t     = []; // Temporary
     while (false !== ($row = $db->fetchArray($result))) {
         $user = new RMUser();
         $user->assignVars($row);
-        $t = $user->getValues();
+        $t           = $user->getValues();
         $t['groups'] = &$user->getGroups();
-        $t = RMEvents::get()->trigger('rmcommon.loading.users.list', $t);
-        $users[] = $t;
-        $t = [];
+        $t           = RMEvents::get()->trigger('rmcommon.loading.users.list', $t);
+        $users[]     = $t;
+        $t           = [];
     }
 
     extract(RMTemplate::getInstance()->get_vars());
-    $query = '';
+    $query  = '';
     $params = [];
 
     foreach ($_REQUEST as $k => $v) {
@@ -266,7 +272,7 @@ function show_users()
     $nav = new RMPageNav($num, $limit, $page, 5);
     $nav->target_url('users.php?pag={PAGE_NUM}&amp;' . $query);
 
-    $xgh = new XoopsGroupHandler($db);
+    $xgh   = new XoopsGroupHandler($db);
     $users = RMEvents::get()->trigger('rmcommon.users.list.loaded', $users);
 
     // Users template
@@ -294,7 +300,7 @@ function user_form($edit = false)
             redirectMsg('users.php?' . $query, __('The specified user is not valid!', 'rmcommon'), 1);
         }
 
-        $uh = new XoopsUserHandler($db);
+        $uh   = new XoopsUserHandler($db);
         $user = $uh->get($uid);
         if ($user->isNew()) {
             redirectMsg('users.php?' . $query, __('The specified user does not exists!', 'rmcommon'), 1);
@@ -339,12 +345,12 @@ function user_form($edit = false)
 
     // Groups
     $form->addElement(new RMFormGroups([
-        'caption' => __('Assign to groups', 'rmcommon'),
-        'name' => 'groups',
-        'multiple' => null,
-        'type' => 'checkbox',
-        'selected' => $user->groups(),
-    ]));
+                                           'caption'  => __('Assign to groups', 'rmcommon'),
+                                           'name'     => 'groups',
+                                           'multiple' => null,
+                                           'type'     => 'checkbox',
+                                           'selected' => $user->groups(),
+                                       ]));
 
     // Other options by API
     $form = RMEvents::get()->run_event('rmcommon.user.form', $form, $edit, isset($user) ? $user : null);
@@ -358,16 +364,16 @@ function user_form($edit = false)
     // Submit and cancel buttons
     $ele = new RMFormButtonGroup('');
     $ele->addButton(new RMFormButton([
-        'caption' => $edit ? __('Save Changes', 'rmcommon') : __('Save User', 'rmcommon'),
-        'type' => 'submit',
-        'class' => 'btn btn-primary btn-lg',
-    ]));
+                                         'caption' => $edit ? __('Save Changes', 'rmcommon') : __('Save User', 'rmcommon'),
+                                         'type'    => 'submit',
+                                         'class'   => 'btn btn-primary btn-lg',
+                                     ]));
     $ele->addButton(new RMFormButton([
-        'caption' => __('Cancel', 'rmcommon'),
-        'type' => 'button',
-        'class' => 'btn btn-default btn-lg',
-        'onclick' => 'history.go(-1);',
-    ]));
+                                         'caption' => __('Cancel', 'rmcommon'),
+                                         'type'    => 'button',
+                                         'class'   => 'btn btn-default btn-lg',
+                                         'onclick' => 'history.go(-1);',
+                                     ]));
 
     $form->addElement($ele);
 
@@ -432,11 +438,7 @@ function save_data($edit = false)
     list($exists) = $xoopsDB->fetchRow($xoopsDB->query($sql));
 
     if ($exists > 0) {
-        RMUris::redirect_with_message(
-            __('Another user with same username or email already exists!', 'rmcommon'),
-            'users.php?action=' . ($edit ? 'edit' : 'new') . '&' . $q,
-            RMMSG_ERROR
-        );
+        RMUris::redirect_with_message(__('Another user with same username or email already exists!', 'rmcommon'), 'users.php?action=' . ($edit ? 'edit' : 'new') . '&' . $q, RMMSG_ERROR);
     }
 
     // Save user data
@@ -496,7 +498,7 @@ function show_mailer()
 {
     global $xoopsConfig, $rmc_config, $rmTpl;
 
-    $uid = rmc_server_var($_GET, 'uid', []);
+    $uid   = rmc_server_var($_GET, 'uid', []);
     $query = rmc_server_var($_GET, 'query', '');
 
     if (!is_array($uid) && $uid <= 0 || empty($uid)) {
@@ -594,7 +596,7 @@ function activate_users($activate)
         $in .= '' == $in ? $id : ',' . $id;
     }
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('users') . " SET level='$activate' WHERE uid IN($in)";
 
     if ($db->queryF($sql)) {
@@ -626,18 +628,14 @@ function delete_users()
     $uid = $common->httpRequest()::post('ids', 'array', []);
 
     if (empty($uid)) {
-        $common->uris()::redirect_with_message(
-            __('Select at leas one user to delete', 'rmcommon'),
-            'users.php?' . $query,
-            RMMSG_INFO
-        );
+        $common->uris()::redirect_with_message(__('Select at leas one user to delete', 'rmcommon'), 'users.php?' . $query, RMMSG_INFO);
     }
 
     $memberHandler = xoops_getHandler('member', 'system');
-    $errors = '';
+    $errors        = '';
 
     foreach ($uid as $id) {
-        $user = $memberHandler->getUser($id);
+        $user   = $memberHandler->getUser($id);
         $groups = $user->getGroups();
 
         if (in_array(XOOPS_GROUP_ADMIN, $groups, true)) {
@@ -653,18 +651,10 @@ function delete_users()
     }
 
     if ('' == $errors) {
-        $common->uris()::redirect_with_message(
-            __('Users deleted successfully!', 'rmcommon'),
-            'users.php?' . $query,
-            RMMSG_SUCCESS
-        );
+        $common->uris()::redirect_with_message(__('Users deleted successfully!', 'rmcommon'), 'users.php?' . $query, RMMSG_SUCCESS);
     }
 
-    $common->uris()::redirect_with_message(
-        __('There was errors while trying to delete users:', 'rmcommon') . '<br>' . $errors,
-        'users.php?' . $query,
-        RMMSG_WARN
-    );
+    $common->uris()::redirect_with_message(__('There was errors while trying to delete users:', 'rmcommon') . '<br>' . $errors, 'users.php?' . $query, RMMSG_WARN);
 }
 
 // get the action

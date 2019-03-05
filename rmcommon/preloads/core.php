@@ -25,7 +25,7 @@ class RmcommonCorePreload extends XoopsPreloadItem
             global $xoopsTpl;
             $bks = RMBlocksFunctions::construct_blocks();
             $bks = RMEvents::get()->trigger('rmcommon.retrieve.xoops.blocks', $bks);
-            $b = &$xoopsTpl->get_template_vars('xoBlocks');
+            $b   = &$xoopsTpl->get_template_vars('xoBlocks');
             if (is_array($bks)) {
                 $blocks = array_merge($b, $bks);
             } else {
@@ -72,7 +72,7 @@ class RmcommonCorePreload extends XoopsPreloadItem
          * Check before to a rmcommon native module be installed
          */
         $fct = RMHttpRequest::get('fct', 'string', '');
-        $op = RMHttpRequest::get('op', 'string', '');
+        $op  = RMHttpRequest::get('op', 'string', '');
         if ('modulesadmin' == $fct && 'install' == $op) {
             $dirname = RMHttpRequest::get('module', 'string', '');
 
@@ -80,19 +80,15 @@ class RmcommonCorePreload extends XoopsPreloadItem
                 $module = new XoopsModule();
                 $module->loadInfoAsVar($dirname);
                 if ($module->getInfo('rmnative')) {
-                    RMUris::redirect_with_message(
-                        __('Please install %s using the modules manager from Common Utilities to prevent errors during install.', 'rmcommon'),
-                        RMCURL . '/modules.php?action=install&amp;dir=' . $dirname,
-                        RMMSG_WARN
-                    );
+                    RMUris::redirect_with_message(__('Please install %s using the modules manager from Common Utilities to prevent errors during install.', 'rmcommon'), RMCURL . '/modules.php?action=install&amp;dir=' . $dirname, RMMSG_WARN);
                 }
             }
         }
 
         if (RMUris::current_url() == RMCURL . '/include/upload.php' && $xoopsConfig['closesite']) {
-            $security = rmc_server_var($_POST, 'rmsecurity', 0);
-            $data = TextCleaner::getInstance()->decrypt($security, true);
-            $data = explode('|', $data); // [0] = referer, [1] = session_id(), [2] = user, [3] = token
+            $security  = rmc_server_var($_POST, 'rmsecurity', 0);
+            $data      = TextCleaner::getInstance()->decrypt($security, true);
+            $data      = explode('|', $data); // [0] = referer, [1] = session_id(), [2] = user, [3] = token
             $xoopsUser = new XoopsUser($data[0]);
             if ($xoopsUser->isAdmin()) {
                 $xoopsConfig['closesite'] = 0;
@@ -107,11 +103,11 @@ class RmcommonCorePreload extends XoopsPreloadItem
         global $xoopsTpl;
 
         // Assign scripts and styles
-        $tpl = RMTemplate::getInstance();
-        $htmlScripts = $tpl->get_scripts(true);
+        $tpl                         = RMTemplate::getInstance();
+        $htmlScripts                 = $tpl->get_scripts(true);
         $htmlScripts['inlineHeader'] = $tpl->inline_scripts();
         $htmlScripts['inlineFooter'] = $tpl->inline_scripts(1);
-        $htmlStyles = $tpl->get_styles(true);
+        $htmlStyles                  = $tpl->get_styles(true);
 
         $xoopsTpl->assign('themeScripts', $htmlScripts);
         $xoopsTpl->assign('themeStyles', $htmlStyles);
@@ -142,23 +138,23 @@ class RmcommonCorePreload extends XoopsPreloadItem
         /**
          * Use internal blocks manager if enabled
          *
-        $config = RMSettings::cu_settings();
-        if ($config->blocks_enable) {
-            global $xoopsTpl;
-            $blocks = RMBlocksFunctions::construct_blocks();
-            $blocks = RMEvents::get()->trigger('rmcommon.retrieve.xoops.blocks', $blocks);
-            /*$b =& $xoopsTpl->get_template_vars('xoBlocks');
-            if (is_array($bks)) {
-                $blocks = array_merge($b, $bks);
-            } else {
-                $blocks = $b;
-            }*
-            //$xoopsTpl->assign_by_ref('xoBlocks', $blocks);
-
-            $xpb->blocks = $blocks;
-
-            unset($b, $bks);
-        }*/
+         * $config = RMSettings::cu_settings();
+         * if ($config->blocks_enable) {
+         * global $xoopsTpl;
+         * $blocks = RMBlocksFunctions::construct_blocks();
+         * $blocks = RMEvents::get()->trigger('rmcommon.retrieve.xoops.blocks', $blocks);
+         * /*$b =& $xoopsTpl->get_template_vars('xoBlocks');
+         * if (is_array($bks)) {
+         * $blocks = array_merge($b, $bks);
+         * } else {
+         * $blocks = $b;
+         * }*
+         * //$xoopsTpl->assign_by_ref('xoBlocks', $blocks);
+         *
+         * $xpb->blocks = $blocks;
+         *
+         * unset($b, $bks);
+         * }*/
 
         $blocks = RMEvents::get()->trigger('rmcommon.retrieve.xoops.blocks', $blocks, $xpb, $tpl);
     }

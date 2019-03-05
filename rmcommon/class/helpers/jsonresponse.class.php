@@ -1,15 +1,16 @@
 <?php
+
 /**
-----------------------------------------
-Smart-B ERP
-@package:   Sistema base
-@author     Red México
-@author     http://www.redmexico.com.mx
-@author     Eduardo Cortés
-@copyright  2013 Red México
-@version    $Id$
-----------------------------------------
-**/
+ * ----------------------------------------
+ * Smart-B ERP
+ * @package    :   Sistema base
+ * @author     Red México
+ * @author     http://www.redmexico.com.mx
+ * @author     Eduardo Cortés
+ * @copyright  2013 Red México
+ * @version    $Id$
+ * ----------------------------------------
+ **/
 class RMJsonResponse
 {
     use RMSingleton, RMProperties;
@@ -19,8 +20,8 @@ class RMJsonResponse
         global $xoopsSecurity;
 
         $return['message'] = $message;
-        $return['type'] = $type;
-        $return['token'] = $token ? $xoopsSecurity->createToken() : '';
+        $return['type']    = $type;
+        $return['token']   = $token ? $xoopsSecurity->createToken() : '';
 
         if (!empty($data)) {
             $return = array_merge($return, $data);

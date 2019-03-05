@@ -20,12 +20,12 @@ $xoopsLogger->activated = false;
  */
 class RMProxy
 {
-    private $url = '';
+    private $url  = '';
     private $type = '';
 
     public function __construct($url, $type = 'text/html')
     {
-        $this->url = $url;
+        $this->url  = $url;
         $this->type = $type;
     }
 
@@ -36,8 +36,7 @@ class RMProxy
         $hdrs = [
             'http' => [
                 'method' => 'GET',
-                'header' => 'Accept-language: ' . _LANGCODE . "\r\n" .
-                                    'Referer: ' . XOOPS_URL . "\r\n",
+                'header' => 'Accept-language: ' . _LANGCODE . "\r\n" . 'Referer: ' . XOOPS_URL . "\r\n",
             ],
         ];
 

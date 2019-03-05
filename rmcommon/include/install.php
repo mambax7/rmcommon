@@ -21,7 +21,7 @@ function xoops_module_pre_uninstall_rmcommon($mod)
 function xoops_module_uninstall_rmcommon($mod)
 {
     $contents = file_get_contents(XOOPS_VAR_PATH . '/configs/xoopsconfig.php');
-    $write = "if(file_exists(XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php')) require_once XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php';";
+    $write    = "if(file_exists(XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php')) require_once XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php';";
     if (false !== mb_strpos($contents, $write)) {
         $contents = str_replace($write, '', $contents);
     }
@@ -46,7 +46,7 @@ function xoops_module_install_rmcommon($mod)
 
     // Temporary solution
     $contents = file_get_contents(XOOPS_VAR_PATH . '/configs/xoopsconfig.php');
-    $write = "if(file_exists(XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php')) require_once XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php';";
+    $write    = "if(file_exists(XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php')) require_once XOOPS_ROOT_PATH.'/modules/rmcommon/loader.php';";
     if (false !== mb_strpos($contents, $write)) {
         return true;
     }
@@ -150,14 +150,14 @@ function xoops_module_update_rmcommon($mod, $prev)
     $result = $db->query("SHOW TABLES LIKE '" . $db->prefix('mod_rmcommon_licensing') . "'");
     if ($db->getRowsNum($result) <= 0) {
         $sql = 'CREATE TABLE `' . $db->prefix('mod_rmcommon_licensing') . '` (
-				  `id_license` int(11) NOT NULL,
-				  `identifier` varchar(32) NOT NULL,
-				  `element` varchar(50) NOT NULL,
-				  `type` varchar(10) NOT NULL,
-				  `data` text NOT NULL,
-				  `date` int(11) NOT NULL,
-				  `expiration` int(11) NOT NULL
-				) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
+                  `id_license` int(11) NOT NULL,
+                  `identifier` varchar(32) NOT NULL,
+                  `element` varchar(50) NOT NULL,
+                  `type` varchar(10) NOT NULL,
+                  `data` text NOT NULL,
+                  `date` int(11) NOT NULL,
+                  `expiration` int(11) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
         if ($db->queryF($sql)) {
             $sql = 'ALTER TABLE `' . $db->prefix('mod_rmcommon_licensing') . '`
@@ -174,8 +174,7 @@ function xoops_module_update_rmcommon($mod, $prev)
     }
 
     // Change theme from TwoP6 to Helium
-    $sql = 'UPDATE ' . $db->prefix('config') . " SET conf_value='helium' WHERE conf_modid=" . $mod->getVar('mid')
-           . " AND conf_name='theme'";
+    $sql = 'UPDATE ' . $db->prefix('config') . " SET conf_value='helium' WHERE conf_modid=" . $mod->getVar('mid') . " AND conf_name='theme'";
 
     $db->queryF($sql);
 

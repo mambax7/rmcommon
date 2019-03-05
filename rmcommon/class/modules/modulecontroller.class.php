@@ -30,18 +30,18 @@ abstract class RMModuleController
 
         // Initialize properties
         $this->module_data = [
-            'settings' => RMSettings::module_settings($module),
-            'path' => XOOPS_ROOT_PATH . '/modules/' . $module,
-            'real_url' => XOOPS_URL . '/modules/' . $module,
-            'data' => (object) $moduleObject->getInfo(),
-            'directory' => $module,
-            'controller' => '',
+            'settings'           => RMSettings::module_settings($module),
+            'path'               => XOOPS_ROOT_PATH . '/modules/' . $module,
+            'real_url'           => XOOPS_URL . '/modules/' . $module,
+            'data'               => (object)$moduleObject->getInfo(),
+            'directory'          => $module,
+            'controller'         => '',
             'default_controller' => '',
-            'default_action' => '',
-            'action' => '',
-            'parameters' => [],
+            'default_action'     => '',
+            'action'             => '',
+            'parameters'         => [],
         ];
-        $this->module = $moduleObject;
+        $this->module      = $moduleObject;
 
         if (defined('XOOPS_CPFUNC_LOADED')) {
             $this->module_data['menu'] = &$moduleObject->getAdminMenu();
@@ -53,8 +53,8 @@ abstract class RMModuleController
     /**
      * Get methods and properties
      * @param string $name Method or property name
-     * @throws RMException
      * @return mixed
+     * @throws RMException
      */
     public function __get($name)
     {
@@ -71,10 +71,10 @@ abstract class RMModuleController
 
     /**
      * Set property values
-     * @param string $name Property or method name
-     * @param mixed $value New value
-     * @throws RMException
+     * @param string $name  Property or method name
+     * @param mixed  $value New value
      * @return mixed
+     * @throws RMException
      */
     public function __set($name, $value)
     {
@@ -120,11 +120,11 @@ abstract class RMModuleController
 
         if ('' == $parameters) {
             $controller_name = $this->default_controller;
-            $action = $this->default_action;
+            $action          = $this->default_action;
         } else {
-            $parameters = explode('/', trim($parameters, '/'));
+            $parameters      = explode('/', trim($parameters, '/'));
             $controller_name = $parameters[0];
-            $action = count($parameters) > 1 ? $parameters[1] : 'index';
+            $action          = count($parameters) > 1 ? $parameters[1] : 'index';
         }
 
         $newAction = explode('-', $action);
@@ -137,7 +137,7 @@ abstract class RMModuleController
         }
 
         $class = ucfirst($this->directory) . '_' . ucfirst($controller_name) . '_' . (defined('XOOPS_CPFUNC_LOADED') ? 'Admin_' : '') . 'Controller';
-        $file = $this->path . '/' . (defined('XOOPS_CPFUNC_LOADED') ? 'admin/controllers' : 'controllers') . '/' . mb_strtolower($controller_name) . '.php';
+        $file  = $this->path . '/' . (defined('XOOPS_CPFUNC_LOADED') ? 'admin/controllers' : 'controllers') . '/' . mb_strtolower($controller_name) . '.php';
 
         if (!file_exists($file)) {
             return $this->send_status(404, $controller_name, $action);
@@ -157,11 +157,11 @@ abstract class RMModuleController
 
         $controller = new $class();
 
-        $controller->parent = $this;
-        $controller->action = mb_strtolower($action);
-        $controller->settings = $this->settings;
-        $controller->tpl = $GLOBALS['rmTpl'];
-        $controller->module = $this->module;
+        $controller->parent     = $this;
+        $controller->action     = mb_strtolower($action);
+        $controller->settings   = $this->settings;
+        $controller->tpl        = $GLOBALS['rmTpl'];
+        $controller->module     = $this->module;
         $controller->parameters = $this->parseParameters($parameters);
 
         if (!method_exists($controller, $action)) {
@@ -169,7 +169,7 @@ abstract class RMModuleController
         }
 
         $this->controller = $controller_name;
-        $this->action = mb_strtolower($action);
+        $this->action     = mb_strtolower($action);
 
         return $controller->$action();
     }
@@ -236,8 +236,8 @@ abstract class RMModuleController
      * Format the URL according to given controller, action and parameters.
      * The URL is based on module URL mode.
      * @param string $controller Name of the controller to access
-     * @param string $action Name of the action
-     * @param array $parameters Parameters to pass trough URL
+     * @param string $action     Name of the action
+     * @param array  $parameters Parameters to pass trough URL
      * @return string URL formatted
      */
     public function anchor($controller, $action = '', $parameters = [])
@@ -276,11 +276,7 @@ abstract class RMModuleController
             return true;
         }
 
-        RMUris::redirect_with_message(
-            __('This area requires user login!', 'rmcommon'),
-            XOOPS_URL . '/user.php',
-            RMMSG_INFO
-        );
+        RMUris::redirect_with_message(__('This area requires user login!', 'rmcommon'), XOOPS_URL . '/user.php', RMMSG_INFO);
 
         return null;
     }
@@ -289,13 +285,13 @@ abstract class RMModuleController
     {
         $parameters = [];
 
-        $i = 0;
+        $i    = 0;
         $prev = '';
 
         foreach ($pArray as $value) {
             if (0 == $i % 2) {
                 $parameters[$value] = null;
-                $prev = $value;
+                $prev               = $value;
             } else {
                 $parameters[$prev] = $value;
             }

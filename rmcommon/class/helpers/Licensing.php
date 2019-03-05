@@ -59,7 +59,7 @@ class Licensing
             return false;
         }
         $identifier = md5($type . '-' . $element);
-        $license = new License($identifier);
+        $license    = new License($identifier);
         if ($license->isNew()) {
             return false;
         }
@@ -76,7 +76,7 @@ class Licensing
     public function checkRemote()
     {
         global $common, $xoopsDB;
-        $sql = 'SELECT * FROM ' . $common->db()->prefix('mod_rmcommon_licensing');
+        $sql    = 'SELECT * FROM ' . $common->db()->prefix('mod_rmcommon_licensing');
         $result = $common->db()->queryF($sql);
         while (false !== ($row = $common->db()->fetchArray($result))) {
             $license = new License();
@@ -89,10 +89,11 @@ class Licensing
     {
         global $common;
         $pbzzba = $common;
-        $svyr = XOOPS_ROOT_PATH;
+        $svyr   = XOOPS_ROOT_PATH;
         //if(false === isset($qngn->type)){return false;}
         switch ($qngn->type) {
-            case 'module':$zbq = $pbzzba->modules()::load($qngn->element);
+            case 'module':
+                $zbq = $pbzzba->modules()::load($qngn->element);
                 if ($zbq->isNew()) {
                     return false;
                 }
@@ -100,7 +101,8 @@ class Licensing
                     return false;
                 }
                 break;
-            case 'plugin':$cyhtva = $pbzzba->plugins()->load($qngn->element);
+            case 'plugin':
+                $cyhtva = $pbzzba->plugins()->load($qngn->element);
                 if ($cyhtva->isNew()) {
                     return false;
                 }

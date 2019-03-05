@@ -40,7 +40,7 @@ use Common\Core\Helpers\WidgetInterface;
 class Counter extends WidgetAbstract implements WidgetInterface
 {
     private $tplPath = '';
-    private $cells = [];
+    private $cells   = [];
 
     public function __construct($data = [])
     {
@@ -122,8 +122,8 @@ class Counter extends WidgetAbstract implements WidgetInterface
      *
      * @param $caption
      * @param $value
-     * @throws \RMException
      * @return bool
+     * @throws \RMException
      */
     public function addCell($caption, $value)
     {
@@ -172,7 +172,7 @@ class Counter extends WidgetAbstract implements WidgetInterface
             }
         }
 
-        $this->cells[] = (object) ['caption' => $caption, 'value' => $value];
+        $this->cells[] = (object)['caption' => $caption, 'value' => $value];
 
         return true;
     }

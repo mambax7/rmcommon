@@ -27,32 +27,34 @@ $rmEvents->run_event('rmcommon.form.loader');
 /**
  * @desc Controlador del editor TinyMCE
  */
-$tiny = TinyEditor::getInstance();
-$tiny->configuration = ['mode' => 'exact',
+$tiny                = TinyEditor::getInstance();
+$tiny->configuration = [
+    'mode'                       => 'exact',
     //'skin' => "exm_theme",
     //'plugins'=>"inlinepopups,spellchecker,media,fullscreen,exmsystem",
-    'menubar' => false,
-    'plugins' => [
+    'menubar'                    => false,
+    'plugins'                    => [
         'advlist autolink lists link image charmap print preview anchor',
         'searchreplace visualblocks code fullscreen',
         'media table paste code',
     ],
-    'toolbar' => RMEvents::get()->run_event('rmcommon.tinybuttons.toolbar1', 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'),
-    'dialog_type' => 'modal',
-    'relative_urls' => '',
-    'remove_script_host' => '',
-    'convert_urls' => '',
-    'apply_source_formatting' => 'false',
-    'remove_linebreaks' => '1',
+    'toolbar'                    => RMEvents::get()->run_event('rmcommon.tinybuttons.toolbar1', 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'),
+    'dialog_type'                => 'modal',
+    'relative_urls'              => '',
+    'remove_script_host'         => '',
+    'convert_urls'               => '',
+    'apply_source_formatting'    => 'false',
+    'remove_linebreaks'          => '1',
     'paste_convert_middot_lists' => '1',
-    'paste_remove_spans' => '1',
-    'paste_remove_styles' => '1',
-    'gecko_spellcheck' => '1',
-    'entities' => '38,amp,60,lt,62,gt',
-    'accessibility_focus' => '1',
-    'tab_focus' => "'=>prev,'=>next",
-    'save_callback' => 'switchEditors.saveCallback',
-    'content_css' => RMTemplate::get()->generate_url('editor.css', 'rmcommon', 'css'), ];
+    'paste_remove_spans'         => '1',
+    'paste_remove_styles'        => '1',
+    'gecko_spellcheck'           => '1',
+    'entities'                   => '38,amp,60,lt,62,gt',
+    'accessibility_focus'        => '1',
+    'tab_focus'                  => "'=>prev,'=>next",
+    'save_callback'              => 'switchEditors.saveCallback',
+    'content_css'                => RMTemplate::get()->generate_url('editor.css', 'rmcommon', 'css'),
+];
 
 /**
  * Esta clase controla la generación de formularios automáticamente.<br>
@@ -67,30 +69,30 @@ class RMForm extends \Common\Core\Helpers\Attributes
      */
     public $fieldClass = '';
 
-    private $_fields = [];
-    protected $_name = '';
+    private   $_fields = [];
+    protected $_name   = '';
     protected $_action = '';
-    protected $_extra = '';
+    protected $_extra  = '';
     protected $_method = '';
-    protected $_title = '';
+    protected $_title  = '';
 
     private $_othervalidates = '';
-    private $_alertColor = '#FF0000';
-    private $_okColor = '#000';
+    private $_alertColor     = '#FF0000';
+    private $_okColor        = '#000';
 
-    private $editores = ''; // LIsta de editores Tiny
-    private $_tinytheme = 'advanced';
-    private $_tinycss = '';
+    private $editores        = ''; // LIsta de editores Tiny
+    private $_tinytheme      = 'advanced';
+    private $_tinycss        = '';
     private $tiny_valid_tags = 'a[name|href|target|title|onclick],code[class,id],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|longdesc|style],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]';
 
     private $row_extras = [];
 
     /**
-     * @param string $title Titulo que se desplegar en la tabla del formulario
-     * @param string $name Nombre del formulario
-     * @param string $action Post o Get (Default post)
-     * @param bool $addtoken Crea el cdigo de seguridad de la sesin con el formulario (default true)
-     * @param mixed $method
+     * @param string $title    Titulo que se desplegar en la tabla del formulario
+     * @param string $name     Nombre del formulario
+     * @param string $action   Post o Get (Default post)
+     * @param bool   $addtoken Crea el cdigo de seguridad de la sesin con el formulario (default true)
+     * @param mixed  $method
      */
     public function __construct($title = '', $name = '', $action = '', $method = 'post', $addtoken = true)
     {
@@ -262,19 +264,19 @@ class RMForm extends \Common\Core\Helpers\Attributes
             return;
         }
         $this->_fields = [];
-        $this->_name = '';
+        $this->_name   = '';
         $this->_action = '';
-        $this->_extra = '';
+        $this->_extra  = '';
         $this->_method = '';
-        $this->_title = '';
+        $this->_title  = '';
     }
 
     /**
      * Agregamos nuevos elementos
      * Estos elementos son instanacias de algun elemento de formulario
      * @param RMFormElement $element
-     * @param bool $required true = Elemento requerido
-     * @param string $css_type Content Type: email,url, etc.
+     * @param bool          $required true = Elemento requerido
+     * @param string        $css_type Content Type: email,url, etc.
      * @return object
      */
     public function addElement($element, $required = false, $css_type = '')
@@ -407,19 +409,19 @@ class RMForm extends \Common\Core\Helpers\Attributes
      */
     public function renderForTemplate()
     {
-        $form = [];
+        $form       = [];
         $attributes = $this->renderAttributeString();
 
-        $req = '';
+        $req        = '';
         $callmethod = '';
         foreach ($this->_fields as $field) {
-            $element = $field['field'];
+            $element          = $field['field'];
             $form['fields'][] = [
-                'type' => get_class($element),
+                'type'    => get_class($element),
                 'content' => $element->render(),
                 'caption' => $element->getCaption(),
-                'desc' => $element->getDescription(),
-                'name' => $element->getName(),
+                'desc'    => $element->getDescription(),
+                'name'    => $element->getName(),
             ];
 
             if (is_a($element, 'RMFormEditor')) {
@@ -430,8 +432,12 @@ class RMForm extends \Common\Core\Helpers\Attributes
         }
 
         if ($this->_addtoken) {
-            $form['fields'][] = ['type' => 'RMFormHidden', 'content' => $GLOBALS['xoopsSecurity']->getTokenHTML(),
-                'caption' => '', 'desc' => '', ];
+            $form['fields'][] = [
+                'type'    => 'RMFormHidden',
+                'content' => $GLOBALS['xoopsSecurity']->getTokenHTML(),
+                'caption' => '',
+                'desc'    => '',
+            ];
         }
 
         $req .= '' == $req ? ('' != $this->_othervalidates ? $this->_othervalidates : '') : ('' != $this->_othervalidates ? ',' . $this->_othervalidates : '');
@@ -440,9 +446,9 @@ class RMForm extends \Common\Core\Helpers\Attributes
         if ('' != $req) {
             $rtn .= ' onsubmit="' . $callmethod . "rmValidateForm(this, '$req');return document.rmValidateReturnValue;\"";
         }
-        $rtn .= '>';
-        $form['title'] = $this->get('title');
-        $form['tag'] = $rtn;
+        $rtn              .= '>';
+        $form['title']    = $this->get('title');
+        $form['tag']      = $rtn;
         $form['lang_req'] = __('Fields marked with (*) are required.', 'rmcommon');
 
         return $form;
@@ -479,7 +485,7 @@ class RMForm extends \Common\Core\Helpers\Attributes
     public function display($js = true)
     {
         $attributes = $this->renderAttributeString();
-        $form = $this;
+        $form       = $this;
         include RMTemplate::getInstance()->path('rmc-forms.php', 'module', 'rmcommon');
         //echo $this->render($js);
     }
@@ -490,7 +496,7 @@ class RMForm extends \Common\Core\Helpers\Attributes
      */
     public function setTinyTags($tags)
     {
-        $tiny = TinyEditor::getInstance();
+        $tiny                                           = TinyEditor::getInstance();
         $tiny->configuration['extended_valid_elements'] = $tags;
     }
 

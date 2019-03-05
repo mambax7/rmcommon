@@ -77,7 +77,8 @@
                     </span>
                                     <a href="#" class="rename text-info"><span class="fa fa-edit"></span> <?php _e('Edit', 'rmcommon'); ?></a>
                                     <?php if ('' != $mod['help']): ?>
-                                        <a href="<?php echo preg_match("/(http|\.{2})/i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?>" class="help cu-help-button text-success" title="<?php echo sprintf(__('%s Help', 'rmcommon'), $mod['name']); ?>"><span class="fa fa-question-circle"></span> <?php _e('Help', 'rmcommon'); ?></a>
+                                        <a href="<?php echo preg_match("/(http|\.{2})/i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?>" class="help cu-help-button text-success" title="<?php echo sprintf(__('%s Help', 'rmcommon'), $mod['name']); ?>"><span
+                                                    class="fa fa-question-circle"></span> <?php _e('Help', 'rmcommon'); ?></a>
                                     <?php endif; ?>
                                     <small class="help-block"><?php echo $mod['description']; ?></small>
                                 </td>
@@ -209,7 +210,8 @@
                                         <?php echo $mod['name']; ?>
                                     </span>
                                     <?php if ('' != $mod['help']): ?>
-                                        <a href="<?php echo preg_match("/(http|\.{2})/i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?>" class="help cu-help-button text-success" title="<?php echo sprintf(__('%s Help', 'rmcommon'), $mod['name']); ?>"><span class="fa fa-question-circle"></span> <?php _e('Help', 'rmcommon'); ?></a>
+                                        <a href="<?php echo preg_match("/(http|\.{2})/i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?>" class="help cu-help-button text-success" title="<?php echo sprintf(__('%s Help', 'rmcommon'), $mod['name']); ?>"><span
+                                                    class="fa fa-question-circle"></span> <?php _e('Help', 'rmcommon'); ?></a>
                                     <?php endif; ?>
                                     <small class="help-block"><?php echo $mod['description']; ?></small>
                                 </td>

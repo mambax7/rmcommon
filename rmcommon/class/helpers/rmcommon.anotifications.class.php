@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Common Utilities Notifications Interface
  * A helper class that allows to integrate notifications with modules and plugins
@@ -53,7 +54,7 @@ abstract class Rmcommon_ANotifications
      * Generate the subject for a notification event
      *
      * @param string $event Event identifier
-     * @param mixed $params
+     * @param mixed  $params
      *
      * @return mixed
      */
@@ -100,16 +101,19 @@ abstract class Rmcommon_ANotifications
 
     /**
      * Set permissions for specific event
-     * @param string $event Event index name (generally event name)
-     * @param array $permissions Array with users and groups indexes
-     *
-    public function permissions( $event, $permissions ){
+     * @param string $event       Event index name (generally event name)
+     * @param array  $permissions Array with users and groups indexes
+     */
+    public function permissions($event, $permissions)
+    {
 
-        if ( !array_key_exists( $event, $this->events ) )
+        if (!array_key_exists($event, $this->events)) {
             return false;
+        }
 
-        if ( !is_array( $permissions ) )
+        if (!is_array($permissions)) {
             return false;
+        }
 
         $this->events[$event]['permissions'] = $permissions;
         return $this;
@@ -119,11 +123,13 @@ abstract class Rmcommon_ANotifications
     /**
      * Set parameters for specific event
      * @param string $event Event index name (generally event name)
-     * @param string $id The parameter identifier
-     *
-    public function parameters( $event, $params ){
-        if ( !array_key_exists( $event, $this->events ) )
+     * @param string $id    The parameter identifier
+     */
+    public function parameters($event, $params)
+    {
+        if (!array_key_exists($event, $this->events)) {
             return false;
+        }
 
         $this->events[$event]['params'] = $params;
         return $this;
@@ -133,15 +139,17 @@ abstract class Rmcommon_ANotifications
      * Return the event array
      * @param string $event Event index name
      * @return bool
-     * @return bool
      * @return array
      *
-    public function event( $event ){
+     * public function event($event)
+     * {
+     *
+     * if (!array_key_exists($event, $this->events)) {
+     * return false;
+     * }
+     *
+     * return $this->events[$event];
+     *
+     * }*/
 
-        if ( !array_key_exists( $event, $this->events ) )
-            return false;
-
-        return $this->events[$event];
-
-    }*/
 }

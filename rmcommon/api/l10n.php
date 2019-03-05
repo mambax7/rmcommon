@@ -1,10 +1,10 @@
 <?php
 /**
-* EXM System API for i10n
-*
-* This API provides support for internationalization for
-* components of EXM System.
-*/
+ * EXM System API for i10n
+ *
+ * This API provides support for internationalization for
+ * components of EXM System.
+ */
 require RMCPATH . '/class/gettext/gettext.php';
 require RMCPATH . '/class/gettext/streams.php';
 
@@ -36,7 +36,7 @@ function get_locale()
  *
  * @param string $domain Unique identifier for this file
  * @param string Local path to file
- * @param mixed $file
+ * @param mixed  $file
  */
 function load_locale_file($domain, $file)
 {
@@ -68,12 +68,12 @@ function load_locale_file($domain, $file)
 /**
  * Read the MO file for a specific domain
  *
- * @uses This function must be called from every application to load the respective language file (mo file)
- *
  * @param string Unique identifier for language file
  * @param string prefix for file name
  * @param mixed $domain
  * @param mixed $prefix
+ * @uses This function must be called from every application to load the respective language file (mo file)
+ *
  */
 function load_mod_locale($domain, $prefix = '')
 {

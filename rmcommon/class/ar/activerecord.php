@@ -17,8 +17,8 @@ include RMCPATH . '/class/ar/db.class.php';
 abstract class RMActiveRecord
 {
     private $_properties = [
-        'db' => '',
-        'system_tables' => [
+        'db'              => '',
+        'system_tables'   => [
             'avatar',
             'config',
             'groups',
@@ -29,17 +29,17 @@ abstract class RMActiveRecord
             'users',
             'xoopscomments',
         ],
-        'results_x_page' => 20,
-        'order_results' => 'ASC',
-        'template' => '',
-        'data' => [],
-        'errors' => [],
-        'columns' => [],
-        'relations' => [],
+        'results_x_page'  => 20,
+        'order_results'   => 'ASC',
+        'template'        => '',
+        'data'            => [],
+        'errors'          => [],
+        'columns'         => [],
+        'relations'       => [],
         'excluded_fields' => [],
-        'groupby' => '',
-        'results' => '',
-        'attributes' => [],
+        'groupby'         => '',
+        'results'         => '',
+        'attributes'      => [],
     ];
 
     /**
@@ -71,13 +71,13 @@ abstract class RMActiveRecord
      * </pre>
      *
      * @param string $objects Object name related to database tables
-     * @param string $owner Object (e.g. rmcommon, mywords, rmcommon_plugin)
+     * @param string $owner   Object (e.g. rmcommon, mywords, rmcommon_plugin)
      */
     public function __construct($objects = null, $owner = null)
     {
         $objects = trim($objects);
 
-        $this->db = new RMdb();
+        $this->db  = new RMdb();
         $this->xdb = XoopsDatabaseFactory::getDatabaseConnection();
 
         if ('' == $objects || null === $objects) {
@@ -112,8 +112,8 @@ abstract class RMActiveRecord
      * </pre>
      *
      * @param string $name the property name or method name
-     * @throws RMException if the property or event is not defined
      * @return mixed the property value or method return
+     * @throws RMException if the property or event is not defined
      * @see __set
      */
     public function __get($name)
@@ -131,10 +131,10 @@ abstract class RMActiveRecord
     /**
      * Sets value of a component property.
      *
-     * @param string $name the property name or the method
-     * @param mixed $value the property value
-     * @throws RMException if the property/method is not defined or the property is read only.
+     * @param string $name  the property name or the method
+     * @param mixed  $value the property value
      * @return mixed
+     * @throws RMException if the property/method is not defined or the property is read only.
      * @see __get
      */
     public function __set($name, $value)
@@ -161,8 +161,8 @@ abstract class RMActiveRecord
      * );
      * </pre>
      * @param $assignments
-     * @throws RMException
      * @return bool
+     * @throws RMException
      */
     public function setTitles($assignments)
     {
@@ -275,7 +275,7 @@ abstract class RMActiveRecord
     public function setGroupby($fields)
     {
         $this->_properties['groupby'] = $fields;
-        $this->db->groupby = $fields;
+        $this->db->groupby            = $fields;
     }
 
     /**
@@ -294,7 +294,7 @@ abstract class RMActiveRecord
 
         while (false !== ($row = $this->db->database->fetchArray($results))) {
             if ($object) {
-                $data[] = (object) $row;
+                $data[] = (object)$row;
             } else {
                 $data[] = $row;
             }
@@ -338,8 +338,8 @@ abstract class RMActiveRecord
      *  )
      * </pre>
      * <strong>Tip:</strong> This function could be used with select fields.
-     * @param $array
-     * @param string $key Name of the array key that will be used as key in the new array.
+     * @param        $array
+     * @param string $key   Name of the array key that will be used as key in the new array.
      * @param string $value Name of the array key that will be used for values in the new array.
      * @return array
      */
@@ -423,7 +423,7 @@ abstract class RMActiveRecord
         }
 
         // Tables where registers reside in
-        $table = isset($options['table']) ? $options['table'] : $this->db->table;
+        $table         = isset($options['table']) ? $options['table'] : $this->db->table;
         $from_tables[] = '`' . $table . '`';
 
         // Is there exists foreign keys
@@ -453,8 +453,8 @@ abstract class RMActiveRecord
         }
 
         $this->db->filters = $filters;
-        $this->db->select = $selected_fields;
-        $this->db->from = $from_tables;
+        $this->db->select  = $selected_fields;
+        $this->db->from    = $from_tables;
 
         $select_sql = $this->db->select;
 
@@ -497,8 +497,8 @@ abstract class RMActiveRecord
 
     /**
      * @param string $error_message Error message
-     * @param int $error_number Optional error number
-     * @param bool $trigger Trigger a PHP error
+     * @param int    $error_number  Optional error number
+     * @param bool   $trigger       Trigger a PHP error
      */
     public function add_error($error_message, $error_number = 0, $trigger = true)
     {
@@ -537,7 +537,7 @@ abstract class RMActiveRecord
     public function save()
     {
         $attributes = $this->attributes;
-        $fields = [];
+        $fields     = [];
 
         /**
          * Name to get post/get/put vars
@@ -594,7 +594,7 @@ abstract class RMActiveRecord
      */
     private function verify_http_data($column)
     {
-        $values = $this->data;
+        $values  = $this->data;
         $columns = $this->columns;
 
         if (!isset($columns[$column])) {

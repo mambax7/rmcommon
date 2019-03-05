@@ -33,109 +33,114 @@ if (!function_exists('__')) {
 }
 
 $adminmenu[] = [
-    'title' => __('Dashboard', 'rmcommon'),
-    'link' => 'index.php',
-    'icon' => 'svg-rmcommon-dashboard text-red',
+    'title'    => __('Dashboard', 'rmcommon'),
+    'link'     => 'index.php',
+    'icon'     => 'svg-rmcommon-dashboard text-red',
     'location' => 'dashboard',
 ];
 
 $adminmenu[] = [
-    'title' => __('Modules', 'rmcommon'),
-    'link' => 'modules.php',
-    'icon' => 'svg-rmcommon-module text-green',
+    'title'    => __('Modules', 'rmcommon'),
+    'link'     => 'modules.php',
+    'icon'     => 'svg-rmcommon-module text-green',
     'location' => 'modules',
 ];
 
 $adminmenu[] = [
-    'title' => __('Blocks', 'rmcommon'),
-    'link' => 'blocks.php',
-    'icon' => 'svg-rmcommon-blocks text-teal',
+    'title'    => __('Blocks', 'rmcommon'),
+    'link'     => 'blocks.php',
+    'icon'     => 'svg-rmcommon-blocks text-teal',
     'location' => 'blocks',
 ];
 
 $adminmenu[] = [
-    'title' => __('Users', 'rmcommon'),
-    'link' => 'users.php',
-    'icon' => 'svg-rmcommon-users text-blue',
+    'title'    => __('Users', 'rmcommon'),
+    'link'     => 'users.php',
+    'icon'     => 'svg-rmcommon-users text-blue',
     'location' => 'users',
 ];
 
 $adminmenu[] = [
-    'title' => __('Groups', 'rmcommon'),
-    'link' => 'groups.php',
-    'icon' => 'svg-rmcommon-group text-blue-grey',
+    'title'    => __('Groups', 'rmcommon'),
+    'link'     => 'groups.php',
+    'icon'     => 'svg-rmcommon-group text-blue-grey',
     'location' => 'groups',
 ];
 
 $adminmenu[] = [
-    'title' => __('Images', 'rmcommon'),
-    'link' => 'images.php',
-    'icon' => 'svg-rmcommon-images text-cyan',
+    'title'    => __('Images', 'rmcommon'),
+    'link'     => 'images.php',
+    'icon'     => 'svg-rmcommon-images text-cyan',
     'location' => 'imgmanager',
-    'options' => [0 => [
-                    'title' => __('Categories', 'rmcommon'),
-                    'link' => 'images.php?action=showcats',
-                    'selected' => 'rmc_imgcats',
-                    'icon' => 'svg-rmcommon-folder text-orange',
-            ], 1 => [
-                    'title' => __('New category', 'rmcommon'),
-                    'link' => 'images.php?action=newcat',
-                    'selected' => 'rmc_imgnewcat',
-                    'icon' => 'svg-rmcommon-folder-plus text-orange',
-            ], 2 => [
-                    'divider' => 1,
-            ], 3 => [
-                    'title' => __('Images', 'rmcommon'),
-                    'link' => 'images.php',
-                    'selected' => 'rmc_images',
-                    'icon' => 'svg-rmcommon-camera text-success',
-            ], 4 => [
-                    'title' => __('Add images', 'rmcommon'),
-                    'link' => 'images.php?action=new',
-                    'selected' => 'rmc_newimages',
-                    'icon' => 'svg-rmcommon-camera-plus text-success',
-            ],
+    'options'  => [
+        0 => [
+            'title'    => __('Categories', 'rmcommon'),
+            'link'     => 'images.php?action=showcats',
+            'selected' => 'rmc_imgcats',
+            'icon'     => 'svg-rmcommon-folder text-orange',
+        ],
+        1 => [
+            'title'    => __('New category', 'rmcommon'),
+            'link'     => 'images.php?action=newcat',
+            'selected' => 'rmc_imgnewcat',
+            'icon'     => 'svg-rmcommon-folder-plus text-orange',
+        ],
+        2 => [
+            'divider' => 1,
+        ],
+        3 => [
+            'title'    => __('Images', 'rmcommon'),
+            'link'     => 'images.php',
+            'selected' => 'rmc_images',
+            'icon'     => 'svg-rmcommon-camera text-success',
+        ],
+        4 => [
+            'title'    => __('Add images', 'rmcommon'),
+            'link'     => 'images.php?action=new',
+            'selected' => 'rmc_newimages',
+            'icon'     => 'svg-rmcommon-camera-plus text-success',
+        ],
     ],
 ];
 
 $adminmenu[] = [
-    'title' => __('Comments', 'rmcommon'),
-    'link' => 'comments.php',
-    'icon' => 'svg-rmcommon-comments text-orange',
+    'title'    => __('Comments', 'rmcommon'),
+    'link'     => 'comments.php',
+    'icon'     => 'svg-rmcommon-comments text-orange',
     'location' => 'comments',
 ];
 
 $adminmenu[] = [
-    'title' => __('Plugins', 'rmcommon'),
-    'link' => 'plugins.php',
-    'icon' => 'svg-rmcommon-plug text-danger',
+    'title'    => __('Plugins', 'rmcommon'),
+    'link'     => 'plugins.php',
+    'icon'     => 'svg-rmcommon-plug text-danger',
     'location' => 'plugins',
 ];
 
 $adminmenu[] = [
-    'title' => __('Services', 'rmcommon'),
-    'link' => 'services.php',
-    'icon' => 'svg-rmcommon-services text-deep-purple',
+    'title'    => __('Services', 'rmcommon'),
+    'link'     => 'services.php',
+    'icon'     => 'svg-rmcommon-services text-deep-purple',
     'location' => 'services',
 ];
 
 $adminmenu[] = [
-    'title' => __('Updates', 'rmcommon'),
-    'link' => 'updates.php',
-    'icon' => 'svg-rmcommon-update text-success',
+    'title'    => __('Updates', 'rmcommon'),
+    'link'     => 'updates.php',
+    'icon'     => 'svg-rmcommon-update text-success',
     'location' => 'updates',
 ];
 
 $adminmenu[] = [
-    'title' => __('Icons', 'rmcommon'),
-    'link' => 'icons.php',
-    'icon' => 'svg-rmcommon-vector text-blue',
+    'title'    => __('Icons', 'rmcommon'),
+    'link'     => 'icons.php',
+    'icon'     => 'svg-rmcommon-vector text-blue',
     'location' => 'icons',
 ];
 
 $adminmenu[] = [
-    'title' => __('About', 'rmcommon'),
-    'link' => 'about.php',
-    'icon' => 'svg-rmcommon-info text-info',
+    'title'    => __('About', 'rmcommon'),
+    'link'     => 'about.php',
+    'icon'     => 'svg-rmcommon-info text-info',
     'location' => 'about',
 ];

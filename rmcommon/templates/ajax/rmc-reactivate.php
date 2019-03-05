@@ -14,9 +14,6 @@
     <input type="hidden" id="reactivate-api" value="<?php echo $api; ?>">
     <input type="hidden" id="reactivate-license" value="<?php echo $license; ?>">
     <div class="help-block">
-        <?php echo sprintf(
-    __('If you have errors with the activation of your %s copy, and you have a valid activation key, please input here and the reactivation request will be sent inmediatly.', 'rmcommon'),
-    '<strong>' . $name . '</strong>'
-); ?>
+        <?php echo sprintf(__('If you have errors with the activation of your %s copy, and you have a valid activation key, please input here and the reactivation request will be sent inmediatly.', 'rmcommon'), '<strong>' . $name . '</strong>'); ?>
     </div>
 </div>

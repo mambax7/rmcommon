@@ -1,10 +1,10 @@
 <?php
 $form = new RMActiveForm([
-    'id' => 'form-add-group',
-    'data-type' => 'ajax',
-    'validation' => 'local',
-    'action' => RMCURL . '/groups.php',
-]);
+                             'id'         => 'form-add-group',
+                             'data-type'  => 'ajax',
+                             'validation' => 'local',
+                             'action'     => RMCURL . '/groups.php',
+                         ]);
 ?>
 <div class="cu-content-with-footer">
     <?php $form->open(); ?>
@@ -53,15 +53,15 @@ $form = new RMActiveForm([
 
                             <?php foreach ($modules as $module): ?>
                                 <?php if (!$module->hasadmin) {
-    continue;
-} ?>
+                                    continue;
+                                } ?>
                                 <div class="checkbox">
                                     <label>
                                         <input
-                                            data-oncheck="admin-module"
-                                            type="checkbox"
-                                            name="admin_modules[<?php echo $module->mid; ?>]"
-                                            value="<?php echo $module->mid; ?>"
+                                                data-oncheck="admin-module"
+                                                type="checkbox"
+                                                name="admin_modules[<?php echo $module->mid; ?>]"
+                                                value="<?php echo $module->mid; ?>"
                                             <?php echo $module->admin ? ' checked' : ''; ?>>
                                         <?php echo $module->name; ?>
                                     </label>
@@ -82,15 +82,15 @@ $form = new RMActiveForm([
                             </div>
                             <?php foreach ($modules as $module): ?>
                                 <?php if (!$module->hasmain) {
-    continue;
-} ?>
+                                    continue;
+                                } ?>
                                 <div class="checkbox">
                                     <label>
                                         <input
-                                            data-oncheck="read-module"
-                                            type="checkbox"
-                                            name="read_modules[<?php echo $module->mid; ?>]"
-                                            value="<?php echo $module->mid; ?>"
+                                                data-oncheck="read-module"
+                                                type="checkbox"
+                                                name="read_modules[<?php echo $module->mid; ?>]"
+                                                value="<?php echo $module->mid; ?>"
                                             <?php echo $module->read ? ' checked' : ''; ?>>
                                         <?php echo $module->name; ?>
                                     </label>
@@ -107,8 +107,8 @@ $form = new RMActiveForm([
 
                     <?php foreach ($modules as $item): ?>
                         <?php if (empty($item->permissions)) {
-    continue;
-} ?>
+                            continue;
+                        } ?>
                         <h4><?php echo $item->name; ?></h4>
 
                         <div class="users-columns-permissions">
@@ -121,7 +121,8 @@ $form = new RMActiveForm([
                             <?php foreach ($item->permissions as $id => $perm): ?>
                                 <div class="checkbox">
                                     <label>
-                                        <input data-oncheck="<?php echo $item->dirname; ?>-perms" type="checkbox" name="specific_perms[<?php echo $item->dirname; ?>][]" value="<?php echo $id; ?>"<?php echo isset($item->privileges->$id) ? ' checked' : ('allow' == $perm['default'] ? ' checked' : ''); ?>>
+                                        <input data-oncheck="<?php echo $item->dirname; ?>-perms" type="checkbox" name="specific_perms[<?php echo $item->dirname; ?>][]" value="<?php echo $id; ?>"<?php echo isset($item->privileges->$id) ? ' checked' : ('allow'
+                                                                                                                                                                                                                                                            == $perm['default'] ? ' checked' : ''); ?>>
                                         <?php echo $perm['caption']; ?>
                                     </label>
                                 </div>

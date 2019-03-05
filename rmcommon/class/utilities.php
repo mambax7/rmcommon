@@ -53,9 +53,11 @@ class RMUtilities
         }
 
         if (6 == mb_strlen($color)) {
-            list($r, $g, $b) = [$color[0] . $color[1],
+            list($r, $g, $b) = [
+                $color[0] . $color[1],
                 $color[2] . $color[3],
-                $color[4] . $color[5], ];
+                $color[4] . $color[5],
+            ];
         } elseif (3 == mb_strlen($color)) {
             list($r, $g, $b) = [$color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]];
         } else {
@@ -75,11 +77,11 @@ class RMUtilities
      * prevent these issues, and if you need to show the result in a form field
      * or directly in the page, then you can use special chars to show correctly.
      *
-     * @param $options_or_size
-     * @param bool $useDigits
-     * @param bool $useSpecial
-     * @param bool $useUpper
-     * @param bool $useAlpha
+     * @param       $options_or_size
+     * @param bool  $useDigits
+     * @param bool  $useSpecial
+     * @param bool  $useUpper
+     * @param bool  $useAlpha
      * @param mixed $onlyUpper
      * @return string
      */
@@ -87,7 +89,7 @@ class RMUtilities
     {
         $upperLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $lowerLetters = 'abcdefghijklmnopqrstuvwxyz';
-        $digits = '0123456789';
+        $digits       = '0123456789';
         $specialChars = '?@#$%&()=/\\~!.:,;-_+*[]{}';
 
         if (is_array($options_or_size)) {
@@ -107,13 +109,13 @@ class RMUtilities
                 $specialChars = $options_or_size['specialChars'];
             }
 
-            $size = array_key_exists('size', $options_or_size) ? $options_or_size['size'] : 40;
-            $useDigits = array_key_exists('digit', $options_or_size) ? $options_or_size['digit'] : true;
+            $size       = array_key_exists('size', $options_or_size) ? $options_or_size['size'] : 40;
+            $useDigits  = array_key_exists('digit', $options_or_size) ? $options_or_size['digit'] : true;
             $useSpecial = array_key_exists('special', $options_or_size) ? $options_or_size['special'] : true;
-            $useAlpha = array_key_exists('alpha', $options_or_size) ? $options_or_size['alpha'] : true;
-            $onlyUpper = array_key_exists('upper', $options_or_size) ? $options_or_size['upper'] : false;
+            $useAlpha   = array_key_exists('alpha', $options_or_size) ? $options_or_size['alpha'] : true;
+            $onlyUpper  = array_key_exists('upper', $options_or_size) ? $options_or_size['upper'] : false;
         } else {
-            $size = (int) $options_or_size;
+            $size = (int)$options_or_size;
         }
 
         $que = [];
@@ -134,7 +136,7 @@ class RMUtilities
             switch ($op) {
                 case 'alpha':
                     $what = $onlyUpper ? $upperLetters : (0 == random_int(0, 1) ? $upperLetters : $lowerLetters);
-                    $rtn .= mb_substr($what, random_int(0, mb_strlen($what) - 1), 1);
+                    $rtn  .= mb_substr($what, random_int(0, mb_strlen($what) - 1), 1);
                     break;
                 case 'digit':
                     $rtn .= mb_substr($digits, random_int(0, mb_strlen($digits) - 1), 1);
@@ -172,9 +174,9 @@ class RMUtilities
     /**
      * Elimina directorios y todos los archivos contenidos
      * @param string $path Ruta del directorio
-     * @param bool $root Specify if the folder root must be deleted too
+     * @param bool   $root Specify if the folder root must be deleted too
      * @param array Path of excluded files or folders
-     * @param mixed $exclude
+     * @param mixed  $exclude
      * @return bool
      */
     public static function delete_directory($path, $root = true, $exclude = [])
@@ -238,10 +240,10 @@ class RMUtilities
     /**
      * Muestra los controles para lanzar el administrador de imágenes
      * desde cualqueir punto
-     * @param string $name Element name for inputs
-     * @param string $id ID for this element
+     * @param string $name    Element name for inputs
+     * @param string $id      ID for this element
      * @param string $default Default value for field
-     * @param array $data Array of data that will be inserted as data-{key} in HTML code
+     * @param array  $data    Array of data that will be inserted as data-{key} in HTML code
      * @return string
      */
     public function image_manager($name, $id = '', $default = '', $data = [])
@@ -289,11 +291,11 @@ class RMUtilities
      * Get the version for a module
      * Use RMModule::get_module_version() instead.
      *
-     * @deprecated
-     * @param bool $includename
+     * @param bool   $includename
      * @param string $module
-     * @param int $type
+     * @param int    $type
      * @return array|string
+     * @deprecated
      */
     public function getVersion($includename = true, $module = '', $type = 0)
     {
@@ -305,10 +307,10 @@ class RMUtilities
     /**
      * Format a module version.
      * Use RMModules::format_module_version() instead
-     * @deprecated
-     * @param $version
+     * @param      $version
      * @param bool $name
      * @return string
+     * @deprecated
      */
     public function format_version($version, $name = false)
     {
@@ -318,14 +320,14 @@ class RMUtilities
     }
 
     /**
+     * @param string $directory Nombre del M?dulo
+     * @param string $option    Nombre de la opci?n de configuraci?n
+     * @return string o array
      * @deprecated
      * Retrieves the configuration for a given module.
      *
      * This function is deprecated, use RMSettings::settings->module_settings() instead
      *
-     * @param string $directory Nombre del M?dulo
-     * @param string $option Nombre de la opci?n de configuraci?n
-     * @return string o array
      */
     public function module_config($directory, $option = '')
     {
@@ -341,15 +343,15 @@ class RMUtilities
 
     /**
      * Creates a new system message that will be shown on next page load
-     * @param $message
-     * @param int $level
+     * @param        $message
+     * @param int    $level
      * @param string $icon
      */
     public function showMessage($message, $level = 0, $icon = '')
     {
-        $i = isset($_SESSION['cu_redirect_messages']) ? count($_SESSION['cu_redirect_messages']) + 1 : 0;
-        $_SESSION['cu_redirect_messages'][$i]['text'] = htmlentities($message);
+        $i                                             = isset($_SESSION['cu_redirect_messages']) ? count($_SESSION['cu_redirect_messages']) + 1 : 0;
+        $_SESSION['cu_redirect_messages'][$i]['text']  = htmlentities($message);
         $_SESSION['cu_redirect_messages'][$i]['level'] = $level;
-        $_SESSION['cu_redirect_messages'][$i]['icon'] = $icon;
+        $_SESSION['cu_redirect_messages'][$i]['icon']  = $icon;
     }
 }

@@ -72,9 +72,9 @@
 
         <div class="row">
             <div class="col-lg-12">
-            <small class="help-block">
-                <?php _e('XOOPS directory must match with this XOOPS installation, but only the relative patch to server root.', 'rmcommon'); ?>
-            </small>
+                <small class="help-block">
+                    <?php _e('XOOPS directory must match with this XOOPS installation, but only the relative patch to server root.', 'rmcommon'); ?>
+                </small>
             </div>
         </div>
     </div>
@@ -83,7 +83,8 @@
 
 <div class="alert alert-info">
     <button class="close" data-dismiss="alert">&times;</button>
-    <p><strong><?php _e('Important:', 'rmcommon'); ?></strong> <?php _e('Before to install updates be sure that target folders have writting permissions for web server. If you wish, you can configure the internal FTP Client in order to update without assign writting permissions.', 'rmcommon'); ?></p>
+    <p><strong><?php _e('Important:', 'rmcommon'); ?></strong> <?php _e('Before to install updates be sure that target folders have writting permissions for web server. If you wish, you can configure the internal FTP Client in order to update without assign writting permissions.', 'rmcommon'); ?>
+    </p>
 </div>
 
 <div class="panel panel-purple">
@@ -111,8 +112,8 @@
         <p></p>
     </div>
     <div class="controls">
-    <button type="button" class="btn btn-default cancel-warning"><?php _e('Cancel', 'rmcommon'); ?></button>
-    <button type="button" class="btn btn-warning continue-update"><?php _e('Continue &raquo;', 'rmcommon'); ?></button>
+        <button type="button" class="btn btn-default cancel-warning"><?php _e('Cancel', 'rmcommon'); ?></button>
+        <button type="button" class="btn btn-warning continue-update"><?php _e('Continue &raquo;', 'rmcommon'); ?></button>
     </div>
 </div>
 
@@ -152,4 +153,4 @@
         <?php _e('Executing Files...', 'rmcommon'); ?>
     </div>
     <iframe border="0"></iframe>
-</div> 
+</div>

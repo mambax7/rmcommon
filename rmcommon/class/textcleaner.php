@@ -63,7 +63,7 @@ class TextCleaner
         }
 
         // Only a few icons due to these can be extended by plugins or modules
-        $url = RMCURL . '/images/emots';
+        $url           = RMCURL . '/images/emots';
         $this->emots[] = ['code' => [':-)'], 'icon' => $url . '/smile.png'];
         $this->emots[] = ['code' => [':-S', 'O.o'], 'icon' => $url . '/confused.png'];
         $this->emots[] = ['code' => [":'("], 'icon' => $url . '/cry.png'];
@@ -88,7 +88,7 @@ class TextCleaner
 
     /**
      * Replace emots codes for ther image
-     * @param    string $message
+     * @param string $message
      * @return    string
      */
     public function smiley($message)
@@ -110,8 +110,8 @@ class TextCleaner
     /**
      * Make links in the text clickable
      *
-     * @param   string $text
-     * @param mixed $string
+     * @param string $text
+     * @param mixed  $string
      * @return  string
      **/
     public function make_clickable($string)
@@ -165,7 +165,7 @@ class TextCleaner
 
     public static function ftp_clickable($matches)
     {
-        $ret = '';
+        $ret  = '';
         $dest = $matches[2];
         $dest = 'http://' . $dest;
         $dest = self::clean_url($dest);
@@ -174,7 +174,7 @@ class TextCleaner
         }
         // removed trailing [,;:] from URL
         if (true === in_array(mb_substr($dest, -1), ['.', ',', ';', ':'], true)) {
-            $ret = mb_substr($dest, -1);
+            $ret  = mb_substr($dest, -1);
             $dest = mb_substr($dest, 0, mb_strlen($dest) - 1);
         }
 
@@ -193,10 +193,10 @@ class TextCleaner
      *
      * Taked from Wordpress
      *
-     * @param string $url The URL to be cleaned.
-     * @param array $protocols Optional. An array of acceptable protocols.
-     *        Defaults to 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet' if not set.
-     * @param string $context Optional. How the URL will be used. Default is 'display'.
+     * @param string $url       The URL to be cleaned.
+     * @param array  $protocols Optional. An array of acceptable protocols.
+     *                          Defaults to 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet' if not set.
+     * @param string $context   Optional. How the URL will be used. Default is 'display'.
      * @return string The cleaned $url after the 'cleaned_url' filter is applied.
      */
     public function clean_url($url, $protocols = null, $context = 'display')
@@ -208,17 +208,18 @@ class TextCleaner
         if ('' == $url) {
             return $url;
         }
-        $url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
+        $url   = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
         $strip = ['%0d', '%0a', '%0D', '%0A'];
-        $url = self::replace($strip, $url);
-        $url = str_replace(';//', '://', $url);
+        $url   = self::replace($strip, $url);
+        $url   = str_replace(';//', '://', $url);
         /* If the URL doesn't appear to contain a scheme, we
          * presume it needs http:// appended (unless a relative
          * link starting with / or a php file).
          */
-        if (false === mb_strpos($url, ':') &&
-            '/' != mb_substr($url, 0, 1) && '#' != mb_substr($url, 0, 1) && !preg_match('/^[a-z0-9-]+?\.php/i', $url)
-        ) {
+        if (false === mb_strpos($url, ':')
+            && '/' != mb_substr($url, 0, 1)
+            && '#' != mb_substr($url, 0, 1)
+            && !preg_match('/^[a-z0-9-]+?\.php/i', $url)) {
             $url = 'http://' . $url;
         }
 
@@ -243,12 +244,12 @@ class TextCleaner
 
     private function bad_protocol($string, $allowed_protocols)
     {
-        $string = self::no_null($string);
+        $string  = self::no_null($string);
         $string2 = $string . 'a';
 
         while ($string != $string2) {
             $string2 = $string;
-            $string = self::bad_protocol_once($string, $allowed_protocols);
+            $string  = self::bad_protocol_once($string, $allowed_protocols);
         } # while
 
         return $string;
@@ -334,7 +335,7 @@ class TextCleaner
             $found = false;
             foreach ((array)$search as $val) {
                 while (false !== mb_strpos($subject, $val)) {
-                    $found = true;
+                    $found   = true;
                     $subject = str_replace($val, '', $subject);
                 }
             }
@@ -354,7 +355,7 @@ class TextCleaner
     public static function truncate($text, $len, $continue = '[...]')
     {
         $text = preg_replace("[\n|\r|\n\r]", ' ', $text);
-        $ret = mb_substr(strip_tags($text), 0, $len);
+        $ret  = mb_substr(strip_tags($text), 0, $len);
 
         if (mb_strlen($text) > $len) {
             $ret .= ' ' . $continue;
@@ -366,46 +367,46 @@ class TextCleaner
     /**
      * Replace EXMCodes with their equivalent HTML formatting
      *
-     * @param   string $text
-     * @param   bool $allowimage Allow images in the text?
+     * @param string $text
+     * @param bool   $allowimage    Allow images in the text?
      *                              On FALSE, uses links to images.
      * @return  string
      **/
     public function codeDecode($text, $allowimage = 1)
     {
-        $patterns = [];
+        $patterns     = [];
         $replacements = [];
         //$patterns[] = "/\[code](.*)\[\/code\]/esU";
         //$replacements[] = "'<div class=\"exmCode\"><code><pre>'.wordwrap(MyTextSanitizer::htmlSpecialChars('\\1'), 100).'</pre></code></div>'";
         // RMV: added new markup for intrasite url (allows easier site moves)
         // TODO: automatically convert other URLs to this format if XOOPS_ROOT_PATH matches??
-        $patterns['patterns'][] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
+        $patterns['patterns'][]     = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
         $patterns['replacements'][] = '<a href="' . XOOPS_ROOT_PATH . '/\\2">\\3</a>';
-        $patterns['patterns'][] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
+        $patterns['patterns'][]     = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
         $patterns['replacements'][] = '<a href="\\2" target="_blank">\\3</a>';
-        $patterns['patterns'][] = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
+        $patterns['patterns'][]     = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
         $patterns['replacements'][] = '<a href="\\2" target="_blank">\\3</a>';
-        $patterns['patterns'][] = "/\[url=(['\"]?)([^\"'<>]*)\\1](.*)\[\/url\]/sU";
+        $patterns['patterns'][]     = "/\[url=(['\"]?)([^\"'<>]*)\\1](.*)\[\/url\]/sU";
         $patterns['replacements'][] = '<a href="http://\\2" target="_blank">\\3</a>';
-        $patterns['patterns'][] = "/\[color=(['\"]?)([a-zA-Z0-9]*)\\1](.*)\[\/color\]/sU";
+        $patterns['patterns'][]     = "/\[color=(['\"]?)([a-zA-Z0-9]*)\\1](.*)\[\/color\]/sU";
         $patterns['replacements'][] = '<span style="color: #\\2;">\\3</span>';
-        $patterns['patterns'][] = "/\[size=(['\"]?)([a-z0-9-]*)\\1](.*)\[\/size\]/sU";
+        $patterns['patterns'][]     = "/\[size=(['\"]?)([a-z0-9-]*)\\1](.*)\[\/size\]/sU";
         $patterns['replacements'][] = '<span style="font-size: \\2;">\\3</span>';
-        $patterns['patterns'][] = "/\[font=(['\"]?)([^;<>\*\(\)\"']*)\\1](.*)\[\/font\]/sU";
+        $patterns['patterns'][]     = "/\[font=(['\"]?)([^;<>\*\(\)\"']*)\\1](.*)\[\/font\]/sU";
         $patterns['replacements'][] = '<span style="font-family: \\2;">\\3</span>';
-        $patterns['patterns'][] = "/\[email]([^;<>\*\(\)\"']*)\[\/email\]/sU";
+        $patterns['patterns'][]     = "/\[email]([^;<>\*\(\)\"']*)\[\/email\]/sU";
         $patterns['replacements'][] = '<a href="mailto:\\1">\\1</a>';
 
-        $patterns['patterns'][] = "/\[b](.*)\[\/b\]/sU";
+        $patterns['patterns'][]     = "/\[b](.*)\[\/b\]/sU";
         $patterns['replacements'][] = '<b>\\1</b>';
-        $patterns['patterns'][] = "/\[i](.*)\[\/i\]/sU";
+        $patterns['patterns'][]     = "/\[i](.*)\[\/i\]/sU";
         $patterns['replacements'][] = '<i>\\1</i>';
-        $patterns['patterns'][] = "/\[u](.*)\[\/u\]/sU";
+        $patterns['patterns'][]     = "/\[u](.*)\[\/u\]/sU";
         $patterns['replacements'][] = '<u>\\1</u>';
-        $patterns['patterns'][] = "/\[d](.*)\[\/d\]/sU";
+        $patterns['patterns'][]     = "/\[d](.*)\[\/d\]/sU";
         $patterns['replacements'][] = '<del>\\1</del>';
 
-        $patterns['patterns'][] = "/\[quote(=(.*)){0,1}\](.*)\[\/quote\]/";
+        $patterns['patterns'][]     = "/\[quote(=(.*)){0,1}\](.*)\[\/quote\]/";
         $patterns['replacements'][] = '<blockquote>$3<p class="citeby">$2</p></blockquote>';
 
         $patterns['patterns'][] = "/\[img align=(['\"]?)(left|center|right)\\1]([^\"\(\)'<>]*)\[\/img\]/sU";
@@ -425,11 +426,11 @@ class TextCleaner
             $patterns['replacements'][] = '<img src="' . XOOPS_ROOT_PATH . '/image.php?id=\\2" alt="\\3">';
         }
 
-        $text = str_replace("\x00", '', $text);
-        $c = "[\x01-\x1f]*";
-        $patterns['patterns'][] = "/j{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}:/si";
+        $text                       = str_replace("\x00", '', $text);
+        $c                          = "[\x01-\x1f]*";
+        $patterns['patterns'][]     = "/j{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}:/si";
         $patterns['replacements'][] = '(script removed)';
-        $patterns['patterns'][] = "/a{$c}b{$c}o{$c}u{$c}t{$c}:/si";
+        $patterns['patterns'][]     = "/a{$c}b{$c}o{$c}u{$c}t{$c}:/si";
         $patterns['replacements'][] = 'about :';
 
         // More patterns with plugins
@@ -445,7 +446,7 @@ class TextCleaner
     /**
      * Convert linebreaks to <br> tags
      *
-     * @param    string $text
+     * @param string $text
      *
      * @return    string
      */
@@ -457,7 +458,7 @@ class TextCleaner
     /**
      * Add slashes to the text if magic_quotes_gpc is turned off.
      *
-     * @param   string $text
+     * @param string $text
      * @return  string
      **/
     public function addslashes($text)
@@ -472,9 +473,9 @@ class TextCleaner
     /*
     * if magic_quotes_gpc is on, stirip back slashes
     *
-    * @param	string  $text
+    * @param    string  $text
     *
-    * @return	string
+    * @return   string
     */
     public static function stripslashes($text)
     {
@@ -488,9 +489,9 @@ class TextCleaner
     /*
     *  for displaying data in html textbox forms
     *
-    * @param	string  $text
+    * @param    string  $text
     *
-    * @return	string
+    * @return   string
     */
     public function specialchars($string, $quote_style = ENT_NOQUOTES, $charset = 'UTF-8')
     {
@@ -513,7 +514,7 @@ class TextCleaner
         }
 
         if ('double' === $quote_style) {
-            $quote_style = ENT_COMPAT;
+            $quote_style  = ENT_COMPAT;
             $_quote_style = ENT_COMPAT;
         } elseif ('single' === $quote_style) {
             $quote_style = ENT_NOQUOTES;
@@ -528,9 +529,9 @@ class TextCleaner
     /**
      * Reverses {@link htmlSpecialChars()}
      *
-     * @param   string $text
-     * @param mixed $string
-     * @param mixed $quote_style
+     * @param string $text
+     * @param mixed  $string
+     * @param mixed  $quote_style
      * @return  string
      **/
     public function specialchars_decode($string, $quote_style = ENT_NOQUOTES)
@@ -551,24 +552,24 @@ class TextCleaner
         }
 
         // More complete than get_html_translation_table( HTML_SPECIALCHARS )
-        $single = ['&#039;' => '\'', '&#x27;' => '\''];
+        $single      = ['&#039;' => '\'', '&#x27;' => '\''];
         $single_preg = ['/&#0*39;/' => '&#039;', '/&#x0*27;/i' => '&#x27;'];
-        $double = ['&quot;' => '"', '&#034;' => '"', '&#x22;' => '"'];
+        $double      = ['&quot;' => '"', '&#034;' => '"', '&#x22;' => '"'];
         $double_preg = ['/&#0*34;/' => '&#034;', '/&#x0*22;/i' => '&#x22;'];
-        $others = ['&lt;' => '<', '&#060;' => '<', '&gt;' => '>', '&#062;' => '>', '&amp;' => '&', '&#038;' => '&', '&#x26;' => '&'];
+        $others      = ['&lt;' => '<', '&#060;' => '<', '&gt;' => '>', '&#062;' => '>', '&amp;' => '&', '&#038;' => '&', '&#x26;' => '&'];
         $others_preg = ['/&#0*60;/' => '&#060;', '/&#0*62;/' => '&#062;', '/&#0*38;/' => '&#038;', '/&#x0*26;/i' => '&#x26;'];
 
         if (ENT_QUOTES === $quote_style) {
-            $translation = array_merge($single, $double, $others);
+            $translation      = array_merge($single, $double, $others);
             $translation_preg = array_merge($single_preg, $double_preg, $others_preg);
         } elseif (ENT_COMPAT === $quote_style || 'double' === $quote_style) {
-            $translation = array_merge($double, $others);
+            $translation      = array_merge($double, $others);
             $translation_preg = array_merge($double_preg, $others_preg);
         } elseif ('single' === $quote_style) {
-            $translation = array_merge($single, $others);
+            $translation      = array_merge($single, $others);
             $translation_preg = array_merge($single_preg, $others_preg);
         } elseif (ENT_NOQUOTES === $quote_style) {
-            $translation = $others;
+            $translation      = $others;
             $translation_preg = $others_preg;
         }
 
@@ -587,10 +588,10 @@ class TextCleaner
      *
      * Taked from Wordpress
      *
-     * @license GPL 2
-     * @param string $string The text which has to be formatted.
-     * @param int|bool $br Optional. If set, this will convert all remaining line-breaks after paragraphing. Default true.
+     * @param string   $string The text which has to be formatted.
+     * @param int|bool $br     Optional. If set, this will convert all remaining line-breaks after paragraphing. Default true.
      * @return string Text which has been converted into correct paragraph tags.
+     * @license GPL 2
      */
     public function double_br($string, $br = 1)
     {
@@ -601,9 +602,9 @@ class TextCleaner
         $string = preg_replace('|<br>\s*<br>|', "\n\n", $string);
         // Space things out a little
         $allblocks = '(?:table|thead|tfoot|caption|col|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|map|area|blockquote|address|math|style|input|p|h[1-6]|hr)';
-        $string = preg_replace('!(<' . $allblocks . '[^>]*>)!', "\n$1", $string);
-        $string = preg_replace('!(</' . $allblocks . '>)!', "$1\n\n", $string);
-        $string = str_replace(["\r\n", "\r"], "\n", $string); // cross-platform newlines
+        $string    = preg_replace('!(<' . $allblocks . '[^>]*>)!', "\n$1", $string);
+        $string    = preg_replace('!(</' . $allblocks . '>)!', "$1\n\n", $string);
+        $string    = str_replace(["\r\n", "\r"], "\n", $string); // cross-platform newlines
         if (false !== mb_strpos($string, '<object')) {
             $string = preg_replace('|\s*<param([^>]*)>\s*|', '<param$1>', $string); // no pee inside object/embed
             $string = preg_replace('|\s*</embed>\s*|', '</embed>', $string);
@@ -611,7 +612,7 @@ class TextCleaner
         $string = preg_replace("/\n\n+/", "\n\n", $string); // take care of duplicates
         // make paragraphs, including one at the end
         $strings = preg_split('/\n\s*\n/', $string, -1, PREG_SPLIT_NO_EMPTY);
-        $string = '';
+        $string  = '';
         foreach ($strings as $tinkle) {
             $string .= '<p>' . trim($tinkle, "\n") . "</p>\n";
         }
@@ -644,11 +645,11 @@ class TextCleaner
      *
      * based on Xoops displayTarea
      *
-     * @param   string $text
-     * @param   bool $dbr Disbale replace of breaklines when html is enabled
+     * @param string $text
+     * @param bool   $dbr Disbale replace of breaklines when html is enabled
      * @param bool Clean disabled tags?
-     * @param mixed $clean_tags
-     * @param mixed $paragraph
+     * @param mixed  $clean_tags
+     * @param mixed  $paragraph
      * @return  string
      **/
     public function to_display($text, $dbr = true, $clean_tags = true, $paragraph = true)
@@ -662,7 +663,7 @@ class TextCleaner
 
         // Markdown
         if ($rmc_config->markdown) {
-            $md = new RMParsedown();
+            $md   = new RMParsedown();
             $text = $md->text($text);
         }
 
@@ -695,7 +696,7 @@ class TextCleaner
             $text = $this->clean_disabled_tags($text);
         }
         $text = $this->make_clickable($text);
-        //$text = $this->codeConv($text, $rmc_config->doxcode);	// Ryuji_edit(2003-11-18)
+        //$text = $this->codeConv($text, $rmc_config->doxcode); // Ryuji_edit(2003-11-18)
         if ($paragraph) {
             $text = $this->double_br($text);
         }
@@ -801,8 +802,8 @@ class TextCleaner
     public function encrypt($string, $encode64 = true)
     {
         $rmc_config = RMSettings::cu_settings();
-        $crypt = new Crypt();
-        $string = $crypt->encrypt($string);
+        $crypt      = new Crypt();
+        $string     = $crypt->encrypt($string);
         //if ($encode64) $string = base64_encode($string);
         return $string;
     }
@@ -819,7 +820,7 @@ class TextCleaner
     {
         $rmc_config = RMSettings::cu_settings();
 
-        $crypt = new Crypt();
+        $crypt  = new Crypt();
         $string = $crypt->decrypt($string);
 
         return $string;
@@ -839,16 +840,16 @@ class TextCleaner
         //Rememplazamos caracteres especiales latinos
         $find = ['á', 'é', 'í', 'ó', 'ú', 'ñ'];
         $repl = ['a', 'e', 'i', 'o', 'u', 'n'];
-        $rtn = str_replace($find, $repl, utf8_encode($rtn));
+        $rtn  = str_replace($find, $repl, utf8_encode($rtn));
 
         // Añadimos los guiones
         $find = [' ', '&', '\r\n', '\n', '+'];
-        $rtn = str_replace($find, '-', $rtn);
+        $rtn  = str_replace($find, '-', $rtn);
 
         // Eliminamos y Reemplazamos demás caracteres especiales
         $find = ['/[^a-zA-Z0-9\-<>_]/', '/[\-]+/', '/<[^>]*>/'];
         $repl = ['', '-', ''];
-        $url = preg_replace($find, $repl, $rtn);
+        $url  = preg_replace($find, $repl, $rtn);
 
         return $url;
     }

@@ -62,47 +62,32 @@ function services_assign_provider()
     $common->ajax()->prepare();
 
     if (!$xoopsSecurity->check(true, false, 'CUTOKEN')) {
-        $common->ajax()->response(
-            __('Not authorized!', 'rmcommon'),
-            1,
-            0,
-            ['reload' => true]
-        );
+        $common->ajax()->response(__('Not authorized!', 'rmcommon'), 1, 0, ['reload' => true]);
     }
 
-    $service = $common->httpRequest()->post('service', 'string', '');
+    $service  = $common->httpRequest()->post('service', 'string', '');
     $provider = $common->httpRequest()->post('provider', 'string', '');
-    $name = $common->httpRequest()->post('name', 'string', '');
+    $name     = $common->httpRequest()->post('name', 'string', '');
 
     if ('' == $service || '' == $provider) {
-        $common->ajax()->response(
-            __('Service name or provider name are not valid!', 'rmcommon'),
-            1,
-            1,
-            [
-                'notify' => [
-                    'title' => __('Services', 'rmcommon'),
-                    'type' => 'alert-danger',
-                    'icon' => 'svg-rmcommon-error',
-                ],
-            ]
-        );
+        $common->ajax()->response(__('Service name or provider name are not valid!', 'rmcommon'), 1, 1, [
+                                                                                                    'notify' => [
+                                                                                                        'title' => __('Services', 'rmcommon'),
+                                                                                                        'type'  => 'alert-danger',
+                                                                                                        'icon'  => 'svg-rmcommon-error',
+                                                                                                    ],
+                                                                                                ]);
     }
 
     $common->services()->registerProvider($service, $provider);
 
-    $common->ajax()->response(
-        sprintf(__('Provider %s for service %s registered successfully', 'rmcommon'), '<strong>' . $name . '</strong>', '<strong>' . mb_strtoupper($service) . '</strong>'),
-        0,
-        1,
-        [
-            'notify' => [
-                'title' => __('Services', 'rmcommon'),
-                'type' => 'alert-success',
-                'icon' => 'svg-rmcommon-ok-circle',
-            ],
-        ]
-    );
+    $common->ajax()->response(sprintf(__('Provider %s for service %s registered successfully', 'rmcommon'), '<strong>' . $name . '</strong>', '<strong>' . mb_strtoupper($service) . '</strong>'), 0, 1, [
+                                                                                                                                                                                                     'notify' => [
+                                                                                                                                                                                                         'title' => __('Services', 'rmcommon'),
+                                                                                                                                                                                                         'type'  => 'alert-success',
+                                                                                                                                                                                                         'icon'  => 'svg-rmcommon-ok-circle',
+                                                                                                                                                                                                     ],
+                                                                                                                                                                                                 ]);
 }
 
 $action = RMHttpRequest::request('action', 'string', '');

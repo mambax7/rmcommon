@@ -39,7 +39,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
 
         if (!file_exists($this->_path)) {
             if (!mkdir($this->_path, 0777, true)) {
-                throw new Swift_IoException('Unable to create Path [' . $this->_path . ']');
+                throw new Swift_IoException('Unable to create Path ['.$this->_path.']');
             }
         }
     }
@@ -92,19 +92,20 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     public function queueMessage(Swift_Mime_Message $message)
     {
         $ser = serialize($message);
-        $fileName = $this->_path . '/' . $this->getRandomString(10);
+        $fileName = $this->_path.'/'.$this->getRandomString(10);
         for ($i = 0; $i < $this->_retryLimit; ++$i) {
             /* We try an exclusive creation of the file. This is an atomic operation, it avoid locking mechanism */
-            $fp = @fopen($fileName . '.message', 'x');
+            $fp = @fopen($fileName.'.message', 'x');
             if (false !== $fp) {
                 if (false === fwrite($fp, $ser)) {
                     return false;
                 }
 
                 return fclose($fp);
+            } else {
+                /* The file already exists, we try a longer fileName */
+                $fileName .= $this->getRandomString(1);
             }
-            /* The file already exists, we try a longer fileName */
-            $fileName .= $this->getRandomString(1);
         }
 
         throw new Swift_IoException('Unable to create a file for enqueuing Message');
@@ -120,10 +121,10 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         foreach (new DirectoryIterator($this->_path) as $file) {
             $file = $file->getRealPath();
 
-            if ('.message.sending' == mb_substr($file, -16)) {
+            if (substr($file, -16) == '.message.sending') {
                 $lockedtime = filectime($file);
                 if ((time() - $lockedtime) > $timeout) {
-                    rename($file, mb_substr($file, 0, -8));
+                    rename($file, substr($file, 0, -8));
                 }
             }
         }
@@ -144,7 +145,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         /* Start the transport only if there are queued files to send */
         if (!$transport->isStarted()) {
             foreach ($directoryIterator as $file) {
-                if ('.message' == mb_substr($file->getRealPath(), -8)) {
+                if (substr($file->getRealPath(), -8) == '.message') {
                     $transport->start();
                     break;
                 }
@@ -157,17 +158,17 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         foreach ($directoryIterator as $file) {
             $file = $file->getRealPath();
 
-            if ('.message' != mb_substr($file, -8)) {
+            if (substr($file, -8) != '.message') {
                 continue;
             }
 
             /* We try a rename, it's an atomic operation, and avoid locking the file */
-            if (rename($file, $file . '.sending')) {
-                $message = unserialize(file_get_contents($file . '.sending'));
+            if (rename($file, $file.'.sending')) {
+                $message = unserialize(file_get_contents($file.'.sending'));
 
                 $count += $transport->send($message, $failedRecipients);
 
-                unlink($file . '.sending');
+                unlink($file.'.sending');
             } else {
                 /* This message has just been catched by another process */
                 continue;
@@ -197,9 +198,9 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         // This string MUST stay FS safe, avoid special chars
         $base = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
         $ret = '';
-        $strlen = mb_strlen($base);
+        $strlen = strlen($base);
         for ($i = 0; $i < $count; ++$i) {
-            $ret .= $base[((int) mt_rand(0, $strlen - 1))];
+            $ret .= $base[((int) rand(0, $strlen - 1))];
         }
 
         return $ret;

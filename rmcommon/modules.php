@@ -15,17 +15,17 @@ $common->location = 'modules';
  * function to update compiled template file in templates_c folder
  *
  * @param string $tpl_id
- * @param bool $clear_old
+ * @param bool   $clear_old
  * @return bool
  */
 function modules_template_touch($tpl_id, $clear_old = true)
 {
-    $tplfileHandler =  xoops_getHandler('tplfile');
-    $tplfile = $tplfileHandler->get($tpl_id);
+    $tplfileHandler = xoops_getHandler('tplfile');
+    $tplfile        = $tplfileHandler->get($tpl_id);
 
     if (is_object($tplfile)) {
         $file = $tplfile->getVar('tpl_file', 'n');
-        $tpl = new XoopsTpl();
+        $tpl  = new XoopsTpl();
 
         $tpl->plugins_dir = RMEvents::get()->trigger('rmcommon.smarty.plugins', $tpl->plugins_dir);
 
@@ -38,10 +38,45 @@ function modules_template_touch($tpl_id, $clear_old = true)
 function modules_install_function($dirname)
 {
     global $xoopsUser, $xoopsConfig;
-    $dirname = trim($dirname);
-    $db = $GLOBALS['xoopsDB'];
-    $reservedTables = ['avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups', 'groups_users_link', 'group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish'];
-    $moduleHandler = xoops_getHandler('module');
+    $dirname        = trim($dirname);
+    $db             = $GLOBALS['xoopsDB'];
+    $reservedTables = [
+        'avatar',
+        'avatar_users_link',
+        'block_module_link',
+        'xoopscomments',
+        'config',
+        'configcategory',
+        'configoption',
+        'image',
+        'imagebody',
+        'imagecategory',
+        'imgset',
+        'imgset_tplset_link',
+        'imgsetimg',
+        'groups',
+        'groups_users_link',
+        'group_permission',
+        'online',
+        'bannerclient',
+        'banner',
+        'bannerfinish',
+        'priv_msgs',
+        'ranks',
+        'session',
+        'smiles',
+        'users',
+        'newblocks',
+        'modules',
+        'tplfile',
+        'tplset',
+        'tplsource',
+        'xoopsnotifications',
+        'banner',
+        'bannerclient',
+        'bannerfinish'
+    ];
+    $moduleHandler  = xoops_getHandler('module');
     if (0 == $moduleHandler->getCount(new Criteria('dirname', $dirname))) {
         $module = $moduleHandler->create();
         $module->loadInfoAsVar($dirname);
@@ -49,8 +84,8 @@ function modules_install_function($dirname)
         $module->setVar('isactive', 1);
         $module->setVar('last_update', time());
         $error = false;
-        $errs = [];
-        $msgs = [];
+        $errs  = [];
+        $msgs  = [];
 
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_INSTALLING . $module->getInfo('name', 's') . '</h4>';
@@ -72,12 +107,12 @@ function modules_install_function($dirname)
         if (function_exists($func)) {
             $result = $func($module);
             if (!$result) {
-                $error = true;
+                $error  = true;
                 $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_EXECUTE, $func) . '</p>';
-                $errs = array_merge($errs, $module->getErrors());
+                $errs   = array_merge($errs, $module->getErrors());
             } else {
                 $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, "<strong>{$func}</strong>") . '</p>';
-                $msgs += $module->getErrors();
+                $msgs   += $module->getErrors();
             }
         }
 
@@ -87,7 +122,7 @@ function modules_install_function($dirname)
                 $sql_file_path = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . $sqlfile[XOOPS_DB_TYPE];
                 if (!file_exists($sql_file_path)) {
                     $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_SQL_NOT_FOUND, "<strong>{$sql_file_path}</strong>");
-                    $error = true;
+                    $error  = true;
                 } else {
                     $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_SQL_FOUND, "<strong>{$sql_file_path}</strong>") . '<br >' . _AM_SYSTEM_MODULES_CREATE_TABLES;
                     require_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
@@ -101,7 +136,7 @@ function modules_install_function($dirname)
                         $prefixed_query = SqlUtility::prefixQuery($piece, $db->prefix());
                         if (!$prefixed_query) {
                             $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_SQL_NOT_VALID, '<strong>' . $piece . '</strong>');
-                            $error = true;
+                            $error  = true;
                             break;
                         }
                         // check if the table name is reserved
@@ -109,11 +144,11 @@ function modules_install_function($dirname)
                             // not reserved, so try to create one
                             if (!$db->query($prefixed_query[0])) {
                                 $errs[] = $db->error();
-                                $error = true;
+                                $error  = true;
                                 break;
                             }
                             if (!in_array($prefixed_query[4], $created_tables, true)) {
-                                $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TABLE_CREATED, '<strong>' . $db->prefix($prefixed_query[4]) . '</strong>');
+                                $msgs[]           = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TABLE_CREATED, '<strong>' . $db->prefix($prefixed_query[4]) . '</strong>');
                                 $created_tables[] = $prefixed_query[4];
                             } else {
                                 $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_INSERT_DATA, '<strong>' . $db->prefix($prefixed_query[4]) . '</strong>');
@@ -121,7 +156,7 @@ function modules_install_function($dirname)
                         } else {
                             // the table name is reserved, so halt the installation
                             $errs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TABLE_RESERVED, '<strong>' . $prefixed_query[4] . '</strong>');
-                            $error = true;
+                            $error  = true;
                             break;
                         }
                     }
@@ -155,14 +190,14 @@ function modules_install_function($dirname)
             }
             $newmid = $module->getVar('mid');
             unset($created_tables);
-            $msgs[] = '<p>' . _AM_SYSTEM_MODULES_INSERT_DATA_DONE . sprintf(_AM_SYSTEM_MODULES_MODULEID, '<strong>' . $newmid . '</strong>');
+            $msgs[]         = '<p>' . _AM_SYSTEM_MODULES_INSERT_DATA_DONE . sprintf(_AM_SYSTEM_MODULES_MODULEID, '<strong>' . $newmid . '</strong>');
             $tplfileHandler = xoops_getHandler('tplfile');
-            $templates = $module->getInfo('templates');
+            $templates      = $module->getInfo('templates');
             if (false !== $templates) {
                 $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_ADD;
                 foreach ($templates as $tpl) {
                     $tplfile = $tplfileHandler->create();
-                    $type = (isset($tpl['type']) ? $tpl['type'] : 'module');
+                    $type    = (isset($tpl['type']) ? $tpl['type'] : 'module');
                     $tpldata = &xoops_module_gettemplate($dirname, $tpl['file'], $type);
                     $tplfile->setVar('tpl_source', $tpldata, true);
                     $tplfile->setVar('tpl_refid', $newmid);
@@ -178,7 +213,7 @@ function modules_install_function($dirname)
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ADD_ERROR, '<strong>' . $tpl['file'] . '</strong>') . '</span>';
                     } else {
                         $newtplid = $tplfile->getVar('tpl_id');
-                        $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ADD_DATA, '<strong>' . $tpl['file'] . '</strong>') . '(ID: <strong>' . $newtplid . '</strong>)';
+                        $msgs[]   = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ADD_DATA, '<strong>' . $tpl['file'] . '</strong>') . '(ID: <strong>' . $newtplid . '</strong>)';
                         // generate compiled file
                         require_once XOOPS_ROOT_PATH . '/class/template.php';
                         if (!modules_template_touch($newtplid)) {
@@ -204,9 +239,9 @@ function modules_install_function($dirname)
                     if (!empty($block['options']) && is_string($block['options'])) {
                         $options = trim($block['options']);
                     }
-                    $newbid = $db->genId($db->prefix('newblocks') . '_bid_seq');
+                    $newbid    = $db->genId($db->prefix('newblocks') . '_bid_seq');
                     $edit_func = isset($block['edit_func']) ? trim($block['edit_func']) : '';
-                    $template = '';
+                    $template  = '';
                     if (isset($block['template']) && '' != trim($block['template'])) {
                         $content = &xoops_module_gettemplate($dirname, $block['template'], 'blocks');
                     }
@@ -216,8 +251,27 @@ function modules_install_function($dirname)
                         $template = trim($block['template']);
                     }
                     $block_name = addslashes(trim($block['name']));
-                    $sql = 'INSERT INTO ' . $db->prefix('newblocks') . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, " . (int)$blockkey
-                               . ", '$options', '" . $block_name . "','" . $block_name . "', '', 0, 0, 0, 'M', 'H', 1, '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '" . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', 0, " . time() . ')';
+                    $sql        = 'INSERT INTO '
+                                  . $db->prefix('newblocks')
+                                  . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, "
+                                  . (int)$blockkey
+                                  . ", '$options', '"
+                                  . $block_name
+                                  . "','"
+                                  . $block_name
+                                  . "', '', 0, 0, 0, 'M', 'H', 1, '"
+                                  . addslashes($dirname)
+                                  . "', '"
+                                  . addslashes(trim($block['file']))
+                                  . "', '"
+                                  . addslashes(trim($block['show_func']))
+                                  . "', '"
+                                  . addslashes($edit_func)
+                                  . "', '"
+                                  . $template
+                                  . "', 0, "
+                                  . time()
+                                  . ')';
                     if (!$db->query($sql)) {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR, '<strong>' . $block['name'] . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR_DATABASE, '<strong>' . $db->error() . '</strong>') . '</span>';
                     } else {
@@ -225,7 +279,7 @@ function modules_install_function($dirname)
                             $newbid = $db->getInsertId();
                         }
                         $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD, '<strong>' . $block['name'] . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $newbid . '</strong>');
-                        $sql = 'INSERT INTO ' . $db->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
+                        $sql    = 'INSERT INTO ' . $db->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
                         $db->query($sql);
                         if ('' != $template) {
                             $tplfile = $tplfileHandler->create();
@@ -242,7 +296,7 @@ function modules_install_function($dirname)
                                 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ADD_ERROR, '<strong>' . $block['template'] . '</strong>') . '</span>';
                             } else {
                                 $newtplid = $tplfile->getVar('tpl_id');
-                                $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ADD_DATA, '<strong>' . $block['template'] . '</strong>') . ' (ID: <strong>' . $newtplid . '</strong>)';
+                                $msgs[]   = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ADD_DATA, '<strong>' . $block['template'] . '</strong>') . ' (ID: <strong>' . $newtplid . '</strong>)';
                                 // generate compiled file
                                 require_once XOOPS_ROOT_PATH . '/class/template.php';
                                 if (!xoops_template_touch($newtplid)) {
@@ -262,14 +316,30 @@ function modules_install_function($dirname)
             if (false !== $configs) {
                 if (0 != $module->getVar('hascomments')) {
                     require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                    array_push($configs, ['name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]]);
+                    array_push($configs, [
+                        'name'        => 'com_rule',
+                        'title'       => '_CM_COMRULES',
+                        'description' => '',
+                        'formtype'    => 'select',
+                        'valuetype'   => 'int',
+                        'default'     => 1,
+                        'options'     => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]
+                    ]);
                     array_push($configs, ['name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0]);
                 }
             } else {
                 if (0 != $module->getVar('hascomments')) {
                     $configs = [];
                     require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                    $configs[] = ['name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]];
+                    $configs[] = [
+                        'name'        => 'com_rule',
+                        'title'       => '_CM_COMRULES',
+                        'description' => '',
+                        'formtype'    => 'select',
+                        'valuetype'   => 'int',
+                        'default'     => 1,
+                        'options'     => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]
+                    ];
                     $configs[] = ['name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0];
                 }
             }
@@ -281,16 +351,16 @@ function modules_install_function($dirname)
                 // Main notification options
                 require_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
                 require_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
-                $options = [];
-                $options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
-                $options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
+                $options                             = [];
+                $options['_NOT_CONFIG_DISABLE']      = XOOPS_NOTIFICATION_DISABLE;
+                $options['_NOT_CONFIG_ENABLEBLOCK']  = XOOPS_NOTIFICATION_ENABLEBLOCK;
                 $options['_NOT_CONFIG_ENABLEINLINE'] = XOOPS_NOTIFICATION_ENABLEINLINE;
-                $options['_NOT_CONFIG_ENABLEBOTH'] = XOOPS_NOTIFICATION_ENABLEBOTH;
+                $options['_NOT_CONFIG_ENABLEBOTH']   = XOOPS_NOTIFICATION_ENABLEBOTH;
 
                 $configs[] = ['name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLE', 'description' => '_NOT_CONFIG_ENABLEDSC', 'formtype' => 'select', 'valuetype' => 'int', 'default' => XOOPS_NOTIFICATION_ENABLEBOTH, 'options' => $options];
                 // Event-specific notification options
                 // FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
-                $options = [];
+                $options    = [];
                 $categories = &notificationCategoryInfo('', $module->getVar('mid'));
                 foreach ($categories as $category) {
                     $events = &notificationEvents($category['name'], false, $module->getVar('mid'));
@@ -298,8 +368,8 @@ function modules_install_function($dirname)
                         if (!empty($event['invisible'])) {
                             continue;
                         }
-                        $option_name = $category['title'] . ' : ' . $event['title'];
-                        $option_value = $category['name'] . '-' . $event['name'];
+                        $option_name           = $category['title'] . ' : ' . $event['title'];
+                        $option_value          = $category['name'] . '-' . $event['name'];
                         $options[$option_name] = $option_value;
                     }
                     unset($events);
@@ -309,9 +379,9 @@ function modules_install_function($dirname)
             }
 
             if (false !== $configs) {
-                $msgs[] = _AM_SYSTEM_MODULES_MODULE_DATA_ADD;
+                $msgs[]        = _AM_SYSTEM_MODULES_MODULE_DATA_ADD;
                 $configHandler = xoops_getHandler('config');
-                $order = 0;
+                $order         = 0;
                 foreach ($configs as $config) {
                     $confobj = $configHandler->createConfig();
                     $confobj->setVar('conf_modid', $newmid);
@@ -351,8 +421,8 @@ function modules_install_function($dirname)
                 $groups = [XOOPS_GROUP_ADMIN];
             }
             // retrieve all block ids for this module
-            $blocks = XoopsBlock::getByModule($newmid, false);
-            $msgs[] = _AM_SYSTEM_MODULES_GROUP_SETTINGS_ADD;
+            $blocks       = XoopsBlock::getByModule($newmid, false);
+            $msgs[]       = _AM_SYSTEM_MODULES_GROUP_SETTINGS_ADD;
             $gpermHandler = xoops_getHandler('groupperm');
             foreach ($groups as $mygroup) {
                 if ($gpermHandler->checkRight('module_admin', 0, $mygroup)) {
@@ -460,13 +530,15 @@ function get_authors($mod)
         return $mod->getInfo('author');
     }
     if ($mod->getInfo('rmnative')) {
-        $author = [[
-                'name' => $mod->getInfo('author'),
+        $author = [
+            [
+                'name'  => $mod->getInfo('author'),
                 'email' => $mod->getInfo('authormail'),
-                'web' => $mod->getInfo('authorweb'),
-                'url' => $mod->getInfo('url'),
-                'aka' => $mod->getInfo('aka'),
-            ]];
+                'web'   => $mod->getInfo('authorweb'),
+                'url'   => $mod->getInfo('url'),
+                'aka'   => $mod->getInfo('aka'),
+            ]
+        ];
 
         return $author;
     }
@@ -479,12 +551,12 @@ function get_authors($mod)
     $authors = [];
     foreach ($persons as $person) {
         $authors[] = [
-                    'name' => $person,
-                    'email' => '',
-                    'web' => 'XOOPS',
-                    'url' => 'http://xoops.org',
-                    'aka' => $person,
-                ];
+            'name'  => $person,
+            'email' => '',
+            'web'   => 'XOOPS',
+            'url'   => 'http://xoops.org',
+            'aka'   => $person,
+        ];
     }
 
     return $authors;
@@ -497,21 +569,21 @@ function get_authors($mod)
 function parse_social_icons($type)
 {
     $icons = [
-        'twitter' => 'fa fa-twitter-square',
-        'facebook' => 'fa fa-facebook-square',
-        'linkedin' => 'fa fa-linkedin-square',
-        'instagram' => 'fa fa-instagram',
-        'google' => 'fa fa-google-plus-square',
-        'flickr' => 'fa fa-flickr',
-        'pinterest' => 'fa fa-pinterest-square',
-        'blog' => 'fa fa-wordpress',
-        'youtube' => 'fa fa-youtube-square',
-        'github' => 'fa fa-github',
-        'medium' => 'fa fa-medium',
+        'twitter'    => 'fa fa-twitter-square',
+        'facebook'   => 'fa fa-facebook-square',
+        'linkedin'   => 'fa fa-linkedin-square',
+        'instagram'  => 'fa fa-instagram',
+        'google'     => 'fa fa-google-plus-square',
+        'flickr'     => 'fa fa-flickr',
+        'pinterest'  => 'fa fa-pinterest-square',
+        'blog'       => 'fa fa-wordpress',
+        'youtube'    => 'fa fa-youtube-square',
+        'github'     => 'fa fa-github',
+        'medium'     => 'fa fa-medium',
         'slideshare' => 'fa fa-slideshare',
-        'tumblr' => 'fa fa-tumblr-square',
-        'vimeo' => 'fa fa-vimeo-square',
-        'default' => 'fa fa-external-link-square',
+        'tumblr'     => 'fa fa-tumblr-square',
+        'vimeo'      => 'fa fa-vimeo-square',
+        'default'    => 'fa fa-external-link-square',
     ];
 
     if (array_key_exists($type, $icons)) {
@@ -533,8 +605,8 @@ function show_modules_list()
 
     $db = XoopsDatabaseFactory::getDatabaseConnection();
 
-    $sql = 'SELECT * FROM ' . $db->prefix('modules') . ' ORDER BY `name`';
-    $result = $db->query($sql);
+    $sql            = 'SELECT * FROM ' . $db->prefix('modules') . ' ORDER BY `name`';
+    $result         = $db->query($sql);
     $installed_dirs = [];
 
     while (false !== ($row = $db->fetchArray($result))) {
@@ -565,27 +637,27 @@ function show_modules_list()
 
         // Admin section
         $admin_link = $mod->getVar('hasadmin') ? XOOPS_URL . '/modules/' . $mod->dirname() . '/' . $mod->getInfo('adminindex') : '';
-        $icon = '' != $mod->getInfo('icon') ? $cuIcons->getIcon($mod->getInfo('icon')) : (XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . ($mod->getInfo('icon48') ? $mod->getInfo('icon48') : $mod->getInfo('image')));
+        $icon       = '' != $mod->getInfo('icon') ? $cuIcons->getIcon($mod->getInfo('icon')) : (XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . ($mod->getInfo('icon48') ? $mod->getInfo('icon48') : $mod->getInfo('image')));
 
         $modules[] = [
-            'id' => $mod->getVar('mid'),
-            'name' => $mod->getVar('name'),
-            'realname' => $mod->getInfo('name'),
-            'version' => $mod->getInfo('rmnative') ? RMModules::format_module_version($mod->getInfo('rmversion')) : $mod->getInfo('version'),
+            'id'          => $mod->getVar('mid'),
+            'name'        => $mod->getVar('name'),
+            'realname'    => $mod->getInfo('name'),
+            'version'     => $mod->getInfo('rmnative') ? RMModules::format_module_version($mod->getInfo('rmversion')) : $mod->getInfo('version'),
             'description' => $mod->getInfo('description'),
-            'icon' => $icon,
-            'image' => XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . $mod->getInfo('image'),
-            'link' => $main_link,
-            'admin_link' => $admin_link,
-            'updated' => formatTimestamp($mod->getVar('last_update'), 's'),
-            'url' => $mod->getInfo('url'),
-            'authors' => get_authors($mod),
+            'icon'        => $icon,
+            'image'       => XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . $mod->getInfo('image'),
+            'link'        => $main_link,
+            'admin_link'  => $admin_link,
+            'updated'     => formatTimestamp($mod->getVar('last_update'), 's'),
+            'url'         => $mod->getInfo('url'),
+            'authors'     => get_authors($mod),
             //'avatar'        => RMEvents::get()->run_event('rmcommon.get.avatar', $mod->getInfo('authormail'), 80),
-            'license' => $mod->getInfo('license'),
-            'dirname' => $mod->getInfo('dirname'),
-            'active' => $mod->getVar('isactive'),
-            'help' => $mod->getInfo('help'),
-            'social' => $mod->getInfo('social'),
+            'license'     => $mod->getInfo('license'),
+            'dirname'     => $mod->getInfo('dirname'),
+            'active'      => $mod->getVar('isactive'),
+            'help'        => $mod->getInfo('help'),
+            'social'      => $mod->getInfo('social'),
         ];
     }
 
@@ -593,9 +665,9 @@ function show_modules_list()
     $modules = RMEvents::get()->trigger('rmcommon.installed.modules', $modules, $installed_dirs);
 
     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-    $dirlist = XoopsLists::getModulesList();
+    $dirlist        = XoopsLists::getModulesList();
     $available_mods = [];
-    $moduleHandler = xoops_getHandler('module');
+    $moduleHandler  = xoops_getHandler('module');
     foreach ($dirlist as $file) {
         clearstatcache();
         $file = trim($file);
@@ -606,15 +678,15 @@ function show_modules_list()
             }
 
             $available_mods[] = [
-                'name' => $module->getInfo('name'),
-                'version' => $module->getInfo('rmnative') ? RMModules::format_module_version($module->getInfo('rmversion')) : $module->getInfo('version'),
+                'name'        => $module->getInfo('name'),
+                'version'     => $module->getInfo('rmnative') ? RMModules::format_module_version($module->getInfo('rmversion')) : $module->getInfo('version'),
                 'description' => $module->getInfo('description'),
-                'image' => XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image'),
-                'authors' => get_authors($module),
-                'license' => $module->getInfo('license'),
-                'dirname' => $module->getInfo('dirname'),
-                'help' => $module->getInfo('help'),
-                'social' => $module->getInfo('social'),
+                'image'       => XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image'),
+                'authors'     => get_authors($module),
+                'license'     => $module->getInfo('license'),
+                'dirname'     => $module->getInfo('dirname'),
+                'help'        => $module->getInfo('help'),
+                'social'      => $module->getInfo('social'),
             ];
             unset($module);
         }
@@ -728,9 +800,9 @@ function module_install_now()
     RMTemplate::get()->add_style('modules.min.css', 'rmcommon');
     xoops_cp_header();
 
-    $module = $moduleHandler->getByDirname($mod);
+    $module    = $moduleHandler->getByDirname($mod);
     $log_title = sprintf(__('Installation log for %s', 'rmcommon'), $module ? $module->name() : $mod);
-    $action = rmc_server_var($_POST, 'action', '');
+    $action    = rmc_server_var($_POST, 'action', '');
     include RMTemplate::get()->get_template('rmc-modules-log.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
@@ -798,7 +870,7 @@ function module_uninstall_now()
     $module = new XoopsModule();
     $module->loadInfo($mod, false);
     $log_title = sprintf(__('Uninstall log for %s', 'rmcommon'), $module ? $module->getInfo('name') : $mod);
-    $action = rmc_server_var($_POST, 'action', '');
+    $action    = rmc_server_var($_POST, 'action', '');
     include RMTemplate::get()->get_template('rmc-modules-log.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
@@ -808,9 +880,9 @@ function module_update($dirname)
 {
     global $xoopsConfig, $xoopsDB;
 
-    $dirname = trim($dirname);
+    $dirname       = trim($dirname);
     $moduleHandler = xoops_getHandler('module');
-    $module = $moduleHandler->getByDirname($dirname);
+    $module        = $moduleHandler->getByDirname($dirname);
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
     require_once XOOPS_ROOT_PATH . '/class/template.php';
@@ -826,12 +898,12 @@ function module_update($dirname)
     if (!$moduleHandler->insert($module)) {
         $log .= sprintf(__('Could not update %s', 'rmcommon'), $module->getVar('name'));
     } else {
-        $newmid = $module->getVar('mid');
-        $msgs = [];
-        $msgs[] = sprintf(__('Updating module %s', 'rmcommon'), $module->getVar('name'));
+        $newmid         = $module->getVar('mid');
+        $msgs           = [];
+        $msgs[]         = sprintf(__('Updating module %s', 'rmcommon'), $module->getVar('name'));
         $tplfileHandler = xoops_getHandler('tplfile');
-        $deltpl = $tplfileHandler->find('default', 'module', $module->getVar('mid'));
-        $delng = [];
+        $deltpl         = $tplfileHandler->find('default', 'module', $module->getVar('mid'));
+        $delng          = [];
         if (is_array($deltpl)) {
             // delete template file entry in db
             $dcount = count($deltpl);
@@ -865,7 +937,7 @@ function module_update($dirname)
                     if (!$tplfileHandler->insert($tplfile)) {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(__('Template %s could not be inserted!', 'rmcommon'), '<strong>' . $tpl['file'] . '</strong>') . '</span>';
                     } else {
-                        $newid = $tplfile->getVar('tpl_id');
+                        $newid  = $tplfile->getVar('tpl_id');
                         $msgs[] = '&nbsp;&nbsp;' . sprintf(__('Template %s inserted to the database.', 'rmcommon'), '<strong>' . $tpl['file'] . '</strong>');
                         if ('default' == $xoopsConfig['template_set']) {
                             if (!modules_template_touch($newid)) {
@@ -888,10 +960,10 @@ function module_update($dirname)
             $funcfiles = [];
             foreach ($blocks as $i => $block) {
                 if (isset($block['show_func']) && '' != $block['show_func'] && isset($block['file']) && '' != $block['file']) {
-                    $editfunc = isset($block['edit_func']) ? $block['edit_func'] : '';
+                    $editfunc    = isset($block['edit_func']) ? $block['edit_func'] : '';
                     $showfuncs[] = $block['show_func'];
                     $funcfiles[] = $block['file'];
-                    $template = '';
+                    $template    = '';
                     if (isset($block['template']) && '' != trim($block['template'])) {
                         $content = &xoops_module_gettemplate($dirname, $block['template'], 'blocks');
                     }
@@ -905,12 +977,12 @@ function module_update($dirname)
                     if (!empty($block['options'])) {
                         $options = $block['options'];
                     }
-                    $sql = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
+                    $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
                     $fresult = $xoopsDB->query($sql);
-                    $fcount = 0;
+                    $fcount  = 0;
                     while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
                         $fcount++;
-                        $sql = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes($block['name']) . "', edit_func='" . addslashes($editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
+                        $sql    = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes($block['name']) . "', edit_func='" . addslashes($editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(__('ERROR: Could not update %s'), $fblock['name']);
@@ -948,14 +1020,40 @@ function module_update($dirname)
                         }
                     }
                     if (0 == $fcount) {
-                        $newbid = $xoopsDB->genId($xoopsDB->prefix('newblocks') . '_bid_seq');
+                        $newbid     = $xoopsDB->genId($xoopsDB->prefix('newblocks') . '_bid_seq');
                         $block_name = addslashes($block['name']);
                         $block_type = ('system' == $module->getVar('dirname')) ? 'S' : 'M';
-                        $sql = 'INSERT INTO ' . $xoopsDB->prefix('newblocks') . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (' . $newbid . ', ' . $module->getVar('mid') . ', ' . $i . ",'" . addslashes($options) . "','" . $block_name . "', '" . $block_name . "', '', 0, 0, 0, '{$block_type}', 1, '" . addslashes($dirname) . "', '" . addslashes($block['file']) . "', '" . addslashes($block['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', " . time() . ')';
-                        $result = $xoopsDB->query($sql);
+                        $sql        = 'INSERT INTO '
+                                      . $xoopsDB->prefix('newblocks')
+                                      . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES ('
+                                      . $newbid
+                                      . ', '
+                                      . $module->getVar('mid')
+                                      . ', '
+                                      . $i
+                                      . ",'"
+                                      . addslashes($options)
+                                      . "','"
+                                      . $block_name
+                                      . "', '"
+                                      . $block_name
+                                      . "', '', 0, 0, 0, '{$block_type}', 1, '"
+                                      . addslashes($dirname)
+                                      . "', '"
+                                      . addslashes($block['file'])
+                                      . "', '"
+                                      . addslashes($block['show_func'])
+                                      . "', '"
+                                      . addslashes($editfunc)
+                                      . "', '"
+                                      . $template
+                                      . "', "
+                                      . time()
+                                      . ')';
+                        $result     = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_('ERROR: Could not create %s', 'rmcommon'), $block['name']);
-                            $log .= $sql;
+                            $log    .= $sql;
                         } else {
                             if (empty($newbid)) {
                                 $newbid = $xoopsDB->getInsertId();
@@ -973,7 +1071,8 @@ function module_update($dirname)
                                 $bperm->setVar('gperm_name', 'block_read');
                                 $bperm->setVar('gperm_modid', 1);
                                 if (!$gpermHandler->insert($bperm)) {
-                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . __('ERROR: Could not add block access right', 'rmcommon') . ' ' . sprintf(__('Block ID: %s', 'rmcommon'), '<strong>' . $newbid . '</strong>') . ' ' . sprintf(__('Group ID: %s', 'rmcommon'), '<strong>' . $mygroup . '</strong>') . '</span>';
+                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . __('ERROR: Could not add block access right', 'rmcommon') . ' ' . sprintf(__('Block ID: %s', 'rmcommon'), '<strong>' . $newbid . '</strong>') . ' ' . sprintf(__('Group ID: %s', 'rmcommon'),
+                                                                                                                                                                                                                                                          '<strong>' . $mygroup . '</strong>') . '</span>';
                                 } else {
                                     $msgs[] = '&nbsp;&nbsp;' . __('Added block access right', 'rmcommon') . ' ' . sprintf(__('Block ID: %s', 'rmcommon'), '<strong>' . $newbid . '</strong>') . ' ' . sprintf(__('Group ID: %s', 'rmcommon'), '<strong>' . $mygroup . '</strong>');
                                 }
@@ -993,7 +1092,7 @@ function module_update($dirname)
                                 if (!$tplfileHandler->insert($tplfile)) {
                                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(__('ERROR: Could not insert template %s to the database.', 'rmcommon'), '<strong>' . $block['template'] . '</strong>') . '</span>';
                                 } else {
-                                    $newid = $tplfile->getVar('tpl_id');
+                                    $newid  = $tplfile->getVar('tpl_id');
                                     $msgs[] = '&nbsp;&nbsp;' . sprintf(__('Template %s added to the database', 'rmcommon'), '<strong>' . $block['template'] . '</strong>');
                                     if ('default' == $xoopsConfig['template_set']) {
                                         if (!modules_template_touch($newid)) {
@@ -1005,7 +1104,7 @@ function module_update($dirname)
                                 }
                             }
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(__('Block %s created', 'rmcommon'), '<strong>' . $block['name'] . '</strong>') . sprintf(__('Block ID: %s', 'rmcommon'), '<strong>' . $newbid . '</strong>');
-                            $sql = 'INSERT INTO ' . $xoopsDB->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
+                            $sql    = 'INSERT INTO ' . $xoopsDB->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
                             $xoopsDB->query($sql);
                         }
                     }
@@ -1042,9 +1141,9 @@ function module_update($dirname)
 
         // first delete all config entries
         $configHandler = xoops_getHandler('config');
-        $configs = $configHandler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
-        $confcount = count($configs);
-        $config_delng = [];
+        $configs       = $configHandler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
+        $confcount     = count($configs);
+        $config_delng  = [];
         if ($confcount > 0) {
             $msgs[] = __('Deleting module config options...', 'rmcommon');
             for ($i = 0; $i < $confcount; $i++) {
@@ -1053,10 +1152,10 @@ function module_update($dirname)
                     // save the name of config failed to delete for later use
                     $config_delng[] = $configs[$i]->getvar('conf_name');
                 } else {
-                    $config_old[$configs[$i]->getvar('conf_name')]['value'] = $configs[$i]->getvar('conf_value', 'N');
-                    $config_old[$configs[$i]->getvar('conf_name')]['formtype'] = $configs[$i]->getvar('conf_formtype');
+                    $config_old[$configs[$i]->getvar('conf_name')]['value']     = $configs[$i]->getvar('conf_value', 'N');
+                    $config_old[$configs[$i]->getvar('conf_name')]['formtype']  = $configs[$i]->getvar('conf_formtype');
                     $config_old[$configs[$i]->getvar('conf_name')]['valuetype'] = $configs[$i]->getvar('conf_valuetype');
-                    $msgs[] = '&nbsp;&nbsp;' . __('Config data deleted from the database.', 'rmcommon') . ' ' . sprintf(__('Config ID: %s', 'rmcommon'), '<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
+                    $msgs[]                                                     = '&nbsp;&nbsp;' . __('Config data deleted from the database.', 'rmcommon') . ' ' . sprintf(__('Config ID: %s', 'rmcommon'), '<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
                 }
             }
         }
@@ -1067,14 +1166,30 @@ function module_update($dirname)
         if (false !== $configs) {
             if (0 != $module->getVar('hascomments')) {
                 require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                array_push($configs, ['name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]]);
+                array_push($configs, [
+                    'name'        => 'com_rule',
+                    'title'       => '_CM_COMRULES',
+                    'description' => '',
+                    'formtype'    => 'select',
+                    'valuetype'   => 'int',
+                    'default'     => 1,
+                    'options'     => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]
+                ]);
                 array_push($configs, ['name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0]);
             }
         } else {
             if (0 != $module->getVar('hascomments')) {
                 $configs = [];
                 require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                $configs[] = ['name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]];
+                $configs[] = [
+                    'name'        => 'com_rule',
+                    'title'       => '_CM_COMRULES',
+                    'description' => '',
+                    'formtype'    => 'select',
+                    'valuetype'   => 'int',
+                    'default'     => 1,
+                    'options'     => ['_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN]
+                ];
                 $configs[] = ['name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0];
             }
         }
@@ -1086,18 +1201,18 @@ function module_update($dirname)
             // Main notification options
             require_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
             require_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
-            $options = [];
-            $options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
-            $options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
+            $options                             = [];
+            $options['_NOT_CONFIG_DISABLE']      = XOOPS_NOTIFICATION_DISABLE;
+            $options['_NOT_CONFIG_ENABLEBLOCK']  = XOOPS_NOTIFICATION_ENABLEBLOCK;
             $options['_NOT_CONFIG_ENABLEINLINE'] = XOOPS_NOTIFICATION_ENABLEINLINE;
-            $options['_NOT_CONFIG_ENABLEBOTH'] = XOOPS_NOTIFICATION_ENABLEBOTH;
+            $options['_NOT_CONFIG_ENABLEBOTH']   = XOOPS_NOTIFICATION_ENABLEBOTH;
 
             //$configs[] = array ('name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLED', 'description' => '_NOT_CONFIG_ENABLEDDSC', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
             $configs[] = ['name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLE', 'description' => '_NOT_CONFIG_ENABLEDSC', 'formtype' => 'select', 'valuetype' => 'int', 'default' => XOOPS_NOTIFICATION_ENABLEBOTH, 'options' => $options];
             // Event specific notification options
             // FIXME: for some reason the default doesn't come up properly
             //  initially is ok, but not when 'update' module..
-            $options = [];
+            $options    = [];
             $categories = &notificationCategoryInfo('', $module->getVar('mid'));
             foreach ($categories as $category) {
                 $events = &notificationEvents($category['name'], false, $module->getVar('mid'));
@@ -1105,8 +1220,8 @@ function module_update($dirname)
                     if (!empty($event['invisible'])) {
                         continue;
                     }
-                    $option_name = $category['title'] . ' : ' . $event['title'];
-                    $option_value = $category['name'] . '-' . $event['name'];
+                    $option_name           = $category['title'] . ' : ' . $event['title'];
+                    $option_value          = $category['name'] . '-' . $event['name'];
                     $options[$option_name] = $option_value;
                     //$configs[] = array ('name' => notificationGenerateConfig($category,$event,'name'), 'title' => notificationGenerateConfig($category,$event,'title_constant'), 'description' => notificationGenerateConfig($category,$event,'description_constant'), 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
                 }
@@ -1115,9 +1230,9 @@ function module_update($dirname)
         }
 
         if (false !== $configs) {
-            $msgs[] = 'Adding module config data...';
+            $msgs[]        = 'Adding module config data...';
             $configHandler = xoops_getHandler('config');
-            $order = 0;
+            $order         = 0;
             foreach ($configs as $config) {
                 // only insert ones that have been deleted previously with success
                 if (!in_array($config['name'], $config_delng, true)) {
@@ -1202,7 +1317,7 @@ function module_update_now()
     }
 
     $moduleHandler = xoops_getHandler('module');
-    $module = $moduleHandler->getByDirname($mod);
+    $module        = $moduleHandler->getByDirname($mod);
 
     if (!$module) {
         redirectMsg('modules.php', sprintf(__('Module %s is not installed yet!', 'rmcommon'), $mod), 1);
@@ -1270,7 +1385,7 @@ function module_disable_now($enable = 0)
 
     RMEvents::get()->run_event('rmcommon.disabling.module', $module);
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('modules') . " SET isactive='$enable' WHERE dirname='$mod'";
     if (!$db->queryF($sql)) {
         redirectMsg('modules.php', sprintf(__('Module %s could not be disabled!', 'rmcommon'), $mod), 1);
@@ -1294,9 +1409,9 @@ function load_modules_page()
         die();
     }
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
-    $sql = 'SELECT * FROM ' . $db->prefix('modules') . ' ORDER BY `name`';
-    $result = $db->query($sql);
+    $db             = XoopsDatabaseFactory::getDatabaseConnection();
+    $sql            = 'SELECT * FROM ' . $db->prefix('modules') . ' ORDER BY `name`';
+    $result         = $db->query($sql);
     $installed_dirs = [];
 
     while (false !== ($row = $db->fetchArray($result))) {
@@ -1304,9 +1419,9 @@ function load_modules_page()
     }
 
     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-    $dirlist = XoopsLists::getModulesList();
+    $dirlist        = XoopsLists::getModulesList();
     $available_mods = [];
-    $moduleHandler = xoops_getHandler('module');
+    $moduleHandler  = xoops_getHandler('module');
     foreach ($dirlist as $file) {
         clearstatcache();
         $file = trim($file);
@@ -1323,9 +1438,9 @@ function load_modules_page()
     unset($dirlist);
     unset($moduleHandler);
 
-    $limit = 7;
+    $limit  = 7;
     $tpages = ceil(count($available_mods) / $limit);
-    $page = rmc_server_var($_POST, 'page', 1);
+    $page   = rmc_server_var($_POST, 'page', 1);
     if ($page > $tpages) {
         $page = 1;
     }
@@ -1336,7 +1451,7 @@ function load_modules_page()
 
     // Event for available modules
     $available_mods = RMEvents::get()->run_event('rmcommon.available.modules', $available_mods);
-    $end = ($page * $limit);
+    $end            = ($page * $limit);
 
     if ($end > count($available_mods)) {
         $end = count($available_mods);
@@ -1345,7 +1460,7 @@ function load_modules_page()
     ob_start(); ?>
     <ul class="list-unstyled">
         <?php for ($i = $start; $i < $end; $i++): ?>
-        <?php $mod = $available_mods[$i]; ?>
+            <?php $mod = $available_mods[$i]; ?>
             <li>
                 <div class="the-logo">
                     <?php if ('' != $mod->getInfo('url')): ?>
@@ -1382,7 +1497,7 @@ function load_modules_page()
                         </div>
                         <div class="name">
                             <h4><?php echo $mod->getInfo('name'); ?></h4>
-                                    <span class="help-block">
+                            <span class="help-block">
                                         <?php echo $mod->getInfo('description'); ?>
                                     </span>
                         </div>
@@ -1462,7 +1577,7 @@ function load_modules_page()
                                 <?php if ('' != $mod->getInfo('releasedate')): ?>
                                     <?php
                                     $time = strtotime($mod->getInfo('releasedate'));
-    echo formatTimestamp($time, 's'); ?>
+                                    echo formatTimestamp($time, 's'); ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -1501,7 +1616,7 @@ function load_modules_page()
     </ul>
     <?php $nav->display(false); ?>
     <input type="hidden" id="token" value="<?php echo $xoopsSecurity->createToken(); ?>">
-<?php
+    <?php
     $ret = ob_get_clean();
     echo $ret;
 }
@@ -1515,7 +1630,7 @@ function module_rename()
 
     if (!$xoopsSecurity->check()) {
         $ret = [
-            'error' => 1,
+            'error'   => 1,
             'message' => __('You can not rename modules. Session token not valid!', 'rmcommon') . ' ' . rmc_server_var($_POST, 'token'),
         ];
 
@@ -1523,27 +1638,27 @@ function module_rename()
         die();
     }
 
-    $id = rmc_server_var($_POST, 'id', 0);
+    $id   = rmc_server_var($_POST, 'id', 0);
     $name = trim(rmc_server_var($_POST, 'name', ''));
 
     if ($id <= 0 || '' == $name) {
         $ret = [
-            'error' => 1,
+            'error'   => 1,
             'message' => __('Data provided is not valid', 'rmcommon'),
-            'token' => $xoopsSecurity->createToken(),
+            'token'   => $xoopsSecurity->createToken(),
         ];
 
         echo json_encode($ret);
         die();
     }
 
-    $db = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('modules') . " SET `name`='$name' WHERE mid='$id'";
     if (!$db->queryF($sql)) {
         $ret = [
-            'error' => 1,
+            'error'   => 1,
             'message' => __('Module name could not be changed!', 'rmcommon') . '\n' . $db->error(),
-            'token' => $xoopsSecurity->createToken(),
+            'token'   => $xoopsSecurity->createToken(),
         ];
 
         echo json_encode($ret);
@@ -1551,10 +1666,10 @@ function module_rename()
     }
 
     $ret = [
-        'error' => 0,
+        'error'   => 0,
         'message' => __('Module name changed successfully!', 'rmcommon'),
-        'token' => $xoopsSecurity->createToken(),
-        'id' => $id,
+        'token'   => $xoopsSecurity->createToken(),
+        'id'      => $id,
     ];
 
     echo json_encode($ret);

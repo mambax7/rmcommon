@@ -45,11 +45,11 @@ class Attributes extends \ArrayObject implements AttributeInterface
     public function add($name, $value)
     {
         if (is_scalar($value)) {
-            $value = explode(' ', (string) $value);
+            $value = explode(' ', (string)$value);
         }
         $values = $this->get($name, []);
         if (is_scalar($values)) {
-            $values = (array) $values;
+            $values = (array)$values;
         }
         foreach ($value as $v) {
             if (!in_array($v, $values, true)) {
@@ -71,10 +71,8 @@ class Attributes extends \ArrayObject implements AttributeInterface
      */
     protected function suppressRender($names)
     {
-        $names = (array) $names;
-        $this->suppressRenderAttributes = array_unique(
-            array_merge($this->suppressRenderAttributes, $names)
-        );
+        $names                          = (array)$names;
+        $this->suppressRenderAttributes = array_unique(array_merge($this->suppressRenderAttributes, $names));
     }
 
     /**
@@ -114,8 +112,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
             }
             if ('name' === $name
                 && $this->has('multiple')
-                && '[]' !== mb_substr($value, -2)
-            ) {
+                && '[]' !== mb_substr($value, -2)) {
                 $value .= '[]';
             }
             if (is_array($value)) {
@@ -226,7 +223,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      */
     public function getNames()
     {
-        return array_keys((array) $this);
+        return array_keys((array)$this);
     }
 
     /**

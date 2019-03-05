@@ -36,7 +36,7 @@ class Widgets
     public function __construct()
     {
         $this->widgetsProviders['rmcommon'] = [
-            'path' => RMCPATH . '/widgets',
+            'path'      => RMCPATH . '/widgets',
             'namespace' => 'Common\Widgets',
         ];
         $this->loadProviders();
@@ -50,8 +50,8 @@ class Widgets
      *
      * 'id' key must have an unique identifier to load icons from 'directory'.
      *
-     * @throws \Exception
      * @return bool
+     * @throws \Exception
      */
     private function loadProviders()
     {
@@ -78,7 +78,7 @@ class Widgets
             }
 
             $this->widgetsProviders[$provider['id']] = [
-                'path' => $provider['path'],
+                'path'      => $provider['path'],
                 'namespace' => rtrim($provider['namespace'], '\\'),
             ];
         }
@@ -93,7 +93,7 @@ class Widgets
 
     /**
      * Instantiate a new widget object from a specif provider
-     * @param string $provider Provider ID (e.g. rmcommon)
+     * @param string $provider   Provider ID (e.g. rmcommon)
      * @param string $widgetName Widget name. This name must correspond with file name (e.g. 'Counter')
      * @return bool|string
      */
@@ -126,7 +126,7 @@ class Widgets
         }
 
         $widgetClass = $this->widgetsProviders[$provider]['namespace'] . '\\' . $widgetName;
-        $widget = new $widgetClass();
+        $widget      = new $widgetClass();
         if (false === is_subclass_of($widget, 'Common\Core\Helpers\WidgetAbstract')) {
             trigger_error(sprintf(__('Attempt to load a non valid widget: %s. Widgets must be extended from WidgetAbstract.', 'rmcommon'), $widgetName));
 

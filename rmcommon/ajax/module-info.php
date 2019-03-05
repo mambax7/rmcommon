@@ -15,20 +15,12 @@ $ajax->prepare_ajax_response();
 
 $dirname = RMHttpRequest::get('module', 'string', '');
 if ('' == $dirname) {
-    $ajax->ajax_response(
-        __('Please specify a valid module dirname!', 'rmcommon'),
-        1,
-        0
-    );
+    $ajax->ajax_response(__('Please specify a valid module dirname!', 'rmcommon'), 1, 0);
 }
 
 $module = RMModules::load_module($dirname);
 if (!$module) {
-    $ajax->ajax_response(
-        __('Specified module is not installed!', 'rmcommon'),
-        1,
-        0
-    );
+    $ajax->ajax_response(__('Specified module is not installed!', 'rmcommon'), 1, 0);
 }
 
 $url = &$module->getInfo('updateurl');

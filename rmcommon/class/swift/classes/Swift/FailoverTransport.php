@@ -20,10 +20,10 @@ class Swift_FailoverTransport extends Swift_Transport_FailoverTransport
      *
      * @param Swift_Transport[] $transports
      */
-    public function __construct($transports = [])
+    public function __construct($transports = array())
     {
         call_user_func_array(
-            [$this, 'Swift_Transport_FailoverTransport::__construct'],
+            array($this, 'Swift_Transport_FailoverTransport::__construct'),
             Swift_DependencyContainer::getInstance()
                 ->createDependenciesFor('transport.failover')
             );
@@ -38,7 +38,7 @@ class Swift_FailoverTransport extends Swift_Transport_FailoverTransport
      *
      * @return Swift_FailoverTransport
      */
-    public static function newInstance($transports = [])
+    public static function newInstance($transports = array())
     {
         return new self($transports);
     }

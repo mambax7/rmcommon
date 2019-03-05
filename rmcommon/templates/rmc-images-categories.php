@@ -1,16 +1,16 @@
 <h1 class="cu-section-title"><?php _e('Categories', 'rmcommon'); ?></h1>
 
 <form name="frmimgcats" id="form-img-cats" method="post" action="images.php" class="form-inline">
-<div class="cu-bulk-actions">
-<?php echo $nav->render(); ?>
-<select name="action" class="form-control">
-	<option value=""><?php _e('Bulk Actions...', 'rmcommon'); ?></option>
-	<option value="deletecat"><?php _e('Delete', 'rmcommon'); ?></option>
-	<option value="closecat"><?php _e('Close Category', 'rmcommon'); ?></option>
-	<option value="opencat"><?php _e('Open Category', 'rmcommon'); ?></option>
-</select>
-<button type="submit" class="btn btn-default"><?php _e('Apply', 'rmcommon'); ?></button>
-</div>
+    <div class="cu-bulk-actions">
+        <?php echo $nav->render(); ?>
+        <select name="action" class="form-control">
+            <option value=""><?php _e('Bulk Actions...', 'rmcommon'); ?></option>
+            <option value="deletecat"><?php _e('Delete', 'rmcommon'); ?></option>
+            <option value="closecat"><?php _e('Close Category', 'rmcommon'); ?></option>
+            <option value="opencat"><?php _e('Open Category', 'rmcommon'); ?></option>
+        </select>
+        <button type="submit" class="btn btn-default"><?php _e('Apply', 'rmcommon'); ?></button>
+    </div>
 
     <div class="panel panel-default">
         <div class="table-responsive">
@@ -37,19 +37,20 @@
                         <td align="center" valign="top"><input type="checkbox" name="cats[]" value="<?php echo $cat['id']; ?>"></td>
                         <td>
                             <strong><?php echo $cat['name']; ?></strong>
-			<span class="cu-item-options">
-				<a href="images.php?action=editcat&amp;id=<?php echo $cat['id']; ?>"><?php _e('Edit', 'rmcommon'); ?></a>
-				<a href="javascript:;" onclick="if(confirm('<?php echo sprintf(__('Do you really want to delete &quot;%s&quot;?', 'rmcommon'), $cat['name']); ?>')) window.location = 'images.php?action=delcat&id=<?php echo $cat['id']; ?>&XOOPS_TOKEN_REQUEST='+$('#token').val();"><?php _e('Delete', 'rmcommon'); ?></a>
-				<a href="images.php?action=<?php echo 'open' == $cat['status'] ? 'closecat' : 'opencat'; ?>&amp;id=<?php echo $cat['id']; ?>"><?php _e('open' == $cat['status'] ? 'Close' : 'Open', 'rmcommon'); ?></a>
-				<a href="images.php?category=<?php echo $cat['id']; ?>"><?php _e('Images', 'rmcommon'); ?></a>
-			</span>
+                            <span class="cu-item-options">
+                <a href="images.php?action=editcat&amp;id=<?php echo $cat['id']; ?>"><?php _e('Edit', 'rmcommon'); ?></a>
+                <a href="javascript:;" onclick="if(confirm('<?php echo sprintf(__('Do you really want to delete &quot;%s&quot;?', 'rmcommon'), $cat['name']); ?>')) window.location = 'images.php?action=delcat&id=<?php echo $cat['id']; ?>&XOOPS_TOKEN_REQUEST='+$('#token').val();"><?php _e('Delete',
+                                                                                                                                                                                                                                                                                                'rmcommon'); ?></a>
+                <a href="images.php?action=<?php echo 'open' == $cat['status'] ? 'closecat' : 'opencat'; ?>&amp;id=<?php echo $cat['id']; ?>"><?php _e('open' == $cat['status'] ? 'Close' : 'Open', 'rmcommon'); ?></a>
+                <a href="images.php?category=<?php echo $cat['id']; ?>"><?php _e('Images', 'rmcommon'); ?></a>
+            </span>
                         </td>
                         <td class="text-center">
                             <?php if ('open' == $cat['status']) {
-    echo Common\Core\Helpers\Icons::getInstance()->getIcon('svg-rmcommon-unlock text-green');
-} else {
-    echo Common\Core\Helpers\Icons::getInstance()->getIcon('svg-rmcommon-lock text-orange');
-} ?>
+                                echo Common\Core\Helpers\Icons::getInstance()->getIcon('svg-rmcommon-unlock text-green');
+                            } else {
+                                echo Common\Core\Helpers\Icons::getInstance()->getIcon('svg-rmcommon-lock text-orange');
+                            } ?>
                         </td>
                         <td class="sizes_data">
                             <?php foreach ($cat['sizes'] as $size): ?>
@@ -74,8 +75,8 @@
         </div>
     </div>
 
-<div class="cu-bulk-actions text-right">
-	<?php echo $nav->render(); ?>
-</div>
-<input type="hidden" name="token" id="token" value="<?php echo $xoopsSecurity->createToken(); ?>">
+    <div class="cu-bulk-actions text-right">
+        <?php echo $nav->render(); ?>
+    </div>
+    <input type="hidden" name="token" id="token" value="<?php echo $xoopsSecurity->createToken(); ?>">
 </form>

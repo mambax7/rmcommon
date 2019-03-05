@@ -26,7 +26,7 @@
  * @author       Eduardo Cortés (AKA bitcero)    <i.bitcero@gmail.com>
  * @url          http://www.eduardocortes.mx
  */
-require  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $common->ajax()->prepare();
 
@@ -50,20 +50,20 @@ class RegisterHelper
                 if ($module->isNew()) {
                     return false;
                 }
-                $url = $module->getInfo('updateurl');
+                $url  = $module->getInfo('updateurl');
                 $name = $module->getInfo('name');
                 break;
             case 'plugin':
                 $plugin = $common->plugins()->load($item);
-                $url = $plugin->get_info('updateurl');
-                $name = $plugin->get_info('name');
+                $url    = $plugin->get_info('updateurl');
+                $name   = $plugin->get_info('name');
                 break;
             case 'theme':
                 $xtAssember = new XtAssembler($item);
                 if (false === $common->nativeTheme) {
                     return false;
                 }
-                $url = $xtAssember->theme()->getInfo('updateurl');
+                $url  = $xtAssember->theme()->getInfo('updateurl');
                 $name = $xtAssember->theme()->getInfo('name');
                 break;
         }
@@ -74,7 +74,7 @@ class RegisterHelper
 
         return [
             'name' => $name,
-            'url' => $url,
+            'url'  => $url,
         ];
     }
 
@@ -86,22 +86,20 @@ class RegisterHelper
     {
         global $common;
 
-        $api = urldecode($common->httpRequest()::post('api', 'string', ''));
+        $api   = urldecode($common->httpRequest()::post('api', 'string', ''));
         $email = urldecode($common->httpRequest()::post('email', 'string', ''));
-        $type = $common->httpRequest()::post('type', 'string', '');
-        $dir = $common->httpRequest()::post('dir', 'string', '');
+        $type  = $common->httpRequest()::post('type', 'string', '');
+        $dir   = $common->httpRequest()::post('dir', 'string', '');
 
         if ($reactivate) {
-            $licenseKey = $common->httpRequest()::post('license', 'string', '');
+            $licenseKey    = $common->httpRequest()::post('license', 'string', '');
             $activationKey = $common->httpRequest()::post('key', 'string', '');
         } else {
             $licenseKey = $common->httpRequest()::post('key', 'string', '');
         }
 
         if ('' == $api || '' == $email || '' == $licenseKey || '' == $type || '' == $dir || ($reactivate && '' == $activationKey)) {
-            $common->ajax()->notifyError(
-                __('Please provide all data', 'dtransport')
-            );
+            $common->ajax()->notifyError(__('Please provide all data', 'dtransport'));
         }
 
         $data = $this->isValid($dir, $type);
@@ -128,10 +126,10 @@ class RegisterHelper
         }
 
         $identifier = md5($type . '-' . $dir);
-        $license = new \Common\Core\License($identifier);
+        $license    = new \Common\Core\License($identifier);
 
-        $api = urlencode($api);
-        $email = urlencode($email);
+        $api        = urlencode($api);
+        $email      = urlencode($email);
         $licenseKey = urlencode($licenseKey);
         if ($reactivate) {
             $activationKey = urlencode($activationKey);
@@ -156,25 +154,20 @@ class RegisterHelper
                 $common->template()->assign('license', $licenseKey);
                 $common->template()->assign('item', $dir);
 
-                $common->ajax()->response(
-                    $response['message'],
-                    1,
-                    1,
-                    [
-                        'code' => $response['code'],
-                        'notify' => $response['notify'],
-                        'form' => $common->template()->render('ajax/rmc-reactivate.php'),
-                    ]
-                );
+                $common->ajax()->response($response['message'], 1, 1, [
+                                                                  'code'   => $response['code'],
+                                                                  'notify' => $response['notify'],
+                                                                  'form'   => $common->template()->render('ajax/rmc-reactivate.php'),
+                                                              ]);
             } else {
                 $common->ajax()->notifyError($response['message'], 1);
             }
         }
 
-        $license->element = $dir;
-        $license->type = $type;
-        $license->data = $response['licenseData'];
-        $license->date = strtotime($response['date']);
+        $license->element    = $dir;
+        $license->type       = $type;
+        $license->data       = $response['licenseData'];
+        $license->date       = strtotime($response['date']);
         $license->expiration = strtotime($response['expiration']);
         $license->identifier = $identifier;
 
@@ -183,18 +176,13 @@ class RegisterHelper
             $message .= '<p>' . sprintf(__('%s has been activated with next key:', 'rmcommon'), '<strong>' . $data['name'] . '</strong>') . '</p>';
             $message .= '<code>' . base64_decode($response['chain'], true) . '</code>';
 
-            $common->ajax()->response(
-                __('Activation has been completed!', 'rmcommon'),
-                0,
-                1,
-                [
-                    'notify' => [
-                        'type' => 'alert-success',
-                        'icon' => 'svg-rmcommon-key',
-                    ],
-                    'activation' => $message,
-                ]
-            );
+            $common->ajax()->response(__('Activation has been completed!', 'rmcommon'), 0, 1, [
+                                                                                          'notify'     => [
+                                                                                              'type' => 'alert-success',
+                                                                                              'icon' => 'svg-rmcommon-key',
+                                                                                          ],
+                                                                                          'activation' => $message,
+                                                                                      ]);
         }
 
         $common->ajax()->notifyError(__('Activation has been completed but data could not be saved. Please try again.', 'rmcommon'));
@@ -205,12 +193,10 @@ class RegisterHelper
         global $common;
 
         $type = $common->httpRequest()::post('type', 'string', '');
-        $dir = $common->httpRequest()::post('dir', 'string', '');
+        $dir  = $common->httpRequest()::post('dir', 'string', '');
 
         if ('' == $type || '' == $dir) {
-            $common->ajax()->notifyError(
-                __('Provided data is not valid!', 'dtransport')
-            );
+            $common->ajax()->notifyError(__('Provided data is not valid!', 'dtransport'));
         }
 
         $data = $this->isValid($dir, $type);
@@ -223,18 +209,13 @@ class RegisterHelper
         $common->template()->assign('type', $type);
         $common->template()->assign('item', $dir);
 
-        $common->ajax()->response(
-            'Registrando',
-            0,
-            1,
-            [
-                'form' => $common->template()->render('ajax/rmc-regform.php'),
-            ]
-        );
+        $common->ajax()->response('Registrando', 0, 1, [
+                                                   'form' => $common->template()->render('ajax/rmc-regform.php'),
+                                               ]);
     }
 }
 
-$action = $common->httpRequest()::post('action', 'string', '');
+$action         = $common->httpRequest()::post('action', 'string', '');
 $registerHelper = new RegisterHelper();
 switch ($action) {
     case 'form':
