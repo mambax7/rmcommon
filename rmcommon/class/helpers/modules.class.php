@@ -58,9 +58,9 @@ class RMModules
      * <pre>
      * array
      *
-     * @param  string $module Module directory to check
-     * @param  bool $name Return the name and version (true) or only version (false)
-     * @param  string $type Type of data to get: 'verbose' get a formatted string, 'raw' gets an array with values.
+     * @param string $module Module directory to check
+     * @param bool   $name   Return the name and version (true) or only version (false)
+     * @param string $type   Type of data to get: 'verbose' get a formatted string, 'raw' gets an array with values.
      * @return array|string
      */
     public static function get_module_version($module = '', $name = true, $type = 'verbose')
@@ -92,8 +92,8 @@ class RMModules
     /**
      * Format a given array with version information for a module.
      *
-     * @param  array $version Array with version values
-     * @param  bool $name Include module name in return string
+     * @param array $version Array with version values
+     * @param bool  $name    Include module name in return string
      * @return string
      */
     public static function format_module_version($version, $name = false)
@@ -103,7 +103,7 @@ class RMModules
 
     /**
      * Load a given Xoops Module
-     * @param  string|int $id Indentifier of module. Could be dirname or numeric ID
+     * @param string|int $id Indentifier of module. Could be dirname or numeric ID
      * @return XoopsModule
      */
     public static function load($id)
@@ -138,7 +138,7 @@ class RMModules
      *
      * Accepted $status values: 'all', 'active', 'inactive'
      *
-     * @param  string $status Type of modules to get
+     * @param string $status Type of modules to get
      * @return array
      */
     public static function get_modules_list($status = 'all')
@@ -159,8 +159,8 @@ class RMModules
             $sql .= " WHERE isactive=$active";
         }
 
-        $sql .= ' ORDER BY name';
-        $result = $db->query($sql);
+        $sql     .= ' ORDER BY name';
+        $result  = $db->query($sql);
         $modules = [];
 
         while (false !== ($row = $db->fetchArray($result))) {
@@ -180,7 +180,7 @@ class RMModules
 
     /**
      * Get the main menu for a module
-     * @param  string $dirname Directory name of module
+     * @param string $dirname Directory name of module
      * @return array|bool
      */
     public static function main_menu($dirname)
@@ -190,7 +190,7 @@ class RMModules
         if ($xoopsModule && $xoopsModule->getVar('dirname') == $dirname) {
             $mod = $xoopsModule;
         } else {
-            $mod = self::load_module($dirname);
+            $mod = self::load($dirname);
         }
 
         if ($mod->getInfo('main_menu') && '' != $mod->getInfo('main_menu') && file_exists(XOOPS_ROOT_PATH . '/modules/' . $mod->getVar('dirname') . '/' . $mod->getInfo('main_menu'))) {
@@ -210,7 +210,7 @@ class RMModules
         if ($xoopsModule && $xoopsModule->getVar('dirname') == $dirname) {
             $mod = $xoopsModule;
         } else {
-            $mod = self::load_module($dirname);
+            $mod = self::load($dirname);
         }
 
         $icon = &$mod->getInfo('icon');
@@ -224,7 +224,7 @@ class RMModules
      * module supports rmcommon rewrite feature.
      *
      * @param string $directory
-     * @param bool $admin
+     * @param bool   $admin
      * @return string
      */
     public static function permalink($directory, $admin = false)
