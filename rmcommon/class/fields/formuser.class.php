@@ -136,7 +136,7 @@ class RMFormUser extends RMFormElement
                     . "',"
                     . $this->get('limit')
                     . ','
-                    . intval($this->get('multi'))
+                    . (int)$this->get('multi')
                     . ",'"
                     . XOOPS_URL
                     . "');\">"

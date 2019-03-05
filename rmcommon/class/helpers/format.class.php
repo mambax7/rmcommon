@@ -26,7 +26,7 @@ class RMFormat
     public static function phone($phone)
     {
         $matches = [];
-        $found = false;
+        $found   = false;
 
         $patterns = [
             '/^(\d{3})[^\d]*(\d{4})$/', // Número local
@@ -67,7 +67,7 @@ class RMFormat
      * Da formato a fechas MySQL
      * @param string $date
      * @param string $format
-     * @param bool $local Utilizar formato de localización
+     * @param bool   $local Utilizar formato de localización
      * @return string
      */
     public static function date($date, $format = '', $local = false)
@@ -101,23 +101,23 @@ class RMFormat
     public static function social_icon($type)
     {
         $networks = [
-            'twitter' => 'fa-twitter-square',
-            'linkedin' => 'fa-linkedin-square',
-            'github' => 'fa-github-alt',
-            'pinterest' => 'fa-pinterest-square',
-            'google+' => 'fa-google-plus-square',
-            'youtube' => 'fa-youtube-square',
-            'rss' => 'fa-rss-square',
-            'xing' => 'fa-xing-square',
-            'dropbox' => 'fa-dropbox',
-            'instagram' => 'fa-instagram',
-            'flickr' => 'fa-flickr',
-            'tumblr' => 'fa-tumblr-square',
-            'dribbble' => 'fa-dribbble',
-            'skype' => 'fa-skype',
+            'twitter'    => 'fa-twitter-square',
+            'linkedin'   => 'fa-linkedin-square',
+            'github'     => 'fa-github-alt',
+            'pinterest'  => 'fa-pinterest-square',
+            'google+'    => 'fa-google-plus-square',
+            'youtube'    => 'fa-youtube-square',
+            'rss'        => 'fa-rss-square',
+            'xing'       => 'fa-xing-square',
+            'dropbox'    => 'fa-dropbox',
+            'instagram'  => 'fa-instagram',
+            'flickr'     => 'fa-flickr',
+            'tumblr'     => 'fa-tumblr-square',
+            'dribbble'   => 'fa-dribbble',
+            'skype'      => 'fa-skype',
             'foursquare' => 'fa-foursquare',
-            'vimeo' => 'fa-vimeo-square',
-            'vimeo' => 'fa-vimeo-square',
+            'vimeo'      => 'fa-vimeo-square',
+            'vimeo'      => 'fa-vimeo-square',
         ];
 
         if (isset($networks[$type])) {
@@ -131,7 +131,7 @@ class RMFormat
      * Format a given array with version information for a module.
      *
      * @param array $version Array with version values
-     * @param bool $name Include module name in return string
+     * @param bool  $name    Include module name in return string
      * @return string
      */
     public static function version($version, $name = false)
@@ -193,10 +193,10 @@ class RMFormat
 
     /**
      * Format bytes to MB, GB, KB, etc
-     * @param int $size value to format
+     * @param int    $size   value to format
      * @param string $origin type of input. Can be b, kb, mb, gb, tb, or ''
      * @param string $target type of output. Can be b, kb, mb, gb, kb or ''
-     * @param bool $abr True enable abbreviations (e.g. kb, mb, gb, etc)
+     * @param bool   $abr    True enable abbreviations (e.g. kb, mb, gb, etc)
      * @return string
      */
     public static function bytes_format($size, $origin = '', $target = '', $abr = true)
@@ -207,7 +207,7 @@ class RMFormat
         $tb = $gb * 1000;
 
         $units = [
-            'b' => 1,
+            'b'  => 1,
             'kb' => $kb,
             'mb' => $mb,
             'gb' => $gb,
@@ -215,7 +215,7 @@ class RMFormat
         ];
 
         $string = [
-            'b' => $abr ? __('%s b', 'rmcommon') : __('%s Bytes', 'rmcommon'),
+            'b'  => $abr ? __('%s b', 'rmcommon') : __('%s Bytes', 'rmcommon'),
             'kb' => $abr ? __('%s KB', 'rmcommon') : __('%s Kilobytes', 'rmcommon'),
             'mb' => $abr ? __('%s MB', 'rmcommon') : __('%s Megabytes', 'rmcommon'),
             'gb' => $abr ? __('%s GB', 'rmcommon') : __('%s Gigabytes', 'rmcommon'),
@@ -272,24 +272,24 @@ class RMFormat
      */
     public static function quantity($number)
     {
-        $value = 0;
+        $value  = 0;
         $suffix = '';
 
         if ($number < 1000) {
-            $value = $number;
+            $value  = $number;
             $suffix = '';
         } elseif ($number >= 1000 && $number < 1000000) {
-            $value = number_format($number / 1000, 1);
+            $value  = number_format($number / 1000, 1);
             $suffix = 'K';
         } elseif ($number >= 1000000) {
-            $value = number_format($number / 1000000, 1);
+            $value  = number_format($number / 1000000, 1);
             $suffix = 'M';
         }
 
-        if ($value > intval($value)) {
+        if ($value > (int)$value) {
             $formatted = $value . $suffix;
         } else {
-            $formatted = intval($value) . $suffix;
+            $formatted = (int)$value . $suffix;
         }
 
         return $formatted;

@@ -13,13 +13,13 @@
  */
 class RMHtaccess
 {
-    private $rules = '';
-    private $module = '';
-    private $file = '';
+    private $rules   = '';
+    private $module  = '';
+    private $file    = '';
     private $content = '';
-    private $bCode = '';
-    private $base = '/';
-    private $apache = true;
+    private $bCode   = '';
+    private $base    = '/';
+    private $apache  = true;
     private $rewrite = true;
 
     public function __construct($module)
@@ -29,7 +29,7 @@ class RMHtaccess
         }
 
         $this->module = $module;
-        $this->file = XOOPS_ROOT_PATH . '/.htaccess';
+        $this->file   = XOOPS_ROOT_PATH . '/.htaccess';
 
         $this->content = file_get_contents($this->file);
 
@@ -89,9 +89,9 @@ class RMHtaccess
             $this->content .= "\nRewriteEngine On\n";
         }
 
-        $base = parse_url(XOOPS_URL . '/');
+        $base       = parse_url(XOOPS_URL . '/');
         $this->base = isset($base['path']) ? rtrim($base['path'], '/') . '/' : '/';
-        $rb = 'RewriteBase ' . $this->base . "\n";
+        $rb         = 'RewriteBase ' . $this->base . "\n";
 
         if (false === mb_strpos($this->content, $rb)) {
             if (preg_match('/RewriteBase/', $this->content)) {
@@ -175,7 +175,7 @@ class RMHtaccess
         }
 
         $this->rules = $rules;
-        $code = $this->makeCode($rules);
+        $code        = $this->makeCode($rules);
 
         $this->removeRule();
 
@@ -186,7 +186,7 @@ class RMHtaccess
             return $this->bCode . $code;
         }
 
-        $this->content .= "$code";
+        $this->content .= (string)$code;
 
         if (file_put_contents($this->file, $this->content)) {
             return true;

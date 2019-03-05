@@ -14,7 +14,7 @@ class RMUser extends RMObject
 
     public function __construct($id = '', $use_email = false, $pass = null)
     {
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db       = XoopsDatabaseFactory::getDatabaseConnection();
         $this->_dbtable = $this->db->prefix('users');
         $this->setNew();
         $this->initVarsFromTable();
@@ -28,13 +28,13 @@ class RMUser extends RMObject
             }
 
             $this->primary = 'email';
-            $loaded = $this->loadValues($id);
+            $loaded        = $this->loadValues($id);
             $this->primary = 'uid';
         } elseif ('' != $id && is_numeric($id)) {
             $loaded = $this->loadValues((int)$id);
         } elseif ('' != $id) {
             $this->primary = 'uname';
-            $loaded = $this->loadValues($id);
+            $loaded        = $this->loadValues($id);
             $this->primary = 'uid';
         }
 
@@ -63,7 +63,7 @@ class RMUser extends RMObject
             return $this->groups;
         }
 
-        $sql = 'SELECT groupid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE uid=' . (int)$this->getVar('uid');
+        $sql    = 'SELECT groupid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE uid=' . (int)$this->getVar('uid');
         $result = $this->db->query($sql);
 
         if (!$result) {
@@ -85,7 +85,7 @@ class RMUser extends RMObject
         }
 
         // Gets all groups based in their id
-        $sql = 'SELECT ' . ('' != $fields ? "$fields" : '') . ' FROM ' . $this->db->prefix('groups') . ' WHERE groupid IN(' . implode(',', $groups) . ')';
+        $sql    = 'SELECT ' . ('' != $fields ? (string)$fields : '') . ' FROM ' . $this->db->prefix('groups') . ' WHERE groupid IN(' . implode(',', $groups) . ')';
         $result = $this->db->query($sql);
         $groups = [];
         while (false !== ($row = $this->db->fetchArray($result))) {
@@ -109,7 +109,7 @@ class RMUser extends RMObject
 
     public function save()
     {
-        $ret = true;
+        $ret    = true;
         $status = $this->isNew();
         /**
          * Guardmaos los datos del usuarios
