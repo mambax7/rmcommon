@@ -114,5 +114,7 @@ abstract class RMIPlugin
         return \Common\Core\Helpers\Plugins::isInstalled($this->info['dir']);
     }
 
-    abstract public function getInstance();
+    public static function getInstance(){
+
+    }
 }
