@@ -637,7 +637,7 @@ function show_modules_list()
 
         // Admin section
         $admin_link = $mod->getVar('hasadmin') ? XOOPS_URL . '/modules/' . $mod->dirname() . '/' . $mod->getInfo('adminindex') : '';
-        $icon       = '' != $mod->getInfo('icon') ? $cuIcons->getIcon($mod->getInfo('icon')) : (XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . ($mod->getInfo('icon48') ? $mod->getInfo('icon48') : $mod->getInfo('image')));
+        $icon       = '' != $mod->getInfo('icon') ? $cuIcons->getIcon($mod->getInfo('icon')) : (XOOPS_URL . '/modules/' . $mod->getVar('dirname') . '/' . ($mod->getInfo('icon48') ?: $mod->getInfo('image')));
 
         $modules[] = [
             'id'          => $mod->getVar('mid'),
