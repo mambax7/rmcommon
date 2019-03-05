@@ -502,7 +502,7 @@ class RMTemplate
             return $this->add_jquery(false);
         }
 
-        if (false !== mb_strpos($file, 'bootstrap.js') || false !== mb_strpos($file, 'bootstrap.min.js') && 'theme' != $owner) {
+        if (false !== mb_strpos($file, 'bootstrap.js') || (false !== mb_strpos($file, 'bootstrap.min.js') && 'theme' != $owner)) {
             return $this->add_bootstrap('js');
         }
 

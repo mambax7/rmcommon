@@ -86,7 +86,7 @@ abstract class RMActiveRecord
             return false;
         }
 
-        if (('' == $owner || null === $owner) & !in_array($objects, $this->system_tables, true)) {
+        if (('' == $owner || null === $owner) && !in_array($objects, $this->system_tables, true)) {
             $this->add_error(__('No owner has been specified!', 'rmcommon'));
 
             return false;

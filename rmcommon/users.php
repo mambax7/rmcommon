@@ -500,7 +500,7 @@ function show_mailer()
     $uid   = rmc_server_var($_GET, 'uid', []);
     $query = rmc_server_var($_GET, 'query', '');
 
-    if (!is_array($uid) && $uid <= 0 || empty($uid)) {
+    if ((!is_array($uid) && $uid <= 0) || empty($uid)) {
         // In admin control panel (side) add_message always must to be called before
         // ExmGUI::show_header()
         RMTemplate::get()->add_message(__('You must select one user at least. Please click on "Add Users" and select as many users as you wish.'), 0);

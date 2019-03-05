@@ -144,7 +144,7 @@ class RMSettings
         global $xoopsModuleConfig, $xoopsModule;
 
         if (isset(self::$modules_settings[$directory])) {
-            if ('' != $option & isset(self::$modules_settings[$directory][$option])) {
+            if ('' != $option && isset(self::$modules_settings[$directory][$option])) {
                 return self::$modules_settings[$directory][$option];
             }
 

@@ -20,33 +20,33 @@ require_once HELIUM_PATH . '/class/HeliumHelper.class.php';
 $xoFunc = new HeliumHelper();
 
 // Common Utilities module menu
-$mod = RMModules::load_module('rmcommon');
+$mod           = RMModules::load_module('rmcommon');
 $rmcommon_menu = [
-    'name' => $mod->getVar('name'),
+    'name'      => $mod->getVar('name'),
     'directory' => $mod->getVar('dirname'),
-    'menu' => $xoFunc->moduleMenu('rmcommon'),
-    'native' => $mod->getInfo('rmnative'),
-    'rewrite' => $mod->getInfo('rewrite'),
+    'menu'      => $xoFunc->moduleMenu('rmcommon'),
+    'native'    => $mod->getInfo('rmnative'),
+    'rewrite'   => $mod->getInfo('rewrite'),
 ];
 
 // System module menu
-$mod = RMModules::load_module('system');
+$mod         = RMModules::load_module('system');
 $system_menu = [
-    'name' => $mod->getVar('name'),
+    'name'      => $mod->getVar('name'),
     'directory' => $mod->getVar('dirname'),
-    'menu' => $xoFunc->moduleMenu('system'),
-    'native' => $mod->getInfo('rmnative'),
-    'rewrite' => $mod->getInfo('rewrite'),
+    'menu'      => $xoFunc->moduleMenu('system'),
+    'native'    => $mod->getInfo('rmnative'),
+    'rewrite'   => $mod->getInfo('rewrite'),
 ];
 
 // Current Module Menu
 if ('rmcommon' != $xoopsModule->getVar('dirname')) {
     $currentModule = [
-        'name' => $xoopsModule->getVar('name'),
+        'name'      => $xoopsModule->getVar('name'),
         'directory' => $xoopsModule->getVar('dirname'),
-        'menu' => $xoFunc->moduleMenu($xoopsModule->getVar('dirname')),
-        'native' => $xoopsModule->getInfo('rmnative'),
-        'rewrite' => $xoopsModule->getInfo('rewrite'),
+        'menu'      => $xoFunc->moduleMenu($xoopsModule->getVar('dirname')),
+        'native'    => $xoopsModule->getInfo('rmnative'),
+        'rewrite'   => $xoopsModule->getInfo('rewrite'),
     ];
     $currentModule = (object)$currentModule;
 }
@@ -54,7 +54,7 @@ if ('rmcommon' != $xoopsModule->getVar('dirname')) {
 /**
  * Load modules and their menus
  */
-$modulesList = \XoopsLists::getModulesList();
+$modulesList   = \XoopsLists::getModulesList();
 $activeModules = [];
 foreach ($modulesList as $item) {
     if ('rmcommon' == $item || 'system' == $item || $item == $xoopsModule->getVar('dirname')) {
@@ -70,12 +70,12 @@ foreach ($modulesList as $item) {
     }
 
     $activeModules[] = (object)[
-        'name' => $module->getVar('name'),
+        'name'      => $module->getVar('name'),
         'directory' => $module->getVar('dirname'),
-        'menu' => $module->getAdminMenu(),
-        'native' => $module->getInfo('rmnative'),
-        'rewrite' => $module->getInfo('rewrite'),
-        'icon' => false === $module->getInfo('icon') ? XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') : $module->getInfo('icon'),
+        'menu'      => $module->getAdminMenu(),
+        'native'    => $module->getInfo('rmnative'),
+        'rewrite'   => $module->getInfo('rewrite'),
+        'icon'      => false === $module->getInfo('icon') ? XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') : $module->getInfo('icon'),
     ];
 }
 
@@ -105,7 +105,7 @@ $this->add_style('font-awesome.min.css', 'rmcommon', ['footer' => 1]);
 $this->add_style('icomoon.min.css', 'rmcommon', ['footer' => 1]);
 $this->add_style('jquery.window.css', 'helium', ['footer' => 1], 'theme');
 $this->add_script('bootstrap.min.js', 'helium', ['footer' => 1, 'id' => 'bootstrap-js'], 'theme');
-$this->add_script('jquery.ck.js', 'rmcommon', ['footer' >= 1]);
+$this->add_script('jquery.ck.js', 'rmcommon', ['footer' => 1]);
 $this->add_script('helium.min.js', 'helium', ['footer' => 1, 'id' => 'helium-js'], 'theme');
 $this->add_script('updates.js', 'rmcommon', ['footer' => 1]);
 
@@ -119,12 +119,12 @@ RMTemplate::getInstance()->clear_styles('rmcommonpagenavcss');
 RMTemplate::getInstance()->clear_styles('cu-blocks-css');
 
 $tp6Alerts = [
-    RMMSG_ERROR => 'alert-danger',
-    RMMSG_INFO => 'alert-info',
-    RMMSG_OTHER => 'alert-info',
-    RMMSG_SAVED => 'alert-success',
+    RMMSG_ERROR   => 'alert-danger',
+    RMMSG_INFO    => 'alert-info',
+    RMMSG_OTHER   => 'alert-info',
+    RMMSG_SAVED   => 'alert-success',
     RMMSG_SUCCESS => 'alert-success',
-    RMMSG_WARN => 'alert-warning',
+    RMMSG_WARN    => 'alert-warning',
 ];
 
 $this->add_head_script("helium_url = '" . HELIUM_URL . "';");
@@ -138,7 +138,7 @@ if ($xoopsModule->hasmain()) {
         $class = ucfirst($xoopsModule->dirname()) . 'Controller';
         if (class_exists($class)) {
             $controller = new $class();
-            $mainLink = $controller->get_main_link();
+            $mainLink   = $controller->get_main_link();
         }
     }
 }
@@ -151,7 +151,7 @@ include RMCPATH . '/js/cu-js-language.php';
 
 // Scripts
 $heliumScripts = \RMTemplate::get()->get_scripts(true);
-$heliumStyles = \RMTemplate::get()->get_styles(true);
+$heliumStyles  = \RMTemplate::get()->get_styles(true);
 
 // User Rank
 $userRank = $xoopsUser->rank();
