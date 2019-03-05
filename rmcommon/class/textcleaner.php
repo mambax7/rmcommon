@@ -199,7 +199,7 @@ class TextCleaner
      * @param string $context   Optional. How the URL will be used. Default is 'display'.
      * @return string The cleaned $url after the 'cleaned_url' filter is applied.
      */
-    public function clean_url($url, $protocols = null, $context = 'display')
+    public static function clean_url($url, $protocols = null, $context = 'display')
     {
         global $aprotocols;
 

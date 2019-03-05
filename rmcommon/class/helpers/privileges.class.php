@@ -19,7 +19,7 @@ class RMPrivileges
      * Loads all user permissions and stores in a stdClass
      * that will functioning as cache
      */
-    private function load_user_permissions()
+    private static function load_user_permissions()
     {
         global $xoopsUser, $xoopsDB;
 
@@ -167,7 +167,7 @@ class RMPrivileges
         return $permissions;
     }
 
-    private function response($method)
+    private static function response($method)
     {
         global $common;
 
