@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Common Utilities Framework for XOOPS
  *
@@ -53,11 +54,9 @@ class EnabledCustomCodes
     {
         static $instance;
 
-        if (isset($instance)) {
-            return $instance;
+        if (!isset($instance)) {
+            $instance = new self();
         }
-
-        $instance = new self();
 
         return $instance;
     }

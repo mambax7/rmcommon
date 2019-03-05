@@ -237,11 +237,9 @@ class Services
     {
         static $instance;
 
-        if (isset($instance)) {
-            return $instance;
+        if (!isset($instance)) {
+            $instance = new self();
         }
-
-        $instance = new self();
 
         return $instance;
     }

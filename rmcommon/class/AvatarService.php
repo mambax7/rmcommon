@@ -74,8 +74,8 @@ class XoopsAvatarService extends \Common\Core\Helpers\ServiceAbstract implements
      * $src = $rmServices->avatar->getSrc('my@email.com', 120);
      * </pre>
      *
-     * @param mixed $user_or_email
-     * @param int $size Ignored parameter
+     * @param mixed  $user_or_email
+     * @param int    $size Ignored parameter
      * @param string $default
      * @return string
      */
@@ -95,7 +95,7 @@ class XoopsAvatarService extends \Common\Core\Helpers\ServiceAbstract implements
             }
         } else {
             $avatar = $this->loadWithEmail($user_or_email);
-            $email = $user_or_email;
+            $email  = $user_or_email;
         }
 
         if (!file_exists(XOOPS_UPLOAD_PATH . '/' . $avatar)) {
@@ -121,8 +121,8 @@ class XoopsAvatarService extends \Common\Core\Helpers\ServiceAbstract implements
      * objet is provided (XoopsUser, RMuser or stdClass) this function takes
      * the name and the uname properties also.
      *
-     * @param $user_or_email
-     * @param int $size
+     * @param        $user_or_email
+     * @param int    $size
      * @param string $default
      * @return string
      */
@@ -130,13 +130,13 @@ class XoopsAvatarService extends \Common\Core\Helpers\ServiceAbstract implements
     {
         if (is_object($user_or_email)) {
             if (is_a($user_or_email, 'XoopsUser')) {
-                $name = $user_or_email->getVar('name');
+                $name  = $user_or_email->getVar('name');
                 $uname = $user_or_email->getVar('uname');
             } elseif (is_a($user_or_email, 'RMUser')) {
-                $name = $user_or_email->name;
+                $name  = $user_or_email->name;
                 $uname = $user_or_email->uname;
             } else {
-                $name = $user_or_email->name;
+                $name  = $user_or_email->name;
                 $uname = $user_or_email->uname;
             }
         }
@@ -153,11 +153,9 @@ class XoopsAvatarService extends \Common\Core\Helpers\ServiceAbstract implements
     {
         static $instance;
 
-        if (isset($instance)) {
-            return $instance;
+        if (!isset($instance)) {
+            $instance = new self();
         }
-
-        $instance = new self();
 
         return $instance;
     }

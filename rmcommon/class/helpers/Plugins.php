@@ -112,8 +112,8 @@ class Plugins
      */
     public static function allInstalled()
     {
-        $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $result = $db->query('SELECT dir FROM ' . $db->prefix('mod_rmcommon_plugins') . ' WHERE status=1');
+        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+        $result  = $db->query('SELECT dir FROM ' . $db->prefix('mod_rmcommon_plugins') . ' WHERE status=1');
         $plugins = [];
 
         while (false !== ($row = $db->fetchArray($result))) {
@@ -141,11 +141,9 @@ class Plugins
     {
         static $instance;
 
-        if (isset($instance)) {
-            return $instance;
+        if (!isset($instance)) {
+            $instance = new self();
         }
-
-        $instance = new self();
 
         return $instance;
     }
