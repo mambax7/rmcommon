@@ -127,7 +127,7 @@ class Widgets
 
         $widgetClass = $this->widgetsProviders[$provider]['namespace'] . '\\' . $widgetName;
         $widget      = new $widgetClass();
-        if (false === is_subclass_of($widget, 'Common\Core\Helpers\WidgetAbstract')) {
+        if (false === $widget instanceof \Common\Core\Helpers\WidgetAbstract) {
             trigger_error(sprintf(__('Attempt to load a non valid widget: %s. Widgets must be extended from WidgetAbstract.', 'rmcommon'), $widgetName));
 
             return false;

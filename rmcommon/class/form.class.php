@@ -284,7 +284,7 @@ class RMForm extends \Common\Core\Helpers\Attributes
         $element->setForm($this->_name);
         $ret['field'] = $element;
         $ret['class'] = get_class($element);
-        if ('RMFormEditor' == get_class($element)) {
+        if ($element instanceof \RMFormEditor) {
             if ('tiny' == $element->getType()) {
                 $this->editores .= ',' . $element->getName();
             }
@@ -422,7 +422,7 @@ class RMForm extends \Common\Core\Helpers\Attributes
                 'name'    => $element->getName(),
             ];
 
-            if (is_a($element, 'RMFormEditor')) {
+            if ($element instanceof \RMFormEditor) {
                 if ('tiny' == $element->getType()) {
                     $callmethod = 'tinyMCE.triggerSave(); ';
                 }

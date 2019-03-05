@@ -1338,7 +1338,7 @@ class RMTemplate
     {
         global $xoopsTpl, $xoopsConfig;
 
-        if (is_a($xoopsTpl, 'XoopsTpl')) {
+        if ($xoopsTpl instanceof \XoopsTpl) {
             return $xoopsTpl;
         }
 

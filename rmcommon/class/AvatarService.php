@@ -129,10 +129,10 @@ class XoopsAvatarService extends \Common\Core\Helpers\ServiceAbstract implements
     public function getAvatar($user_or_email, $size = 80, $default = '')
     {
         if (is_object($user_or_email)) {
-            if (is_a($user_or_email, 'XoopsUser')) {
+            if ($user_or_email instanceof \XoopsUser) {
                 $name  = $user_or_email->getVar('name');
                 $uname = $user_or_email->getVar('uname');
-            } elseif (is_a($user_or_email, 'RMUser')) {
+            } elseif ($user_or_email instanceof \RMUser) {
                 $name  = $user_or_email->name;
                 $uname = $user_or_email->uname;
             } else {

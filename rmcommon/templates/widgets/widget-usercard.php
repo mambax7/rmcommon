@@ -249,7 +249,7 @@ elseif ('large-big-header' == $widgetSettings->type):
                 <?php endif; ?>
 
                 <?php if (false === empty($widgetSettings->addonButton)): ?>
-                    <a href="<?php echo $widgetSettings->addonButton['link']; ?>" class="btn btn-<?php echo $widgetSettings->addonButton['color'] ? $widgetSettings->addonButton['color'] : $widgetSettings->color; ?> main-button">
+                    <a href="<?php echo $widgetSettings->addonButton['link']; ?>" class="btn btn-<?php echo $widgetSettings->addonButton['color'] ?: $widgetSettings->color; ?> main-button">
                         <?php if ('' != $widgetSettings->addonButton['icon']): ?>
                             <?php echo $common->icons()->getIcon($widgetSettings->addonButton['icon']); ?>
                         <?php endif; ?>
