@@ -183,7 +183,7 @@ class RmcommonCorePreload extends XoopsPreloadItem
         die();
     }
 
-    public function eventRmcommonClassGuiHeader($args)
+    public static function eventRmcommonClassGuiHeader($args)
     {
         /*if (!empty($_SESSION['redirect_message'])) {
             $GLOBALS['xoTheme']->addStylesheet('xoops.css');
