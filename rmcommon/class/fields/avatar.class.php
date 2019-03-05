@@ -191,7 +191,7 @@ class RMFormAvatarField extends RMFormElement
             $rtn .= '<tr>';
             $rtn .= "<td align='left'><label><input type='$typeinput' name='$name' id='$name' value=''";
             if (empty($this->_select)) {
-                $rtn .= " checked";
+                $rtn .= ' checked';
             }
             $rtn .= '>' . _RMS_CF_NOAVATAR . '</label></td>';
             $col++;
@@ -204,7 +204,7 @@ class RMFormAvatarField extends RMFormElement
                 $rtn .= "<td align='left'><label><img src='" . ABSURL . "/uploads/avatars/$row[avatar_file]' align='absmiddle'> <input type='$typeinput' name='$name' id='$name' value='$row[avatar_file]'";
                 if (is_array($this->_select)) {
                     if (in_array($row['avatar_file'], $this->_select, true)) {
-                        $rtn .= " checked";
+                        $rtn .= ' checked';
                     }
                 }
                 $rtn .= ">$row[avatar_name]</label>";

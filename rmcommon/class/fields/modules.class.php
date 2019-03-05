@@ -271,7 +271,7 @@ class RMFormModules extends RMFormElement
                         foreach ($subpages as $page => $caption) {
                             $rtns .= "<li class='checkbox'>
                                         <label>
-                                            <input type='checkbox' data-parent='" . $k . "' name='" . sprintf($name, $k) . "[subpages][$page]' id='subpages-$k-$page' value='$page'" . (is_array($subpages) && @in_array($page, $selectedSubs[$k], true) ? " checked" : '') . "> $caption</label></li>";
+                                            <input type='checkbox' data-parent='" . $k . "' name='" . sprintf($name, $k) . "[subpages][$page]' id='subpages-$k-$page' value='$page'" . (is_array($subpages) && @in_array($page, $selectedSubs[$k], true) ? ' checked' : '') . "> $caption</label></li>";
                             $j++;
                             $cr++;
                         }

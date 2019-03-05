@@ -88,7 +88,7 @@ class RMFormTheme extends RMFormElement
 
             $rtn = '<ul class="rmoptions_container">';
             foreach ($themes as $k => $name) {
-                $rtn .= "<li><label><input $attributes value='$k' " . (is_array($selected) ? (in_array($k, $selected, true) ? " checked" : '') : '') . "> $name</label></li>";
+                $rtn .= "<li><label><input $attributes value='$k' " . (is_array($selected) ? (in_array($k, $selected, true) ? ' checked' : '') : '') . "> $name</label></li>";
             }
             $rtn .= '</ul>';
         } else {

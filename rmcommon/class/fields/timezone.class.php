@@ -10,10 +10,10 @@
 
 class RMFormTimeZoneField extends RMFormElement
 {
-    private $multi = 0;
-    private $type = 0;
+    private $multi    = 0;
+    private $type     = 0;
     private $selected = null;
-    private $size = 5;
+    private $size     = 5;
 
     public function __construct($caption, $name, $type = 0, $multi = 0, $selected = null, $size = 5)
     {
@@ -78,7 +78,7 @@ class RMFormTimeZoneField extends RMFormElement
     public function render()
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-        $zonas = XoopsLists::getTimeZoneList();
+        $zonas    = XoopsLists::getTimeZoneList();
         $selected = $this->get('selected');
 
         if ('readio' == $this->get('type') || 'checkbox' == $this->get('type')) {
@@ -91,9 +91,9 @@ class RMFormTimeZoneField extends RMFormElement
                     if (!is_array($selected)) {
                         $selected = [$selected];
                     }
-                    $rtn .= "<label><input $attributes value='$k' " . (is_array($selected) ? (in_array($k, $selected, true) ? " checked" : '') : '') . "> $v</label>";
+                    $rtn .= "<label><input $attributes value='$k' " . (is_array($selected) ? (in_array($k, $selected, true) ? ' checked' : '') : '') . "> $v</label>";
                 } else {
-                    $rtn .= "<label><input $attributes value='$k' " . ($k == $selected ? " checked" : '') . "> $v</label>";
+                    $rtn .= "<label><input $attributes value='$k' " . ($k == $selected ? ' checked' : '') . "> $v</label>";
                 }
                 $i++;
             }

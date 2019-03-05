@@ -202,7 +202,7 @@ class RMFormRadio extends RMFormElement
             foreach ($this->_options as $k => $v) {
                 $rtn .= '<label class="radio-inline">';
                 $rtn .= "<input $attributes value='$v[value]' ";
-                $rtn .= RMHttpRequest::request($this->get('name'), 'string', '') == $v['value'] ? 'checked ' : ($v['value'] == $this->get('value') ? "checked " : '');
+                $rtn .= RMHttpRequest::request($this->get('name'), 'string', '') == $v['value'] ? 'checked ' : ($v['value'] == $this->get('value') ? 'checked ' : '');
                 $rtn .= ('' != $v['extra'] ? "$v[extra] " : '') . "> $v[caption]</label>";
             }
         } else {
