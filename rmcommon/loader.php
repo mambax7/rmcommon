@@ -52,8 +52,7 @@ require RMCPATH . '/include/legacy-autoloader.php';
 require_once XOOPS_ROOT_PATH . '/class/logger/xoopslogger.php';
 require_once XOOPS_ROOT_PATH . '/class/database/databasefactory.php';
 
-$dbF = new XoopsDatabaseFactory();
-$db = $dbF->getDatabaseConnection();
+$db  = XoopsDatabaseFactory::getDatabaseConnection();
 
 $GLOBALS['rmFunctions'] = new RMFunctions();
 global $rmFunctions;
@@ -88,8 +87,8 @@ $loader->addNamespace('Common\Widgets', XOOPS_ROOT_PATH . '/modules/rmcommon/wid
 
 // Base classes
 $GLOBALS['rmEvents'] = RMEvents::get();
-$GLOBALS['rmTpl'] = RMTemplate::getInstance();
-$GLOBALS['rmCodes'] = RMCustomCode::get();
+$GLOBALS['rmTpl']    = RMTemplate::getInstance();
+$GLOBALS['rmCodes']  = RMCustomCode::get();
 
 global $rmEvents, $rmTpl, $rmCodes;
 
@@ -99,8 +98,8 @@ require RMCPATH . '/include/custom-codes.php';
 $cuSettings->lang = $rmEvents->run_event('rmcommon.set.language', $cuSettings->lang);
 
 // Load plugins
-$file = XOOPS_CACHE_PATH . '/plgs.cnf';
-$plugins = [];
+$file                         = XOOPS_CACHE_PATH . '/plgs.cnf';
+$plugins                      = [];
 $GLOBALS['installed_plugins'] = [];
 
 if (file_exists($file)) {
@@ -111,7 +110,7 @@ if (empty($plugins) || !is_array($plugins)) {
     $result = $db->query('SELECT dir FROM ' . $db->prefix('mod_rmcommon_plugins') . ' WHERE status=1');
     while (false !== ($row = $db->fetchArray($result))) {
         $GLOBALS['installed_plugins'][$row['dir']] = true;
-        $plugins[] = $row['dir'];
+        $plugins[]                                 = $row['dir'];
         $rmEvents->load_extra_preloads(RMCPATH . '/plugins/' . $row['dir'], preg_replace('/[^A-Za-z0-9]/', '', $row['dir']) . 'Plugin');
     }
     file_put_contents($file, json_encode($plugins));
@@ -185,11 +184,11 @@ if (defined('XOOPS_CPFUNC_LOADED') || (isset($xoopsOption) && array_key_exists('
 }
 
 // Services Manager
-$cuServices = Common\Core\Helpers\Services::getInstance();
+$cuServices            = Common\Core\Helpers\Services::getInstance();
 $GLOBALS['cuServices'] = $cuServices;
 
 // Icons manager
-$cuIcons = Common\Core\Helpers\Icons::getInstance();
+$cuIcons            = Common\Core\Helpers\Icons::getInstance();
 $GLOBALS['cuIcons'] = $cuIcons;
 
 // Common handler
