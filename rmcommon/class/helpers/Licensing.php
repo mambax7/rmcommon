@@ -93,7 +93,7 @@ class Licensing
         //if(false === isset($qngn->type)){return false;}
         switch ($qngn->type) {
             case 'module':
-                $zbq = $pbzzba->modules()::load($qngn->element);
+                $zbq = $pbzzba->modules()->load($qngn->element);
                 if ($zbq->isNew()) {
                     return false;
                 }
@@ -116,7 +116,7 @@ class Licensing
                 }
                 break;
         }
-        $response = $pbzzba->httpRequest()::load_url($url, 'action=verify&type=' . $qngn->type . '&id=' . $qngn->element . '&data=' . $qngn->data);
+        $response = $pbzzba->httpRequest()->load_url($url, 'action=verify&type=' . $qngn->type . '&id=' . $qngn->element . '&data=' . $qngn->data);
         if ('8c0735ff' != $response) {
             $qngn->data = '';
             $qngn->save();
