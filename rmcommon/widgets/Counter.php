@@ -127,7 +127,7 @@ class Counter extends WidgetAbstract implements WidgetInterface
      */
     public function addCell($caption, $value)
     {
-        if ('' == $caption || '' == $value) {
+        if ('' === $caption || '' === $value) {
             trigger_error(__('You must provide the caption and value when add a new cell to Counter Widget', 'rmcommon'));
 
             return false;
