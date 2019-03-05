@@ -126,7 +126,7 @@ function modules_install_function($dirname)
                 } else {
                     $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_SQL_FOUND, "<strong>{$sql_file_path}</strong>") . '<br >' . _AM_SYSTEM_MODULES_CREATE_TABLES;
                     require_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
-                    $sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
+                    $sql_query = fread(fopen($sql_file_path, 'rb'), filesize($sql_file_path));
                     $sql_query = trim($sql_query);
                     SqlUtility::splitMySqlFile($pieces, $sql_query);
                     $created_tables = [];

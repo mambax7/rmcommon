@@ -45,13 +45,13 @@ class Help
             throw new \RMException(__('File with docs URL does not exists', 'rmcommon'));
         }
 
-        $this->urls = include($path);
+        $this->urls = include $path;
 
         if (empty($this->urls)) {
             throw new \RMException(__('File with docs URL is empty', 'rmcommon'));
         }
 
-        $this->urls = (object) $this->urls;
+        $this->urls    = (object)$this->urls;
         $this->baseURL = $this->urls->base;
     }
 
