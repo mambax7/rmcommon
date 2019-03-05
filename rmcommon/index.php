@@ -149,7 +149,7 @@ function show_dashboard()
                                                 ]);
     $counterSystem->addCell(__('Current Version', 'rmcommon'), RMModules::get_module_version('rmcommon', false));
     $counterSystem->addCell('XOOPS', mb_substr(str_replace('XOOPS ', '', XOOPS_VERSION), 0, 5));
-    $version = explode('-', phpversion());
+    $version = explode('-', PHP_VERSION);
     $counterSystem->addCell('PHP', $version[0]);
     unset($version);
 

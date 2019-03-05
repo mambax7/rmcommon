@@ -477,7 +477,7 @@ class RMFunctions
     {
         global $common;
         header('HTTP/1.0 404 ' . __('Not Found', 'mywords'));
-        if ('cgi' == mb_substr(php_sapi_name(), 0, 3)) {
+        if ('cgi' == mb_substr(PHP_SAPI, 0, 3)) {
             header('Status: 404 ' . __('Not Found', 'mywords'), true);
         } else {
             header($_SERVER['SERVER_PROTOCOL'] . ' 404 ' . __('Not Found', 'mywords'));
