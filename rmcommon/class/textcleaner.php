@@ -625,7 +625,10 @@ class TextCleaner
         $string = preg_replace('!<p>\s*(</?' . $allblocks . '[^>]*>)!', '$1', $string);
         $string = preg_replace('!(</?' . $allblocks . '[^>]*>)\s*</p>!', '$1', $string);
         if ($br) {
-            $string = preg_replace_callback('/<(script|style).*?<\/\\1>/s', create_function('$matches', 'return str_replace("\n", "<EXMPreserveNewline>", $matches[0]);'), $string);
+//            $string = preg_replace_callback('/<(script|style).*?<\/\\1>/s', create_function('$matches', 'return str_replace("\n", "<EXMPreserveNewline>", $matches[0]);'), $string);
+            $string = preg_replace_callback('/<(script|style).*?<\/\\1>/s', function ($matches) {
+                return str_replace("\n", "<EXMPreserveNewline>", $matches[0]);
+            }, $string);
             $string = preg_replace('|(?<!<br>)\s*\n|', "<br>\n", $string); // optionally make line breaks
             $string = str_replace('<EXMPreserveNewline>', "\n", $string);
         }
