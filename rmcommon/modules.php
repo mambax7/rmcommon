@@ -1278,7 +1278,7 @@ function module_disable_now($enable = 0)
     }
 
     RMEvents::get()->run_event('rmcommon.module.disabled', $module);
-
+    xoops_setActiveModules();
     redirectMsg('modules.php', sprintf(__('Module %s successfully disabled!', 'rmcommon'), $module->name()), 0);
 }
 
