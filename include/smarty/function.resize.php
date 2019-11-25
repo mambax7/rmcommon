@@ -40,17 +40,19 @@
  */
 function smarty_function_resize($options, $tpl)
 {
-    $file = RMHttpRequest::array_value('file', $options, 'string', '');
-    $dir = RMHttpRequest::array_value('dir', $options, 'string', 'resizer');
-    $width = RMHttpRequest::array_value('w', $options, 'integer', 0);
-    $height = RMHttpRequest::array_value('h', $options, 'integer', 0);
-    $params = new stdClass();
-    $params->width = 0 == $width ? null : $width;
+    $file           = RMHttpRequest::array_value('file', $options, 'string', '');
+    $dir            = RMHttpRequest::array_value('dir', $options, 'string', 'resizer');
+    $width          = RMHttpRequest::array_value('w', $options, 'integer', 0);
+    $height         = RMHttpRequest::array_value('h', $options, 'integer', 0);
+    $params         = new stdClass();
+    $params->width  = 0 == $width ? null : $width;
     $params->height = 0 == $height ? null : $height;
     $params->target = $dir;
 
     $resizer = new RMImageResizer();
-    $image = $resizer->resize($file, $params);
+    if ($file) {
+        $image = $resizer->resize($file, $params);
+    }
 
     return $image->url;
 }

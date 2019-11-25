@@ -270,7 +270,7 @@ class RMObject
     public function assignVar($key, $value)
     {
         if (isset($value) && isset($this->vars[$key])) {
-            $this->vars[$key]['value'] = &$value;
+            $this->vars[$key]['value'] =& $value;
         }
     }
 
@@ -304,7 +304,7 @@ class RMObject
     public function setVar($key, $value, $not_gpc = false)
     {
         if (!empty($key) && isset($value) && isset($this->vars[$key])) {
-            $this->vars[$key]['value']   = &$value;
+            $this->vars[$key]['value']   =& $value;
             $this->vars[$key]['not_gpc'] = $not_gpc;
             $this->vars[$key]['changed'] = true;
             $this->setDirty();
@@ -615,7 +615,7 @@ class RMObject
                         break;
                 }
             }
-            $this->cleanVars[$k] = &$cleanv;
+            $this->cleanVars[$k] =& $cleanv;
             unset($cleanv);
         }
 
@@ -997,7 +997,7 @@ class RMObject
      */
     protected function loadValuesFiltered($filter = '')
     {
-        if (get_magic_quotes_gpc()) {
+        if  (@get_magic_quotes_gpc()) {
             $filter = stripslashes($filter);
         }
 
@@ -1028,7 +1028,7 @@ class RMObject
          */
         $query = '';
         foreach ($values as $k => $v) {
-            if (get_magic_quotes_gpc()) {
+            if  (@get_magic_quotes_gpc()) {
                 $v = stripslashes($v);
             }
             $values[$k] = $this->escape($v);

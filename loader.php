@@ -54,12 +54,13 @@ require_once XOOPS_ROOT_PATH . '/class/database/databasefactory.php';
 
 $db  = XoopsDatabaseFactory::getDatabaseConnection();
 
-$GLOBALS['rmFunctions'] = new RMFunctions();
 global $rmFunctions;
+$GLOBALS['rmFunctions'] = new RMFunctions();
 
 /**
  * New object to manage Common Utilities configurations
  */
+
 global $cuSettings;
 $GLOBALS['cuSettings'] = (object)$rmFunctions->settings->cu_settings();
 

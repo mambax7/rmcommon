@@ -12,7 +12,7 @@
  * This files allow to exigent people to control every aspect of tinymce
  * from exmsystem
  */
-class tinyeditor
+class TinyEditor
 {
     public $configuration = [];
 
@@ -68,42 +68,42 @@ class tinyeditor
         ob_start(); ?>
 
         (function($){
-            this.initMCE = function(elements){
+        this.initMCE = function(elements){
 
-                var editor;
+        var editor;
 
-                editor = $(elements).tinymce({
-                    <?php
+        editor = $(elements).tinymce({
+        <?php
 
-                    $elements = $this->configuration['elements'];
+        $elements = $this->configuration['elements'];
         unset($this->configuration['elements']);
 
         echo mb_substr(json_encode($this->configuration), 1, -1) . ','; ?>
-                    setup: function(ed){
-                        ed.on('keyup', function(e){
-                            if ($(editor).isDirty())
-                                this.save();
-                        });
-                    },
+        setup: function(ed){
+        ed.on('keyup', function(e){
+        if ($(editor).isDirty())
+        this.save();
+        });
+        },
 
-                    oninit: function(ed){
-                        switchEditors.edInit();
-                        switchEditors.go(elements, "<?php echo isset($_COOKIE['editor']) ? $_COOKIE['editor'] : 'tinymce'; ?>");
-                    },
+        oninit: function(ed){
+        switchEditors.edInit();
+        switchEditors.go(elements, "<?php echo isset($_COOKIE['editor']) ? $_COOKIE['editor'] : 'tinymce'; ?>");
+        },
 
-                    init_instance_callback: function(editor) {
+        init_instance_callback: function(editor) {
 
-                        if(undefined == switchEditors){return false;};
+        if(undefined == switchEditors){return false;};
 
-                        editor.on('BeforeSetContent', function(e) {
-                            e.content = switchEditors.esautop(e.content);
-                        });
-                    }
-                });
+        editor.on('BeforeSetContent', function(e) {
+        e.content = switchEditors.esautop(e.content);
+        });
+        }
+        });
 
-                return editor;
+        return editor;
 
-            };
+        };
 
         })(jQuery);
 

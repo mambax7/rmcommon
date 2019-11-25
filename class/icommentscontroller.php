@@ -1,5 +1,4 @@
 <?php
-// $Id: icommentscontroller.php 898 2012-01-03 05:45:07Z i.bitcero $
 // --------------------------------------------------------------
 // Red México Common Utilities
 // A framework for Red México Modules
@@ -8,7 +7,7 @@
 // License: GPL 2.0
 // --------------------------------------------------------------
 
-interface icommentscontroller
+interface iCommentsController
 {
     /**
      * Add 1 to comments internal counter of the module

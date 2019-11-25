@@ -77,7 +77,7 @@
                     </span>
                                     <a href="#" class="rename text-info"><span class="fa fa-edit"></span> <?php _e('Edit', 'rmcommon'); ?></a>
                                     <?php if ('' != $mod['help']): ?>
-                                        <a href="<?php echo preg_match("^/(http|\.{2})/i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?>" class="help cu-help-button text-success" title="<?php echo sprintf(__('%s Help', 'rmcommon'), $mod['name']); ?>"><span
+                                        <a href="<?php echo preg_match("^/(http|\.{2})/^i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?>" class="help cu-help-button text-success" title="<?php echo sprintf(__('%s Help', 'rmcommon'), $mod['name']); ?>"><span
                                                     class="fa fa-question-circle"></span> <?php _e('Help', 'rmcommon'); ?></a>
                                     <?php endif; ?>
                                     <small class="help-block"><?php echo $mod['description']; ?></small>
@@ -114,7 +114,7 @@
                         </span>
                         <span class="url"><?php echo $mod['url']; ?></span>
                         <span class="license"><?php echo $mod['license']; ?></span>
-                        <span class="help"><?php echo preg_match("^/(http|\.{2})/i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?></span>
+                        <span class="help"><?php echo preg_match("^/(http|\.{2})/^i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?></span>
                         <span class="active"><?php echo $mod['active']; ?></span>
                         <span class="social">
                             <?php if ($mod['social']): ?>
@@ -210,7 +210,7 @@
                                         <?php echo $mod['name']; ?>
                                     </span>
                                     <?php if ('' != $mod['help']): ?>
-                                        <a href="<?php echo preg_match("^/(http|\.{2})/i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?>" class="help cu-help-button text-success" title="<?php echo sprintf(__('%s Help', 'rmcommon'), $mod['name']); ?>"><span
+                                        <a href="<?php echo preg_match("^/(http|\.{2})/^i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?>" class="help cu-help-button text-success" title="<?php echo sprintf(__('%s Help', 'rmcommon'), $mod['name']); ?>"><span
                                                     class="fa fa-question-circle"></span> <?php _e('Help', 'rmcommon'); ?></a>
                                     <?php endif; ?>
                                     <small class="help-block"><?php echo $mod['description']; ?></small>
@@ -247,7 +247,7 @@
                         </span>
                         <span class="url"><?php echo isset($mod['url']) ? $mod['url'] : ''; ?></span>
                         <span class="license"><?php echo $mod['license']; ?></span>
-                        <span class="help"><?php echo preg_match("^/(http|\.{2})/i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?></span>
+                        <span class="help"><?php echo preg_match("^/(http|\.{2})/^i", $mod['help']) ? $mod['help'] : '../' . $mod['dirname'] . '/' . $mod['help']; ?></span>
                         <span class="active"></span>
                         <span class="social">
                             <?php if ($mod['social']): ?>

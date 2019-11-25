@@ -146,7 +146,9 @@ class RMFormat
         if (isset($version['major'])) {
             $rtn .= $version['major'];
             $rtn .= '.' . $version['minor'];
-            $rtn .= '.' . ($version['revision'] / 10);
+            if (isset($version['revision'])) {
+                $rtn .= '.' . ($version['revision'] / 10);
+            }
             switch ($version['stage']) {
                 case -3:
                     $rtn .= ' alfa';

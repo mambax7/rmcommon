@@ -1,5 +1,4 @@
 <?php
-// $Id: image.php 1020 2012-09-04 16:15:09Z i.bitcero $
 // --------------------------------------------------------------
 // Red México Common Utilities
 // A framework for Red México Modules
@@ -207,17 +206,19 @@ class RMImage extends RMObject
     {
         $sizes  = $this->get_sizes_data();
         $sorted = [];
-        foreach ($sizes as $i => $size) {
-            $sorted[$i] = $size['width'];
-        }
 
-        asort($sorted);
-        foreach ($sorted as $id => $size) {
-            if ($size >= $width) {
-                return $this->url($sizes[$id]['name']);
+        if ($sizes) {
+            foreach ($sizes as $i => $size) {
+                $sorted[$i] = $size['width'];
+            }
+
+            asort($sorted);
+            foreach ($sorted as $id => $size) {
+                if ($size >= $width) {
+                    return $this->url($sizes[$id]['name']);
+                }
             }
         }
-
         return $this->getOriginal();
     }
 

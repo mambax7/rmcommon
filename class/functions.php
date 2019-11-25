@@ -242,7 +242,7 @@ class RMFunctions
      * @param string $params Params
      * @return mixed|null
      */
-    public function delete_comments($module, $params)
+    public static function delete_comments($module, $params)
     {
         if ('' == $module || '' == $params) {
             return null;
@@ -381,7 +381,7 @@ class RMFunctions
      * @return mixed Settings array or option value
      * @deprecated
      */
-    public function configs($name = '')
+    public static function configs($name = '')
     {
         trigger_error(sprintf(__('Method %s is deprecated. Use %s::%s instead.', 'rmcommon'), __METHOD__, 'RMSettings', 'cu_settings'));
 
@@ -446,7 +446,7 @@ class RMFunctions
      * @return mixed|XoopsModule
      * @deprecated
      */
-    public function load_module($mod)
+    public static function load_module($mod)
     {
         trigger_error(sprintf(__('Method %s is deprecated. Use %s::%s instead.', 'rmcommon'), __METHOD__, 'RMModules', 'load_module'));
 

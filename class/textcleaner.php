@@ -458,9 +458,9 @@ class TextCleaner
      * @param string $text
      * @return  string
      **/
-    public function addslashes($text)
+    public static function addslashes($text)
     {
-        if (get_magic_quotes_gpc()) {
+        if  (@get_magic_quotes_gpc()) {
             $text = stripslashes($text);
         }
 
@@ -476,7 +476,7 @@ class TextCleaner
     */
     public static function stripslashes($text)
     {
-        if (get_magic_quotes_gpc()) {
+        if  (@get_magic_quotes_gpc()) {
             $text = stripslashes($text);
         }
 

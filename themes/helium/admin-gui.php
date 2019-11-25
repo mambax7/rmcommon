@@ -11,7 +11,7 @@ global $common;
 
 load_theme_locale('helium', '', true);
 
-global $xoopsUser, $xoopsSecurity, $cuIcons, $cuServices;
+global $xoopsUser, $xoopsSecurity, $cuIcons, $cuServices, $cuSettings;
 
 define('HELIUM_PATH', RMCPATH . '/themes/helium');
 define('HELIUM_URL', RMCURL . '/themes/helium');
@@ -175,20 +175,22 @@ RMTemplate::getInstance()->add_attribute('html', [
     'class' => RMTemplate::getInstance()->body_classes(),
 ]);
 
-// The logo
-$logoHelium = trim($cuSettings->helium_logo);
-if ('' == $logoHelium) {
-    $logoHelium = HELIUM_URL . '/images/logo-he.svg';
+if ($cuSettings) {
+
+    // The logo
+    $logoHelium = trim($cuSettings->helium_logo);
+    if ('' == $logoHelium) {
+        $logoHelium = HELIUM_URL . '/images/logo-he.svg';
+    }
+
+    if ('.svg' == mb_substr($logoHelium, -4)) {
+        $logoHelium = file_get_contents($logoHelium);
+    } else {
+        $logoHelium = '<img src="' . $logoHelium . '">';
+    }
+
+    // Xoops Metas
+    $showXoopsMetas = $cuSettings->helium_xoops_metas;
 }
-
-if ('.svg' == mb_substr($logoHelium, -4)) {
-    $logoHelium = file_get_contents($logoHelium);
-} else {
-    $logoHelium = '<img src="' . $logoHelium . '">';
-}
-
-// Xoops Metas
-$showXoopsMetas = $cuSettings->helium_xoops_metas;
-
 // Display theme
 require_once HELIUM_PATH . '/theme.php';

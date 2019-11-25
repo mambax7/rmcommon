@@ -80,7 +80,8 @@ function xoops_module_install_rmcommon($mod)
     if (is_dir($target)) {
         RMUtilities::delete_directory($target, false);
     }
-    @rename($source, $target);
+//    @rename($source, $target);
+    @RMUtilities::copy_directory($source, $target);
 
     //RMUtilities::delete_directory( $source );
 

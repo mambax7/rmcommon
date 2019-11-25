@@ -8,7 +8,7 @@
 // License: GPL 2.0
 // --------------------------------------------------------------
 
-if (!isset(\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER')) || '' == \Xmf\Request::getString('HTTP_REFERER', '', 'SERVER')) {
+if (!(\Xmf\Request::hasVar('HTTP_REFERER', '', 'SERVER')) || '' == \Xmf\Request::getString('HTTP_REFERER', '', 'SERVER')) {
     die('Not Allowed');
 }
 

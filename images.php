@@ -12,7 +12,7 @@
  * This is the images manager file for RMCommon. It is based on EXM system
  * and as a substitute for xoops image manager
  */
-require_once dirname(__DIR__) . '/../include/cp_header.php';
+require_once dirname(dirname(__DIR__)) . '/include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/modules/rmcommon/admin-loader.php';
 $common->location = 'imgmanager';
 
@@ -135,7 +135,7 @@ function images_form($edit = 0)
     $category = rmc_server_var($_GET, 'category', 0);
     $cat      = new RMImageCategory($category);
 
-    if (!$cat->isNew() && 'open' != $cat->getVar('status')) {
+    if (!$cat->isNew() && 'open' !== $cat->getVar('status')) {
         showMessage(sprintf(__('Category %s is closed. Please, select another category.', 'rmcommon'), '"' . $cat->getVar('name') . '"'), 1);
         $cat = new RMImageCategory();
     }
@@ -302,7 +302,7 @@ function save_category($edit = 0)
 
     $q = 'images.php?action=' . ($edit ? 'editcat' : 'newcat');
     foreach ($_POST as $k => $v) {
-        if ('action' == $k || 'XOOPS_TOKEN_REQUEST' == $k) {
+        if ('action' === $k || 'XOOPS_TOKEN_REQUEST' === $k) {
             continue;
         }
         if (is_array($v)) {
@@ -346,7 +346,7 @@ function save_category($edit = 0)
         if ('' == trim($size['name'])) {
             continue;
         }
-        if ('none' != $size['type'] && $size['width'] <= 0 && $size['height'] <= 0) {
+        if ('none' !== $size['type'] && $size['width'] <= 0 && $size['height'] <= 0) {
             continue;
         }
         $schecked[] = $size;
@@ -468,7 +468,7 @@ function resize_images()
         $resize = true;
 
         // TODO 5: Verificar que funcione correctamente
-        if ('crop' == $size['type']) {
+        if ('crop' === $size['type']) {
             if ($size['width'] > $currentWidth || $size['height'] > $currentHeight) {
                 $resize = false;
             }

@@ -155,7 +155,7 @@ class RMUtilities
      * @param mixed $string
      * @return string
      */
-    public function add_slash($string)
+    public static function add_slash($string)
     {
         $string = rtrim($string, '/');
 
@@ -167,7 +167,7 @@ class RMUtilities
      * @param int $size Tamaño de bytes
      * @return string
      */
-    public function formatBytesSize($size)
+    public static function formatBytesSize($size)
     {
         return RMFormat::bytes_format($size, 'bytes');
     }
