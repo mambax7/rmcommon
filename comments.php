@@ -124,13 +124,13 @@ function show_comments()
 
     xoops_cp_header();
     //RMFunctions::create_toolbar();
-    RMTemplate::get()->add_style('comms-admin.css', 'rmcommon');
-    RMTemplate::get()->add_style('general.min.css', 'rmcommon');
-    RMTemplate::get()->add_script('jquery.checkboxes.js', 'rmcommon');
-    RMTemplate::get()->add_script('comments.js', 'rmcommon');
+    RMTemplate::getInstance()->add_style('comms-admin.css', 'rmcommon');
+    RMTemplate::getInstance()->add_style('general.min.css', 'rmcommon');
+    RMTemplate::getInstance()->add_script('jquery.checkboxes.js', 'rmcommon');
+    RMTemplate::getInstance()->add_script('comments.js', 'rmcommon');
     $script = '<script type="text/javascript">delmes = "' . __('Do you really want to delete this comment?', 'rmcommon') . '";</script>';
-    RMTemplate::get()->add_head($script);
-    include RMTemplate::get()->get_template('rmc-comments.php', 'module', 'rmcommon');
+    RMTemplate::getInstance()->add_head($script);
+    include RMTemplate::getInstance()->get_template('rmc-comments.php', 'module', 'rmcommon');
     xoops_cp_footer();
 }
 

@@ -12,8 +12,8 @@ if (isset($_SESSION['cu_redirect_messages'])) {
 
 if (isset($_SESSION['redirect_message'])) {
     $heliumMessages[] = [
-        'text' => $_SESSION['redirect_message'],
-        'icon' => 'svg-rmcommon-info',
+        'text'  => $_SESSION['redirect_message'],
+        'icon'  => 'svg-rmcommon-info',
         'level' => RMMSG_INFO,
     ];
     unset($_SESSION['redirect_message']);
@@ -64,6 +64,6 @@ if (!empty($heliumMessages)) {
 
         $template = sprintf($template, '', html_entity_decode($msg['text']), $type, $icon);
 
-        RMTemplate::get()->add_inline_script($template, 1);
+        RMTemplate::getInstance()->add_inline_script($template, 1);
     }
 }

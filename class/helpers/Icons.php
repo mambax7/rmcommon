@@ -45,7 +45,7 @@ class Icons extends Attributes
         foreach ($this->iconsProviders as $provider => $path) {
             $jsProviders[$provider] = \RMUris::relative_url(str_replace(XOOPS_ROOT_PATH, XOOPS_URL, $path));
         }
-        \RMTemplate::get()->add_inline_script('var iconsProviders = ' . json_encode($jsProviders) . ';', 0);
+        \RMTemplate::getInstance()->add_inline_script('var iconsProviders = ' . json_encode($jsProviders) . ';', 0);
     }
 
     /**

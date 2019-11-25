@@ -188,7 +188,7 @@ if ('save' == $action) {
         }
 
         ob_start();
-        include RMTemplate::get()->get_template('mail/rmc-comment-notify.php');
+        include RMTemplate::getInstance()->get_template('mail/rmc-comment-notify.php');
         $body = ob_get_clean();
 
         $xoopsMailer->setBody($body);

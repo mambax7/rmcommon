@@ -1259,7 +1259,7 @@ class RMTemplate
     /**
      * Add a new element to toolbar array
      * Example:
-     * <code>RMTemplate::get()->add_tool(
+     * <code>RMTemplate::getInstance()->add_tool(
      *     array(
      *         'title'    => 'Caption of tool',
      *         'link'     => 'http://...',
@@ -1353,7 +1353,7 @@ class RMTemplate
         $xoopsThemeFactory->defaultTheme  = $xoopsConfig['theme_set'];
 
         $xoTheme  = $xoopsThemeFactory->createInstance(['contentTemplate' => @$xoopsOption['template_main']]);
-        $xoopsTpl = &$xoTheme->template;
+        $xoopsTpl =& $xoTheme->template;
 
         return $xoopsTpl;
     }

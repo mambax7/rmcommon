@@ -197,14 +197,14 @@ function show_users()
     global $xoopsSecurity, $rmTpl, $cuIcons, $common;
 
     define('RMCSUBLOCATION', 'allusers');
-    RMTemplate::get()->add_style('users.css', 'rmcommon');
-    RMTemplate::get()->add_style('js-widgets.css');
+    RMTemplate::getInstance()->add_style('users.css', 'rmcommon');
+    RMTemplate::getInstance()->add_style('js-widgets.css');
 
     //Scripts
-    RMTemplate::get()->add_script('users.js', 'rmcommon', ['directory' => 'include']);
-    RMTemplate::get()->add_script('jquery.checkboxes.js', 'rmcommon', ['directory' => 'include']);
+    RMTemplate::getInstance()->add_script('users.js', 'rmcommon', ['directory' => 'include']);
+    RMTemplate::getInstance()->add_script('jquery.checkboxes.js', 'rmcommon', ['directory' => 'include']);
 
-    RMTemplate::get()->add_head('<script type="text/javascript">var rmcu_select_message = "' . __('You have not selected any user!', 'rmcommon') . '";
+    RMTemplate::getInstance()->add_head('<script type="text/javascript">var rmcu_select_message = "' . __('You have not selected any user!', 'rmcommon') . '";
         var rmcu_message = "' . __('Dou you really wish to delete selected users?', 'rmcommon') . '";</script>');
 
     $form = new RMForm('', '', '');
@@ -252,7 +252,7 @@ function show_users()
         $user = new RMUser();
         $user->assignVars($row);
         $t           = $user->getValues();
-        $t['groups'] = &$user->getGroups();
+        $t['groups'] =& $user->getGroups();
         $t           = RMEvents::get()->trigger('rmcommon.loading.users.list', $t);
         $users[]     = $t;
         $t           = [];
@@ -276,7 +276,7 @@ function show_users()
     $users = RMEvents::get()->trigger('rmcommon.users.list.loaded', $users);
 
     // Users template
-    include RMTemplate::get()->path('rmc-users.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->path('rmc-users.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
 }
@@ -503,7 +503,7 @@ function show_mailer()
     if ((!is_array($uid) && $uid <= 0) || empty($uid)) {
         // In admin control panel (side) add_message always must to be called before
         // ExmGUI::show_header()
-        RMTemplate::get()->add_message(__('You must select one user at least. Please click on "Add Users" and select as many users as you wish.'), 0);
+        RMTemplate::getInstance()->add_message(__('You must select one user at least. Please click on "Add Users" and select as many users as you wish.'), 0);
     }
 
     $uid = !is_array($uid) ? [$uid] : $uid;

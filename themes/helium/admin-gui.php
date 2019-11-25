@@ -150,8 +150,8 @@ include RMCPATH . '/js/cu-js-language.php';
 !defined('RMCSUBLOCATION') ? define('RMCSUBLOCATION', '') : true;
 
 // Scripts
-$heliumScripts = \RMTemplate::get()->get_scripts(true);
-$heliumStyles  = \RMTemplate::get()->get_styles(true);
+$heliumScripts = \RMTemplate::getInstance()->get_scripts(true);
+$heliumStyles  = \RMTemplate::getInstance()->get_styles(true);
 
 // User Rank
 $userRank = $xoopsUser->rank();

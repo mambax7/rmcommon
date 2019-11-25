@@ -303,7 +303,7 @@ function show_dashboard()
 
     $common->template()->header();
 
-    //RMTemplate::get()->add_style('dashboard.min.css', 'rmcommon');
+    //RMTemplate::getInstance()->add_style('dashboard.min.css', 'rmcommon');
     RMTemplate::getInstance()->add_style('pagenav.css', 'rmcommon');
     //RMTemplate::getInstance()->add_help(__('Dashboard Help','rmcommon'),'https://www.xoopsmexico.net/docs/bitcero/common-utilities/introduccion/');
     include RMTemplate::getInstance()->path('rmc-dashboard.php', 'module', 'rmcommon');

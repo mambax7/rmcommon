@@ -53,7 +53,7 @@ $tiny->configuration = [
     'accessibility_focus'        => '1',
     'tab_focus'                  => "'=>prev,'=>next",
     'save_callback'              => 'switchEditors.saveCallback',
-    'content_css'                => RMTemplate::get()->generate_url('editor.css', 'rmcommon', 'css'),
+    'content_css'                => RMTemplate::getInstance()->generate_url('editor.css', 'rmcommon', 'css'),
 ];
 
 /**

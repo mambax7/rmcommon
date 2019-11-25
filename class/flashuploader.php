@@ -143,12 +143,12 @@ class RMFlashUploader
 
     public function render()
     {
-        RMTemplate::get()->add_script('swfobject.js', 'rmcommon', ['directory' => 'include']);
-        RMTemplate::get()->add_script('jquery.uploadify.js', 'rmcommon', ['directory' => 'include']);
-        RMTemplate::get()->add_style('uploadify.css', 'rmcommon');
+        RMTemplate::getInstance()->add_script('swfobject.js', 'rmcommon', ['directory' => 'include']);
+        RMTemplate::getInstance()->add_script('jquery.uploadify.js', 'rmcommon', ['directory' => 'include']);
+        RMTemplate::getInstance()->add_style('uploadify.css', 'rmcommon');
 
         ob_start();
-        include RMTemplate::get()->get_template('uploadify.js.php', 'module', 'rmcommon');
+        include RMTemplate::getInstance()->get_template('uploadify.js.php', 'module', 'rmcommon');
         $script = ob_get_clean();
 
         return $script;

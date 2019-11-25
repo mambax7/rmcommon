@@ -50,7 +50,7 @@ if ($xoopsModule && ($xoopsModule->getInfo('rmnative') || !$rmc_config['gui_disa
             RMTemplate::getInstance()->add_jquery(false, true);
 
             if ($xoopsModule && !$xoopsModule->getInfo('rmnative')) {
-                RMTemplate::get()->add_script(XOOPS_URL . '/include/xoops.js');
+                RMTemplate::getInstance()->add_script(XOOPS_URL . '/include/xoops.js');
             }
         }
 
@@ -105,7 +105,7 @@ if ($xoopsModule && ($xoopsModule->getInfo('rmnative') || !$rmc_config['gui_disa
             $xoopsLogger->stopTime();
 
             // RMCommon Templates
-            RMTemplate::get()->footer();
+            RMTemplate::getInstance()->footer();
             die();
         }
     }

@@ -13,12 +13,12 @@
  */
 class RMFormEditor extends RMFormElement
 {
-    private $_width = '';
-    private $_height = '';
+    private $_width   = '';
+    private $_height  = '';
     private $_default = '';
-    private $_type = 'tiny';
-    private $_theme = '';
-    private $_action = '';
+    private $_type    = 'tiny';
+    private $_theme   = '';
+    private $_action  = '';
     /**
      * Indica si se muestra o no el combo para cambiar tipo de editor
      */
@@ -45,14 +45,14 @@ class RMFormEditor extends RMFormElement
     private $md_options = [];
 
     /**
-     * @param mixed $caption Texto del campo
-     * @param string $name Nombre de este campo
-     * @param string $width Ancho del campo. Puede ser el valor en formato pixels (300px) o en porcentaje (100%)
-     * @param string $height Alto de campo. El valor debe ser pasado en formato pixels (300px).
+     * @param mixed  $caption Texto del campo
+     * @param string $name    Nombre de este campo
+     * @param string $width   Ancho del campo. Puede ser el valor en formato pixels (300px) o en porcentaje (100%)
+     * @param string $height  Alto de campo. El valor debe ser pasado en formato pixels (300px).
      * @param string $default Texto incial al cargar el campo. POr defecto se muestra vaco.
-     * @param string $type Tipo de Editor. Posibles valores: tiny, html, xoops, simple, markdown, quill
-     * @param mixed $change
-     * @param mixed $ele
+     * @param string $type    Tipo de Editor. Posibles valores: tiny, html, xoops, simple, markdown, quill
+     * @param mixed  $change
+     * @param mixed  $ele
      * @update Added quill editor as default option
      */
     public function __construct($caption, $name = null, $width = '100%', $height = '300px', $default = '', $type = '', $change = 1, $ele = ['op'])
@@ -160,8 +160,8 @@ class RMFormEditor extends RMFormElement
     {
         global $cuIcons;
 
-        RMTemplate::get()->add_style('simple-editor.min.css', 'rmcommon');
-        $rtn = '<div class="ed-container">';
+        RMTemplate::getInstance()->add_style('simple-editor.min.css', 'rmcommon');
+        $rtn     = '<div class="ed-container">';
         $plugins = [];
         $plugins = RMEvents::get()->trigger('rmcommon.editor.top.plugins', $plugins, 'simple', $this->id());
         $plugins = RMEvents::get()->trigger('rmcommon.simple.editor.plugins', $plugins, $this->id());
@@ -212,7 +212,7 @@ class RMFormEditor extends RMFormElement
         RMTemplate::getInstance()->add_script(RMCURL . '/api/editors/tinymce/jquery.tinymce.min.js', '', ['footer' => 1, 'id' => 'tinymce-jquery-js']);
         RMTemplate::getInstance()->add_inline_script(TinyEditor::getInstance()->get_js(), 1);
         if ('' != $this->get('id')) {
-            //RMTemplate::get()->add_inline_script('edToolbar("' . $this->get('id') . '");', 1);
+            //RMTemplate::getInstance()->add_inline_script('edToolbar("' . $this->get('id') . '");', 1);
             RMTemplate::getInstance()->add_inline_script('$(document).ready(function(){initMCE("#' . $this->get('id') . '"); edToolbar("' . $this->get('id') . '");});', 1);
         }
 
@@ -220,7 +220,7 @@ class RMFormEditor extends RMFormElement
         $plugins = RMEvents::get()->trigger('rmcommon.editor.top.plugins', $plugins, 'tiny', $this->get('id'));
 
         $rtn = '
-		<div class="ed-container" id="ed-cont-' . $this->get('id') . '" style="width: 100%;">
+        <div class="ed-container" id="ed-cont-' . $this->get('id') . '" style="width: 100%;">
         <div class="es-editor" style="width: 100%;">
         <div class="es-plugins">
             <span class="plugin">' . implode('</span><span class="plugin">', $plugins) . '</span>
@@ -246,11 +246,11 @@ class RMFormEditor extends RMFormElement
 
         $this->renderAttributeString();
 
-        RMTemplate::get()->add_script('quicktags.min.js', 'rmcommon', ['footer' => 1]);
-        RMTemplate::get()->add_style('html-editor.min.css', 'rmcommon');
+        RMTemplate::getInstance()->add_script('quicktags.min.js', 'rmcommon', ['footer' => 1]);
+        RMTemplate::getInstance()->add_style('html-editor.min.css', 'rmcommon');
         RMTemplate::getInstance()->add_fontawesome();
-        RMTemplate::get()->add_inline_script('edToolbar("' . $this->get('id') . '");', 1);
-        $rtn = "\n<div class='ed-container html_editor_container' style='width: " . $this->get('width') . ";' id='" . $this->get('id') . "-ed-container'>";
+        RMTemplate::getInstance()->add_inline_script('edToolbar("' . $this->get('id') . '");', 1);
+        $rtn     = "\n<div class='ed-container html_editor_container' style='width: " . $this->get('width') . ";' id='" . $this->get('id') . "-ed-container'>";
         $plugins = [];
 
         // Get external plugins
@@ -268,8 +268,8 @@ class RMFormEditor extends RMFormElement
         $plugins = RMEvents::get()->run_event('rmcommon.html.editor.plugins', $plugins, $this->get('id'));
 
         $rtn .= '<div class="quicktags"><div id="ed_toolbar_' . $this->get('id') . '"></div></div>' . (!empty($plugins) ? "<div class='ed-qt-plugins'><span class='plugin'>" . implode('</span><span class="plugin">', $plugins) . '</span></div>' : '') . "
-		<div class='txtarea-container' style='height: " . $this->get('height') . ";'><textarea id='" . $this->get('id') . "' name='" . $this->get('name') . "' class='" . $this->get('class') . "'>" . $this->get('value') . '</textarea></div>
-		</div>';
+        <div class='txtarea-container' style='height: " . $this->get('height') . ";'><textarea id='" . $this->get('id') . "' name='" . $this->get('name') . "' class='" . $this->get('class') . "'>" . $this->get('value') . '</textarea></div>
+        </div>';
 
         return $rtn;
     }

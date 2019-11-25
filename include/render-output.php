@@ -67,11 +67,11 @@ function cu_render_output($output)
     $page = $output;
     if ($xoopsTpl) {
         if (defined('COMMENTS_INCLUDED') && COMMENTS_INCLUDED) {
-            RMTemplate::get()->add_style('comments.css', 'rmcommon');
+            RMTemplate::getInstance()->add_style('comments.css', 'rmcommon');
         }
     }
 
-    require_once RMTemplate::get()->path('rmc-header.php', 'module', 'rmcommon');
+    require_once RMTemplate::getInstance()->path('rmc-header.php', 'module', 'rmcommon');
     /*$rtn = $htmlStyles;
     $rtn .= $htmlScripts['header'];
     $rtn .= $htmlScripts['inlineHeader'];*/

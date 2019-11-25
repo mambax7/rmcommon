@@ -119,10 +119,10 @@ function show_images()
 
     xoops_cp_header();
     RMFunctions::create_toolbar();
-    RMTemplate::get()->add_style('imgmgr.css', 'rmcommon');
-    RMTemplate::get()->add_style('general.min.css', 'rmcommon');
-    RMTemplate::get()->add_script('jquery.checkboxes.js', 'rmcommon');
-    include RMTemplate::get()->get_template('rmc-images-images.php', 'module', 'rmcommon');
+    RMTemplate::getInstance()->add_style('imgmgr.css', 'rmcommon');
+    RMTemplate::getInstance()->add_style('general.min.css', 'rmcommon');
+    RMTemplate::getInstance()->add_script('jquery.checkboxes.js', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-images-images.php', 'module', 'rmcommon');
     xoops_cp_footer();
 }
 
@@ -219,9 +219,9 @@ function show_categories()
         ];
     }
 
-    RMTemplate::get()->add_style('general.min.css', 'rmcommon');
-    RMTemplate::get()->add_style('imgmgr.css', 'rmcommon');
-    RMTemplate::get()->add_script('jquery.checkboxes.js', 'rmcommon');
+    RMTemplate::getInstance()->add_style('general.min.css', 'rmcommon');
+    RMTemplate::getInstance()->add_style('imgmgr.css', 'rmcommon');
+    RMTemplate::getInstance()->add_script('jquery.checkboxes.js', 'rmcommon');
     RMFunctions::create_toolbar();
 
     RMBreadCrumb::get()->add_crumb(__('Images Manager', 'rmcommon'), 'images.php');
@@ -231,7 +231,7 @@ function show_categories()
 
     xoops_cp_header();
 
-    include RMTemplate::get()->get_template('rmc-images-categories.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-images-categories.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
 }
@@ -286,9 +286,9 @@ function new_category($edit = 0)
     $fwrite = new RMFormGroups('', 'write', true, 1, 3, isset($write) ? $write : [XOOPS_GROUP_ADMIN]);
     $fread  = new RMFormGroups('', 'read', true, 1, 3, isset($read) ? $read : [0]);
 
-    RMTemplate::get()->add_script('imgmanager.js', 'rmcommon');
-    include RMTemplate::get()->get_template('rmc-categories-form.php', 'module', 'rmcommon');
-    RMTemplate::get()->add_style('imgmgr.css', 'rmcommon');
+    RMTemplate::getInstance()->add_script('imgmanager.js', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-categories-form.php', 'module', 'rmcommon');
+    RMTemplate::getInstance()->add_style('imgmgr.css', 'rmcommon');
     xoops_cp_footer();
 }
 
@@ -580,10 +580,10 @@ function edit_image()
 
     xoops_cp_header();
 
-    RMTemplate::get()->add_script('images.min.js', 'rmcommon');
-    RMTemplate::get()->add_script('include/js/jquery.validate.min.js');
-    RMTemplate::get()->add_style('imgmgr.css', 'rmcommon');
-    include RMTemplate::get()->get_template('rmc-images-edit.php', 'module', 'rmcommon');
+    RMTemplate::getInstance()->add_script('images.min.js', 'rmcommon');
+    RMTemplate::getInstance()->add_script('include/js/jquery.validate.min.js');
+    RMTemplate::getInstance()->add_style('imgmgr.css', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-images-edit.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
 }

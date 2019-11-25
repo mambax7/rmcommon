@@ -698,12 +698,12 @@ function show_modules_list()
     RMBreadCrumb::get()->add_crumb(__('Modules Management', 'rmcommon'));
 
     ////RMFunctions::create_toolbar();
-    RMTemplate::get()->assign('xoops_pagetitle', __('Modules Management', 'rmcommon'));
-    RMTemplate::get()->add_style('modules.min.css', 'rmcommon');
-    RMTemplate::get()->add_script('modules.min.js', 'rmcommon');
-    RMTemplate::get()->set_help('http://www.redmexico.com.mx/docs/common-utilities/uso-de-common-utilities/standalone/1/#administrador-de-modulos');
+    RMTemplate::getInstance()->assign('xoops_pagetitle', __('Modules Management', 'rmcommon'));
+    RMTemplate::getInstance()->add_style('modules.min.css', 'rmcommon');
+    RMTemplate::getInstance()->add_script('modules.min.js', 'rmcommon');
+    RMTemplate::getInstance()->set_help('http://www.redmexico.com.mx/docs/common-utilities/uso-de-common-utilities/standalone/1/#administrador-de-modulos');
     xoops_cp_header();
-    include RMTemplate::get()->path('rmc-modules.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->path('rmc-modules.php', 'module', 'rmcommon');
     xoops_cp_footer();
 }
 
@@ -736,8 +736,8 @@ function module_install()
 
     $module = RMEvents::get()->run_event('rmcommon.preinstall.module', $module);
 
-    RMTEmplate::get()->add_script('modules.min.js', 'rmcommon');
-    RMTemplate::get()->add_style('modules.min.css', 'rmcommon');
+    RMTemplate::getInstance()->add_script('modules.min.js', 'rmcommon');
+    RMTemplate::getInstance()->add_style('modules.min.css', 'rmcommon');
     //RMFunctions::create_toolbar();
 
     RMBreadCrumb::get()->add_crumb(__('Modules Management', 'rmcommon'), 'modules.php');
@@ -747,7 +747,7 @@ function module_install()
 
     xoops_cp_header();
 
-    include RMTemplate::get()->get_template('rmc-module-preinstall.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-module-preinstall.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
 }
@@ -797,13 +797,13 @@ function module_install_now()
     $module_log = RMEvents::get()->run_event('rmcommon.module.installed', $module_log, $mod);
 
     //RMFunctions::create_toolbar();
-    RMTemplate::get()->add_style('modules.min.css', 'rmcommon');
+    RMTemplate::getInstance()->add_style('modules.min.css', 'rmcommon');
     xoops_cp_header();
 
     $module    = $moduleHandler->getByDirname($mod);
     $log_title = sprintf(__('Installation log for %s', 'rmcommon'), $module ? $module->name() : $mod);
     $action    = rmc_server_var($_POST, 'action', '');
-    include RMTemplate::get()->get_template('rmc-modules-log.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-modules-log.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
 }
@@ -858,7 +858,7 @@ function module_uninstall_now()
     $module_log = RMEvents::get()->run_event('rmcommon.module.uninstalled', $module_log, $mod);
 
     //RMFunctions::create_toolbar();
-    RMTemplate::get()->add_style('modules.min.css', 'rmcommon');
+    RMTemplate::getInstance()->add_style('modules.min.css', 'rmcommon');
 
     RMBreadCrumb::get()->add_crumb(__('Modules Management', 'rmcommon'), 'modules.php');
     RMBreadCrumb::get()->add_crumb(sprintf(__('%s install log', 'rmcommon'), $mod->getVar('name')));
@@ -871,7 +871,7 @@ function module_uninstall_now()
     $module->loadInfo($mod, false);
     $log_title = sprintf(__('Uninstall log for %s', 'rmcommon'), $module ? $module->getInfo('name') : $mod);
     $action    = rmc_server_var($_POST, 'action', '');
-    include RMTemplate::get()->get_template('rmc-modules-log.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-modules-log.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
 }
@@ -1349,7 +1349,7 @@ function module_update_now()
     $module_log = RMEvents::get()->run_event('rmcommon.module.updated', $module_log, $module_log);
 
     //RMFunctions::create_toolbar();
-    RMTemplate::get()->add_style('modules.min.css', 'rmcommon');
+    RMTemplate::getInstance()->add_style('modules.min.css', 'rmcommon');
     xoops_cp_header();
 
     $log_title = sprintf(__('Update log for %s', 'rmcommon'), $module ? $module->getInfo('name') : $mod);
@@ -1360,7 +1360,7 @@ function module_update_now()
     $rmTpl->assign('xoops_pagetitle', $log_title);
 
     $action = rmc_server_var($_POST, 'action', '');
-    include RMTemplate::get()->get_template('rmc-modules-log.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-modules-log.php', 'module', 'rmcommon');
 
     xoops_cp_footer();
 }

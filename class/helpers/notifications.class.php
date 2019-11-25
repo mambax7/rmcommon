@@ -140,10 +140,10 @@ class RMNotifications
             return null;
         }
 
-        RMTemplate::get()->add_script('cu-handler.js', 'rmcommon', ['footer' => 1, 'id' => 'cuhandler']);
+        RMTemplate::getInstance()->add_script('cu-handler.js', 'rmcommon', ['footer' => 1, 'id' => 'cuhandler']);
 
         ob_start();
-        include RMTemplate::get()->get_template('rmc-notifications-options.php', 'module', 'rmcommon');
+        include RMTemplate::getInstance()->get_template('rmc-notifications-options.php', 'module', 'rmcommon');
         $template = ob_get_clean();
 
         // Clear notifications items

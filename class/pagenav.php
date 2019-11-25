@@ -35,7 +35,7 @@ class RMPageNav
         $this->items_page    = $items_page;
         $this->current_page  = $current_page;
         $this->steps         = $steps;
-        RMTemplate::get()->add_style('pagenav.css', 'rmcommon');
+        RMTemplate::getInstance()->add_style('pagenav.css', 'rmcommon');
 
         $total_pages  = ceil($total_results / $items_page);
         $current_page = $current_page > $total_pages ? $total_pages : $current_page;
@@ -169,7 +169,7 @@ class RMPageNav
         if ('' != $this->template && is_file($this->template)) {
             include $this->template;
         } else {
-            include RMTemplate::get()->get_template('rmc-navigation-pages.php', 'module', 'rmcommon');
+            include RMTemplate::getInstance()->get_template('rmc-navigation-pages.php', 'module', 'rmcommon');
         }
 
         $this->displayed = true;

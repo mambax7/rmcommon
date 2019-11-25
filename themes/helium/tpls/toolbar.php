@@ -1,5 +1,5 @@
 <!-- rmcommon toolbar -->
-<?php if (RMTemplate::get()->get_toolbar()): ?>
+<?php if (RMTemplate::getInstance()->get_toolbar()): ?>
     <nav id="he-toolbar" role="navigation">
 
         <div class="he-toolbar-icons">

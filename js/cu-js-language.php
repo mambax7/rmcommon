@@ -46,7 +46,7 @@ global $common;
 ob_start();
 ?>
 
-var cuLanguage = {
+    var cuLanguage = {
 
 <?php if ('groups' == $common->location): ?>
 
@@ -101,11 +101,11 @@ var cuLanguage = {
     thereAreErrors: "<?php _e('Errors were found! Please check fields in red.', 'rmcommon'); ?>",
     invalidResponse: "<?php _e('Invalid response from server', 'rmcommon'); ?>",
 
-    <?php /* DROPZONE messages */?>
+<?php /* DROPZONE messages */ ?>
     dzDefault: "<?php _e('Drop files here to upload', 'rmcommon'); ?>",
-};
+    };
 
 <?php
 
 $script = ob_get_clean();
-RMTemplate::get()->add_inline_script($script);
+RMTemplate::getInstance()->add_inline_script($script);

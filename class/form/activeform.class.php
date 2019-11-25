@@ -129,11 +129,11 @@ class RMActiveForm
         $form  = '<form ';
         $class = 'active-form';
 
-        RMTemplate::get()->add_script('forms/active-form.js', 'rmcommon', [
+        RMTemplate::getInstance()->add_script('forms/active-form.js', 'rmcommon', [
                                                                 'location' => 'footer',
                                                             ]);
 
-        RMTemplate::get()->add_style('active-form.css', 'rmcommon', [
+        RMTemplate::getInstance()->add_style('active-form.css', 'rmcommon', [
                                                           'location' => 'footer',
                                                       ]);
 

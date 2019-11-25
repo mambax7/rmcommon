@@ -115,7 +115,7 @@ class RmcommonRmcommonPreload
     {
         global $cuIcons;
 
-        RMTemplate::get()->add_script('cu-image-mgr.js', 'rmcommon');
+        RMTemplate::getInstance()->add_script('cu-image-mgr.js', 'rmcommon');
 
         $plugins[] = '<a href="#"
                         onclick="launch_image_manager($(this));"

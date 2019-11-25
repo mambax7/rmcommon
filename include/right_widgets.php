@@ -13,9 +13,9 @@ function rmc_available_mods()
     global $available_mods, $xoopsSecurity;
 
     $ret['title'] = __('Available Modules', 'rmcommon');
-    $ret['icon'] = RMCURL . '/images/modules.png';
+    $ret['icon']  = RMCURL . '/images/modules.png';
 
-    $limit = 7;
+    $limit  = 7;
     $tpages = ceil(count($available_mods) / $limit);
 
     $nav = new RMPageNav(count($available_mods), $limit, 1, 3);
@@ -23,20 +23,20 @@ function rmc_available_mods()
 
     ob_start();
     $i = 0; ?>
-	<div class="rmc_widget_content_reduced rmc-modules-widget">
+    <div class="rmc_widget_content_reduced rmc-modules-widget">
         <img id="img-load" src="images/loading.gif" style="display: none; margin: 15px auto;">
         <div id="mods-widget-container">
             <ul class="list-unstyled">
                 <?php foreach ($available_mods as $mod): ?>
-                <?php if ($i == $limit) {
-        break;
-    } ?>
+                    <?php if ($i == $limit) {
+                        break;
+                    } ?>
                     <li>
                         <div class="the-logo">
                             <?php if ('' != $mod->getInfo('url')): ?>
-                            <a href="modules.php?action=install&amp;dir=<?php echo $mod->getInfo('dirname'); ?>">
-                                <img src="<?php echo XOOPS_URL; ?>/modules/<?php echo $mod->getInfo('dirname'); ?>/<?php echo $mod->getInfo('image'); ?>" alt="<?php echo $mod->getInfo('dirname'); ?>">
-                            </a>
+                                <a href="modules.php?action=install&amp;dir=<?php echo $mod->getInfo('dirname'); ?>">
+                                    <img src="<?php echo XOOPS_URL; ?>/modules/<?php echo $mod->getInfo('dirname'); ?>/<?php echo $mod->getInfo('image'); ?>" alt="<?php echo $mod->getInfo('dirname'); ?>">
+                                </a>
                             <?php else: ?>
                                 <img src="<?php echo XOOPS_URL; ?>/modules/<?php echo $mod->getInfo('dirname'); ?>/<?php echo $mod->getInfo('image'); ?>" alt="<?php echo $mod->getInfo('dirname'); ?>">
                             <?php endif; ?>
@@ -147,7 +147,7 @@ function rmc_available_mods()
                                         <?php if ('' != $mod->getInfo('releasedate')): ?>
                                             <?php
                                             $time = strtotime($mod->getInfo('releasedate'));
-    echo formatTimestamp($time, 's'); ?>
+                                            echo formatTimestamp($time, 's'); ?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
@@ -167,9 +167,9 @@ function rmc_available_mods()
                                             <?php endif; ?>
                                         <?php endif; ?>
                                         <?php if ($mod->getInfo('social')): ?>
-                                        <?php foreach ($mod->getInfo('social') as $social): ?>
-                                            <a target="_blank" href="<?php echo $social['url']; ?>"><span class="<?php echo parse_social_icons($social['type']); ?>"></span></a>
-                                        <?php endforeach; ?>
+                                            <?php foreach ($mod->getInfo('social') as $social): ?>
+                                                <a target="_blank" href="<?php echo $social['url']; ?>"><span class="<?php echo parse_social_icons($social['type']); ?>"></span></a>
+                                            <?php endforeach; ?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
@@ -183,13 +183,13 @@ function rmc_available_mods()
                         </div>
                     </li>
                     <?php $i++;
-    endforeach; ?>
+                endforeach; ?>
             </ul>
-        <?php $nav->display(false); ?>
+            <?php $nav->display(false); ?>
             <input type="hidden" id="token" value="<?php echo $xoopsSecurity->createToken(); ?>">
         </div>
-	</div>
-<?php
+    </div>
+    <?php
     $ret['content'] = ob_get_clean();
 
     return $ret;
@@ -212,7 +212,7 @@ function rmc_blocks_new()
     }
 
     // Cargamos los grupos
-    $sql = 'SELECT groupid, name FROM ' . $db->prefix('groups') . ' ORDER BY name';
+    $sql    = 'SELECT groupid, name FROM ' . $db->prefix('groups') . ' ORDER BY name';
     $result = $db->query($sql);
     $groups = [];
     while (false !== ($row = $db->fetchArray($result))) {
@@ -220,9 +220,9 @@ function rmc_blocks_new()
     }
 
     $widget['title'] = 'Add Block';
-    $widget['icon'] = '';
+    $widget['icon']  = '';
     ob_start();
-    include RMTemplate::get()->get_template('widgets/rmc_aw_bknew.php');
+    include RMTemplate::getInstance()->get_template('widgets/rmc_aw_bknew.php');
     $widget['content'] = ob_get_clean();
 
     return $widget;
@@ -236,12 +236,12 @@ function rmc_blocks_addpos()
     global $xoopsSecurity;
 
     $widget['title'] = 'Add Position';
-    $widget['icon'] = '';
+    $widget['icon']  = '';
 
     $positions = RMBlocksFunctions::block_positions();
 
     ob_start();
-    include RMTemplate::get()->get_template('widgets/rmc_aw_posnew.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('widgets/rmc_aw_posnew.php', 'module', 'rmcommon');
     $widget['content'] = ob_get_clean();
 
     return $widget;

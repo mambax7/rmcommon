@@ -203,7 +203,7 @@
                 $class = 'odd';
 
                 $qstring = '';
-                foreach (RMTemplate::get()->get_vars() as $var => $value) {
+                foreach (RMTemplate::getInstance()->get_vars() as $var => $value) {
                     $qstring .= '' == $qstring ? $var . '=' . $value : '&amp;' . $var . '=' . $value;
                 }
 

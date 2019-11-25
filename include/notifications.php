@@ -112,13 +112,13 @@ if ('cu-notification-subscribe' == $page) {
         ];
     }
 
-    RMTemplate::get()->add_script('cu-handler.js', 'rmcommon', ['footer' => 1, 'id' => 'cuhandler']);
+    RMTemplate::getInstance()->add_script('cu-handler.js', 'rmcommon', ['footer' => 1, 'id' => 'cuhandler']);
 
-    RMTemplate::get()->header();
+    RMTemplate::getInstance()->header();
 
-    include RMTemplate::get()->get_template('rmc-notifications-list.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-notifications-list.php', 'module', 'rmcommon');
 
-    RMTemplate::get()->footer();
+    RMTemplate::getInstance()->footer();
 
     exit();
 }

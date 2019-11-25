@@ -42,17 +42,17 @@ function show_groups_list()
     $bc->add_crumb(__('Users Management', 'rmcommon'), RMCURL . '/users.php');
     $bc->add_crumb(__('Groups', 'rmcommon'));
 
-    RMTemplate::get()->assign('xoops_pagetitle', __('Groups Management', 'rmcommon'));
+    RMTemplate::getInstance()->assign('xoops_pagetitle', __('Groups Management', 'rmcommon'));
 
     RMFunctions::get()->create_toolbar();
-    RMTemplate::get()->add_script('cu-groups.js', 'rmcommon', ['footer' => 1]);
+    RMTemplate::getInstance()->add_script('cu-groups.js', 'rmcommon', ['footer' => 1]);
     include RMCPATH . '/js/cu-js-language.php';
 
-    RMTemplate::get()->header();
+    RMTemplate::getInstance()->header();
 
-    include RMTemplate::get()->get_template('rmc-groups.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-groups.php', 'module', 'rmcommon');
 
-    RMTemplate::get()->footer();
+    RMTemplate::getInstance()->footer();
 }
 
 function show_group_form()

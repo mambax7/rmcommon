@@ -106,7 +106,7 @@ $field_type = $type ? 'checkbox' : 'radio';
 $nav->render(false);
 
 ob_start();
-include RMTemplate::get()->get_template('rmc-form-users.php', 'module', 'rmcommon');
+include RMTemplate::getInstance()->get_template('rmc-form-users.php', 'module', 'rmcommon');
 $content = ob_get_clean();
 
 $common->ajax()->response(__('Seleccionar usuario', 'sessions'), 0, 1, [

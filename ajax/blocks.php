@@ -60,7 +60,7 @@ function insert_block()
     }
 
     $module->loadInfoAsVar($mod);
-    $blocks = &$module->getInfo('blocks');
+    $blocks =& $module->getInfo('blocks');
     $ms     = $module->name() . '<br>';
     $found  = false;
     foreach ($blocks as $bk) {
@@ -185,7 +185,7 @@ function configure_block()
     $block_options = $block->getOptions();
 
     ob_start();
-    include RMTemplate::get()->get_template('rmc-block-form.php', 'module', 'rmcommon');
+    include RMTemplate::getInstance()->get_template('rmc-block-form.php', 'module', 'rmcommon');
     $form = ob_get_clean();
 
     $ret = [

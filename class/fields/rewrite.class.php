@@ -31,8 +31,8 @@ class RMFormRewrite extends RMFormElement
          * Load all modules that supports rewrite feature
          */
         $moduleHandler = xoops_getHandler('module');
-        $objects = $moduleHandler->getObjects();
-        $modules = [];
+        $objects       = $moduleHandler->getObjects();
+        $modules       = [];
 
         foreach ($objects as $mod) {
             if (!$mod->getInfo('rewrite') || 'rmcommon' == $mod->getVar('dirname')) {
@@ -45,7 +45,7 @@ class RMFormRewrite extends RMFormElement
         unset($objects, $mod);
 
         ob_start();
-        require RMTemplate::get()->get_template('fields/field-rewrite.php', 'module', 'rmcommon');
+        require RMTemplate::getInstance()->get_template('fields/field-rewrite.php', 'module', 'rmcommon');
         $field = ob_get_clean();
 
         return $field;

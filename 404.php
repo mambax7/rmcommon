@@ -31,8 +31,8 @@ if (!isset($xoopsOption['module_subpage'])) {
 
 require dirname(__DIR__) . '/../mainfile.php';
 
-RMTemplate::get()->header();
+RMTemplate::getInstance()->header();
 
-include RMTemplate::get()->get_template('404.php', 'module', 'rmcommon');
+include RMTemplate::getInstance()->get_template('404.php', 'module', 'rmcommon');
 
-RMTemplate::get()->footer();
+RMTemplate::getInstance()->footer();
